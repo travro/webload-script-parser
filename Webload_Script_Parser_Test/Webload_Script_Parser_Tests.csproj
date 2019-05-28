@@ -49,16 +49,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XML_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileStream_Practice\Webload_Script_Parser_Classes.csproj">
-      <Project>{e7d9f81c-08b2-4244-bfa3-221005c56b1c}</Project>
-      <Name>FileStream_Practice</Name>
+    <ProjectReference Include="..\Webload_Script_Parser\Webload_Script_Parser.csproj">
+      <Project>{779b7d62-d89f-4a9d-b8e8-b02633ba046a}</Project>
+      <Name>Webload_Script_Parser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

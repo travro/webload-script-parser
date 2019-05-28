@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -22,24 +23,20 @@ namespace FileStream_Practice
         //TOFIX - account for wlTemporary
         public static string ParseRequestParameters(string str)
         {
-            string[] servers ={
-                ".getValue()+\"",
-                "sumtotaldevelopment.net/core",
-                "sumtotaldevelopment.net",
-                //"wlTemporary"                
-            };
+            char[] skippableChars = {'"',')','('};
+            StringBuilder builder = new StringBuilder();
 
-            string server = servers.First((value) => str.Contains(value));
+            for (int i = str.Length - 1; i >= 0 && CharacterIsValid(str[i], skippableChars); i--)
+            {
+                if (!skippableChars.Contains(str[i])) builder.Insert(0, str[i]);
+            }
+            return builder.ToString();
+        }
 
-            StringBuilder strBldr = new StringBuilder(str);
-
-            int lengthToServer = str.Length - str.IndexOf(server);
-
-            strBldr.Remove(0, (str.Length - lengthToServer) + server.Length);
-
-
-            strBldr.Remove(strBldr.Length - 2, 2);
-            return strBldr.ToString();
+        private static bool CharacterIsValid(char c, char[] skippableChars)
+        {
+            char[] validChars = {'.', '/' };
+            return (Char.IsLetterOrDigit(c) || validChars.Contains(c) || skippableChars.Contains(c)) ? true : false;
         }
 
         public static void Parse(StreamReader reader, TransactionRepository repo)
@@ -56,7 +53,7 @@ namespace FileStream_Practice
                 }
 
                 if (trans != null &&
-                    line.StartsWith("wlHttp.Get", true, CultureInfo.InvariantCulture))
+                    line.StartsWith("wlHttp.Get(\"https://p", true, CultureInfo.InvariantCulture))
                 {
                     trans.AddRequest(new Request(ParseRequestVerb(line), ParseRequestParameters(line)));
                 }
