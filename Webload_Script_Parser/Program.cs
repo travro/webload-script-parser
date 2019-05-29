@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Collections;
+using System.Xml;
 using System.Xml.Linq;
 using System.Linq;
+using Webload_Script_Parser.Models;
 
 namespace Webload_Script_Parser
 {
@@ -9,35 +12,23 @@ namespace Webload_Script_Parser
     {
         static void Main(string[] args)
         {
-            string name = "TM_PRM_Journal_Reply_24May19" + ".wlp";
+            string name = "LM_LRN_ActDtl_28May19" + ".wlp";
             string path = $@"C:\Users\tsmelvin\Documents\WebLOAD\Sessions\{name}";
 
             Console.WriteLine($"{name}\n\n---------------------\n");
-            XDocument project = XDocument.Load(path);
-            //TransactionRepository repo = new TransactionRepository();
 
-           
+            TransactionRepository repo = new TransactionRepository();
+            TransactionBlockParser.Parse(path, repo);
 
-            var transactionBlocks = from transTable in project.Descendants("JavaScriptObject")
-                                    where transTable
-                                    .Element("Properties")
-                                    .Element("PropertyPage")
-                                    .Element("ItemName")
-                                    .Value.Contains("Begin")
-                                    select transTable;
-                       
-
-            foreach (var t in transactionBlocks)
+            foreach (Transaction t in repo.Transactions)
             {
-                Console.WriteLine(t.Element("Properties").Element("PropertyPage").Element("ItemName").Value);
-
-                foreach (var h in t.Descendants("HeaderItem").Where(headerItem => headerItem.Parent.Name == "PropertyPage"))
+                Console.WriteLine(t.Name + "\n");
+                foreach (Request r in t.Requests)
                 {
-                    Console.WriteLine("-- " + (h.Attribute("Text").Value));
+                    Console.WriteLine("-- " + r.Verb.ToString() + "  " + r.Parameters);
                 }
-
-            }  
-            
+                Console.WriteLine("\n--------------------\n");
+            }
         }
     }
 }
