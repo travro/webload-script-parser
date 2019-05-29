@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webload_Script_Parser
+namespace Webload_Script_Parser.Models
 {
     public class Request
-    {        
+    {
         public Request.RequestVerb Verb { get; set; }
         public string Parameters { get; set; }
 
@@ -16,7 +16,7 @@ namespace Webload_Script_Parser
 
         public enum RequestVerb
         {
-            GET =0,
+            GET = 0,
             POST = 1,
             PUT = 2,
             DELETE = 3

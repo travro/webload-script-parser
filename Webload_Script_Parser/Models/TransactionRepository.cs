@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Webload_Script_Parser
+namespace Webload_Script_Parser.Models
 {
     public class TransactionRepository
     {
