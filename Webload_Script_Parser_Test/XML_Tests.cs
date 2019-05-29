@@ -9,9 +9,14 @@ namespace Webload_Script_Parser_Test
     public class XML_Tests
     {
         [TestMethod]
-        public void XMLDocumentedLoaded()
+        public void ParseRequestVerbTest()
         {
-          
+            
+        }
+        [TestMethod]
+        public void ParseRequestParamsTest()
+        {
+
         }
     }
 }
