@@ -1,0 +1,21 @@
+﻿<Window x:Class="Webload_Script_Parser_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Webload_Script_Parser_WPF"
+        mc:Ignorable="d"
+        Title="WebLoad Script Parser" MinHeight="480" Height="600" MinWidth="640" Width="800" Background="LightGray">
+    <Grid Margin="0,0,1.333,0.667">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="78*"/>
+            <ColumnDefinition Width="311*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="File_String_Label" Content="No File Selected" HorizontalAlignment="Left" Margin="20,20,-60,0" VerticalAlignment="Top" Width="832" Grid.ColumnSpan="3" BorderThickness="1,1,1,1" BorderBrush="Gray"/>
+        <Button Content="Open" Name="Open_Button" Click="Open_Button_Click" Margin="36,70,0,0" FontSize="14" Height="40" HorizontalAlignment="Left" Width="80" VerticalAlignment="Top" />
+        <Button  Content="Save" x:Name="Save_Button" Click="Save_Button_Click" Margin="140,70,0,0" RenderTransformOrigin="-0.243,0.425" FontSize="14" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"  />
+        <TextBox x:Name="Text_Box" Margin="20,145,20,25" 
+                 TextWrapping="NoWrap" Text="No File Selected" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Panel.ZIndex="-1" Grid.ColumnSpan="2" />
+    </Grid>
+</Window>

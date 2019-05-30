@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webload_Script_Parser", "We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webload_Script_Parser_Tests", "Webload_Script_Parser_Test\Webload_Script_Parser_Tests.csproj", "{D0B379A0-3311-4536-9F51-572BCAE601DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webload_Script_Parser_WPF", "Webload_Script_Parser_WPF\Webload_Script_Parser_WPF.csproj", "{0482AF34-AD3E-4814-915D-1E5589813D50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D0B379A0-3311-4536-9F51-572BCAE601DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0B379A0-3311-4536-9F51-572BCAE601DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0B379A0-3311-4536-9F51-572BCAE601DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0482AF34-AD3E-4814-915D-1E5589813D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0482AF34-AD3E-4814-915D-1E5589813D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0482AF34-AD3E-4814-915D-1E5589813D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0482AF34-AD3E-4814-915D-1E5589813D50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
