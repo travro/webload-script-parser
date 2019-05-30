@@ -12,8 +12,8 @@ namespace Webload_Script_Parser
     {
         static void Main(string[] args)
         {
-            string name = "LM_PRM_191_EcomReg_Feb07" + ".wlp";
-            string path = $@"C:\Users\tsmelvin\Documents\WebLOAD\Sessions\{name}";
+            string name = "LM_PRM_192_EcomReg_Apr22";
+            string path = $@"C:\Users\tsmelvin\Documents\WebLOAD\Sessions\{name}" + ".wlp";
 
             Console.WriteLine($"{name}\n\n---------------------\n");
 
