@@ -11,11 +11,6 @@ namespace Webload_Script_Parser
 {
     public class TransactionBlockParser
     {
-        //TO_ERASE?
-        private static void ParseTransactionName(XElement element)
-        {
-
-        }
         private static Request.RequestVerb ParseRequestVerb(XElement element)
         {
             string val = element.Attribute("Text").Value;
@@ -25,36 +20,39 @@ namespace Webload_Script_Parser
             if (val.StartsWith(" GET")) return Request.RequestVerb.GET;
             return Request.RequestVerb.GET;
         }
-        //TODO
         private static string ParseRequestParams(XElement element)
         {
             string val = element.Attribute("Text").Value;
-            string domain = "sumtotaldevelopment.net/";
-            int uRlIndex = val.IndexOf(domain) + domain.Length;
-            int limitIndex = val.IndexOfAny(new[] { '?',' '}, uRlIndex);
+            string sumTotalSite = "sumtotaldevelopment.net/";
+            string domain = (val.Contains(sumTotalSite))? sumTotalSite : "https://";
+            int domainIndex = val.IndexOf(domain) + domain.Length;
+            int paramIndex = val.IndexOfAny(new[] { '?',' '}, domainIndex);
 
-            return val.Substring(uRlIndex, limitIndex - uRlIndex);
+            return val.Substring(domainIndex, paramIndex - domainIndex);
         }
 
+        //Given a filepath and repo, will populate repo with Transaction objects
         public static void Parse(string path, TransactionRepository repo)
         {
             FileStream _fStream = new FileStream(path, FileMode.Open);
             XmlReader _xReader = XmlReader.Create(_fStream);
             XDocument _XDoc = XDocument.Load(_xReader);
 
-            //Get all BeginTransaction JS objects as XElements
+            //Get the JavaScriptObject XElements that are BeginTransaction blocks
             var jScriptElements = from transTable in _XDoc.Descendants("JavaScriptObject")
                                   where transTable
                                   .Element("Properties")
                                   .Element("PropertyPage")
                                   .Element("ItemName")
-                                  .Value.Contains("Begin")
+                                  .Value.Contains("BeginTransaction::")
                                   select transTable;
 
+            //Add each XElement to the repo as a Transaction object
             foreach (var jSE in jScriptElements)
             {
                 Transaction trans = new Transaction(jSE.Element("Properties").Element("PropertyPage").Element("ItemName").Value);
 
+                //Get the PropertyPage descendant elements that are of type HTTPHeader, which contain the request URLs
                 var reqElements = jSE.Descendants("JavaScriptObject")
                     .Descendants()
                     .Where(desc => desc.Name == "PropertyPage" && desc.Attribute("Name").Value == "HTTPHeaders")
@@ -62,7 +60,6 @@ namespace Webload_Script_Parser
 
                 foreach (var req in reqElements)
                 {
-                    //Console.WriteLine(req.Attribute("Text").Value);
                     trans.AddRequest(new Request(ParseRequestVerb(req), ParseRequestParams(req)));
                 }
                 repo.AddTransaction(trans);
