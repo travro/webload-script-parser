@@ -26,7 +26,7 @@ namespace Webload_Script_Parser
             string sumTotalSite = "sumtotaldevelopment.net/";
             string domain = (val.Contains(sumTotalSite))? sumTotalSite : "https://";
             int domainIndex = val.IndexOf(domain) + domain.Length;
-            int paramIndex = val.IndexOfAny(new[] { '?',' '}, domainIndex);
+            int paramIndex = val.IndexOf(' ', domainIndex);
 
             return val.Substring(domainIndex, paramIndex - domainIndex);
         }
