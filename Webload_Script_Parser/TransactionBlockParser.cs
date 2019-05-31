@@ -11,6 +11,16 @@ namespace Webload_Script_Parser
 {
     public class TransactionBlockParser
     {
+        private static string ParseTransactionName(XElement element)
+        {
+            string itemName = element.Element("Properties").Element("PropertyPage").Element("ItemName").Value;
+            string beginTrans = "BeginTransaction::";
+            if (itemName.Contains(beginTrans))
+            {
+                return itemName.Substring(itemName.IndexOf(beginTrans) + beginTrans.Length);
+            }
+            else return "Transaction";
+        }
         private static Request.RequestVerb ParseRequestVerb(XElement element)
         {
             string val = element.Attribute("Text").Value;
@@ -24,7 +34,7 @@ namespace Webload_Script_Parser
         {
             string val = element.Attribute("Text").Value;
             string sumTotalSite = "sumtotaldevelopment.net/";
-            string domain = (val.Contains(sumTotalSite))? sumTotalSite : "https://";
+            string domain = (val.Contains(sumTotalSite)) ? sumTotalSite : "https://";
             int domainIndex = val.IndexOf(domain) + domain.Length;
             int paramIndex = val.IndexOf(' ', domainIndex);
 
@@ -50,7 +60,7 @@ namespace Webload_Script_Parser
             //Add each XElement to the repo as a Transaction object
             foreach (var jSE in jScriptElements)
             {
-                Transaction trans = new Transaction(jSE.Element("Properties").Element("PropertyPage").Element("ItemName").Value);
+                Transaction trans = new Transaction(ParseTransactionName(jSE));
 
                 //Get the PropertyPage descendant elements that are of type HTTPHeader, which contain the request URLs
                 var reqElements = jSE.Descendants("JavaScriptObject")
