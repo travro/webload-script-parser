@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionRepository.cs" />
+    <Compile Include="TransactionBlockParser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,12 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Webload_Script_Parser\Webload_Script_Parser.csproj">
-      <Project>{779b7d62-d89f-4a9d-b8e8-b02633ba046a}</Project>
-      <Name>Webload_Script_Parser</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

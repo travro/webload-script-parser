@@ -14,8 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
-using Webload_Script_Parser;
-using Webload_Script_Parser.Models;
+using Webload_Script_Parser_WPF;
+using Webload_Script_Parser_WPF.Models;
 
 namespace Webload_Script_Parser_WPF
 {
@@ -52,21 +52,29 @@ namespace Webload_Script_Parser_WPF
                     {
                         Text_Box.AppendText($"-- {r.Verb.ToString()} {r.Parameters} \n");
                     }
-                    Text_Box.AppendText("\n--------------------\n\n");
+                    Text_Box.AppendText("\n--------------------\n\n");                    
                 }
+                Text_Box.AppendText($"\nLine count:{Text_Box.LineCount}");
             }
         }
-
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sFD = new SaveFileDialog();
             sFD.Title = "Save Text to File";
             sFD.Filter = "Text files (.txt)|*txt|All Files (*.*)|*.*";
-            sFD.AddExtension = false;
             sFD.DefaultExt = "txt";
             if(sFD.ShowDialog() == true)
             {
-                File.WriteAllText(sFD.FileName, Text_Box.Text);
+                StreamWriter _writer = new StreamWriter(sFD.FileName);
+                int textLines = Text_Box.LineCount;
+                int currentline = 1;               
+
+                while(currentline < textLines)
+                {
+                    _writer.WriteLine(Text_Box.GetLineText(currentline));
+                    currentline++;
+                }
+                _writer.Close();                
             }
         }
     }
