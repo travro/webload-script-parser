@@ -59,7 +59,15 @@ namespace Webload_Script_Parser_WPF
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You clicked the save button");
+            SaveFileDialog sFD = new SaveFileDialog();
+            sFD.Title = "Save Text to File";
+            sFD.Filter = "Text files (.txt)|*txt|All Files (*.*)|*.*";
+            sFD.AddExtension = false;
+            sFD.DefaultExt = "txt";
+            if(sFD.ShowDialog() == true)
+            {
+                File.WriteAllText(sFD.FileName, Text_Box.Text);
+            }
         }
     }
 }

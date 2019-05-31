@@ -16,6 +16,6 @@
         <Button Content="Open" Name="Open_Button" Click="Open_Button_Click" Margin="36,70,0,0" FontSize="14" Height="40" HorizontalAlignment="Left" Width="80" VerticalAlignment="Top" />
         <Button  Content="Save" x:Name="Save_Button" Click="Save_Button_Click" Margin="140,70,0,0" RenderTransformOrigin="-0.243,0.425" FontSize="14" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"  />
         <TextBox x:Name="Text_Box" Margin="20,145,20,25" 
-                 TextWrapping="NoWrap" Text="No File Selected" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Panel.ZIndex="-1" Grid.ColumnSpan="2" />
+                 TextWrapping="NoWrap" Text="No File Selected" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Panel.ZIndex="-1" Grid.ColumnSpan="2" />        
     </Grid>
 </Window>
