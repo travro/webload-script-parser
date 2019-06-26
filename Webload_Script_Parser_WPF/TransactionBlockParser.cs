@@ -21,6 +21,7 @@ namespace Webload_Script_Parser_WPF
         private static Request.RequestVerb ParseRequestVerb(XElement element)
         {
             string val = element.Attribute("Text").Value;
+            if (val.StartsWith(" CONNECT")) return Request.RequestVerb.CONNECT;
             if (val.StartsWith(" DELETE")) return Request.RequestVerb.DELETE;
             if (val.StartsWith(" POST")) return Request.RequestVerb.POST;
             if (val.StartsWith(" PUT")) return Request.RequestVerb.PUT;
@@ -35,7 +36,7 @@ namespace Webload_Script_Parser_WPF
             int domainIndex = val.IndexOf(domain) + domain.Length;
             int paramIndex = val.IndexOf(' ', domainIndex);
 
-            return val.Substring(domainIndex, paramIndex - domainIndex);
+            return val.Substring(domainIndex/*, paramIndex - domainIndex*/);
         }
 
         //Given a filepath and repo, will populate repo with Transaction objects
