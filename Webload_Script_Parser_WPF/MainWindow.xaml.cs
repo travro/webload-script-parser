@@ -10,11 +10,12 @@ namespace Webload_Script_Parser_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        TransactionRepository repo;
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void Open_Button_Click(object sender, RoutedEventArgs e)
+        private void MenuFileOpenEventHandler(object sender, RoutedEventArgs e)
         {
             OpenFileDialog oFD = new OpenFileDialog();
             oFD.Title = "Select Webload Project File";
@@ -24,7 +25,7 @@ namespace Webload_Script_Parser_WPF
             {
                 File_String_Label.Content = oFD.FileName;
 
-                TransactionRepository repo = new TransactionRepository();
+                repo = new TransactionRepository();
                 TransactionBlockParser.Parse(oFD.FileName, repo);
 
                 Text_Box.Text = "\n";
@@ -38,30 +39,52 @@ namespace Webload_Script_Parser_WPF
                     {
                         Text_Box.AppendText($"-- {r.Verb.ToString()} {r.Parameters} \n");
                     }
-                    Text_Box.AppendText("\n--------------------\n\n");                    
+                    Text_Box.AppendText("\n--------------------\n\n");
                 }
                 Text_Box.AppendText($"\nLine count:{Text_Box.LineCount}");
             }
         }
-        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        private void MenuExportFileEventHandler(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sFD = new SaveFileDialog();
             sFD.Title = "Save Text to File";
-            sFD.Filter = "Text files (.txt)|*txt|All Files (*.*)|*.*";
+            sFD.Filter = "Text files (.txt)|*txt|CSV files (.csv)|*.csv";
             sFD.DefaultExt = "txt";
-            if(sFD.ShowDialog() == true)
+            if (sFD.ShowDialog() == true)
             {
                 StreamWriter _writer = new StreamWriter(sFD.FileName);
-                int textLines = Text_Box.LineCount;
-                int currentline = 1;               
 
-                while(currentline < textLines)
+                //export as text file
+                if (sFD.FilterIndex == 1)
                 {
-                    _writer.WriteLine(Text_Box.GetLineText(currentline));
-                    currentline++;
+                    int textLines = Text_Box.LineCount;
+                    int currentline = 1;
+
+                    while (currentline < textLines)
+                    {
+                        _writer.WriteLine(Text_Box.GetLineText(currentline));
+                        currentline++;
+                    }
                 }
-                _writer.Close();                
+                //export as csv file
+                else
+                {
+                    _writer.WriteLine("Transaction,Request,Parameters");
+                    foreach (Transaction t in repo.Transactions)
+                    {
+                        foreach(Request r in t.Requests)
+                        {
+                            _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
+                        }
+                    }
+                }
+                _writer.Close();
             }
         }
+        private void MenuFileExitEventHander(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }
