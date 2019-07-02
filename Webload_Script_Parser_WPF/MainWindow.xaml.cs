@@ -51,35 +51,35 @@ namespace Webload_Script_Parser_WPF
             sFD.Filter = "Text files (.txt)|*txt|CSV files (.csv)|*.csv";
             sFD.DefaultExt = "txt";
             if (sFD.ShowDialog() == true)
-            {
-                StreamWriter _writer = new StreamWriter(sFD.FileName);
-
-                //export as text file
-                if (sFD.FilterIndex == 1)
+            {   
+                using(StreamWriter _writer = new StreamWriter(sFD.FileName))
                 {
-                    int textLines = Text_Box.LineCount;
-                    int currentline = 1;
+                    //export as text file
+                    if (sFD.FilterIndex == 1)
+                    {
+                        int textLines = Text_Box.LineCount;
+                        int currentline = 1;
 
-                    while (currentline < textLines)
-                    {
-                        _writer.WriteLine(Text_Box.GetLineText(currentline));
-                        currentline++;
-                    }
-                }
-                //export as csv file
-                else
-                {
-                    _writer.WriteLine("Transaction,Request,Parameters");
-                    foreach (Transaction t in repo.Transactions)
-                    {
-                        foreach(Request r in t.Requests)
+                        while (currentline < textLines)
                         {
-                            _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
+                            _writer.WriteLine(Text_Box.GetLineText(currentline));
+                            currentline++;
+                        }
+                    }
+                    //export as csv file
+                    else
+                    {
+                        _writer.WriteLine("Transaction,Request,Parameters");
+                        foreach (Transaction t in repo.Transactions)
+                        {
+                            foreach (Request r in t.Requests)
+                            {
+                                _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
+                            }
                         }
                     }
                 }
-                _writer.Close();
-            }
+            }            
         }
         private void MenuFileExitEventHander(object sender, RoutedEventArgs e)
         {
