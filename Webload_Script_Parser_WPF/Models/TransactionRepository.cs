@@ -17,11 +17,11 @@ namespace Webload_Script_Parser_WPF.Models
 
         public bool Contains(Transaction t)
         {
-            return this.Transactions.Exists(element => element.Name == t.Name);
+            return Transactions.Exists(element => element.Name == t.Name);
         }
         public bool Contains(string s)
         {
-            return this.Transactions.Exists(element => element.Name == s);
+            return Transactions.Exists(element => element.Name == s);
         }
     }
 }
