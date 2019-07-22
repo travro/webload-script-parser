@@ -38,6 +38,11 @@ namespace Webload_Script_Parser_WPF
                     foreach (Request r in t.Requests)
                     {
                         Text_Box.AppendText($"-- {r.Verb.ToString()} {r.Parameters} \n");
+
+                        foreach (Correlation c in r.Correlations)
+                        {
+                            Text_Box.AppendText($"-- --Corr: {c.Name}, {c.OriginalValue}\n");
+                        }
                     }
                     Text_Box.AppendText("\n--------------------\n\n");
                 }
@@ -75,6 +80,14 @@ namespace Webload_Script_Parser_WPF
                             foreach (Request r in t.Requests)
                             {
                                 _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
+
+                                 if(r.Correlations.Length > 0)
+                                {
+                                    foreach(Correlation c in r.Correlations)
+                                    {
+                                        _writer.WriteLine($"Corr: {c.Name}, {c.OriginalValue}");
+                                    }
+                                }
                             }
                         }
                     }

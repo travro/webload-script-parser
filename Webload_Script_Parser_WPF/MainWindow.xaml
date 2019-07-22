@@ -15,7 +15,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="MenuFileOpenEventHandler"/>
-                <MenuItem Header="_Export">
+                <MenuItem Header="_Save As...">
                     <MenuItem Header="File" Click="MenuExportFileEventHandler"/>
                     <MenuItem Header="Push to Database" IsEnabled="False"/>
                 </MenuItem>
