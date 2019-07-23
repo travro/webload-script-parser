@@ -32,16 +32,18 @@ namespace Webload_Script_Parser_WPF
 
                 foreach (Transaction t in repo.Transactions)
                 {
-                    Text_Box.FontWeight = FontWeights.Bold;
                     Text_Box.AppendText($"{t.Name}\n");
-                    Text_Box.FontWeight = FontWeights.Regular;
+
                     foreach (Request r in t.Requests)
                     {
                         Text_Box.AppendText($"-- {r.Verb.ToString()} {r.Parameters} \n");
 
-                        foreach (Correlation c in r.Correlations)
+                        if (r.Correlations != null)
                         {
-                            Text_Box.AppendText($"-- --Corr: {c.Name}, {c.OriginalValue}\n");
+                            foreach (Correlation c in r.Correlations)
+                            {
+                                Text_Box.AppendText($"-- --: {c.Name}, {c.OriginalValue}\n");
+                            }
                         }
                     }
                     Text_Box.AppendText("\n--------------------\n\n");
@@ -56,8 +58,8 @@ namespace Webload_Script_Parser_WPF
             sFD.Filter = "Text files (.txt)|*txt|CSV files (.csv)|*.csv";
             sFD.DefaultExt = "txt";
             if (sFD.ShowDialog() == true)
-            {   
-                using(StreamWriter _writer = new StreamWriter(sFD.FileName))
+            {
+                using (StreamWriter _writer = new StreamWriter(sFD.FileName))
                 {
                     //export as text file
                     if (sFD.FilterIndex == 1)
@@ -81,9 +83,9 @@ namespace Webload_Script_Parser_WPF
                             {
                                 _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
 
-                                 if(r.Correlations.Length > 0)
+                                if (r.Correlations.Length > 0)
                                 {
-                                    foreach(Correlation c in r.Correlations)
+                                    foreach (Correlation c in r.Correlations)
                                     {
                                         _writer.WriteLine($"Corr: {c.Name}, {c.OriginalValue}");
                                     }
@@ -92,7 +94,7 @@ namespace Webload_Script_Parser_WPF
                         }
                     }
                 }
-            }            
+            }
         }
         private void MenuFileExitEventHander(object sender, RoutedEventArgs e)
         {
