@@ -13,13 +13,11 @@ namespace Webload_Script_Parser_WPF.Models
         public Request(RequestVerb verb, string parameters)
         {
             Verb = verb; Parameters = parameters;
-           // _correlations = new List<Correlation>();
         }
         public Request(XElement element)
         {
             Verb = ParseRequestVerb(element);
             Parameters = ParseRequestParams(element);
-           // _correlations = new List<Correlation>();
         }
         public Request(XElement httpHeaderElement, XElement nodeScriptElement)
         {
