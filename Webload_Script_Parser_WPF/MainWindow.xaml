@@ -9,7 +9,6 @@
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
@@ -22,7 +21,6 @@
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>                
             </MenuItem>
         </Menu>
-        <Label Grid.Row="1" x:Name="File_String_Label" Content="No File Selected" Margin="0" BorderThickness="0,0.5,0,0.5" BorderBrush="Black" RenderTransformOrigin="0,0" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" x:Name="Text_Box" Margin="0" TextWrapping="NoWrap" Text="--" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        <TextBox Grid.Row="1" x:Name="Text_Box" Margin="0" TextWrapping="NoWrap" Text="No File Selected"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
     </Grid>
 </Window>

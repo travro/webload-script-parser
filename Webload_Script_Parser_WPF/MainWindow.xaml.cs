@@ -11,6 +11,7 @@ namespace Webload_Script_Parser_WPF
     public partial class MainWindow : Window
     {
         TransactionRepository repo;
+        string title = "Webload Script Parser";
         public MainWindow()
         {
             InitializeComponent();
@@ -23,8 +24,7 @@ namespace Webload_Script_Parser_WPF
             oFD.Multiselect = false;
             if (oFD.ShowDialog() == true)
             {
-                File_String_Label.Content = oFD.FileName;
-
+                Title = oFD.FileName;
                 repo = new TransactionRepository();
                 TransactionBlockParser.Parse(oFD.FileName, repo);
 
