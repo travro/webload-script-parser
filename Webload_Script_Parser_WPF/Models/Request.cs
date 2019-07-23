@@ -5,27 +5,27 @@ namespace Webload_Script_Parser_WPF.Models
 {
     public class Request
     {
-        private List<Correlation> _correlations;
+        private Correlation[] _correlations;
         public Request.RequestVerb Verb { get; }
         public string Parameters { get; }
-        public Correlation[] Correlations => _correlations.ToArray();
+        public Correlation[] Correlations => _correlations;
 
         public Request(RequestVerb verb, string parameters)
         {
             Verb = verb; Parameters = parameters;
-            _correlations = new List<Correlation>();
+           // _correlations = new List<Correlation>();
         }
         public Request(XElement element)
         {
             Verb = ParseRequestVerb(element);
             Parameters = ParseRequestParams(element);
-            _correlations = new List<Correlation>();
+           // _correlations = new List<Correlation>();
         }
         public Request(XElement httpHeaderElement, XElement nodeScriptElement)
         {
             Verb = ParseRequestVerb(httpHeaderElement);
             Parameters = ParseRequestParams(httpHeaderElement);
-            if (nodeScriptElement != null && nodeScriptElement.Value.Contains("setCorrelation") && Verb == RequestVerb.GET)
+            if (nodeScriptElement != null && nodeScriptElement.Value.Contains("setCorrelation") /*&& Verb == RequestVerb.GET*/)
             {
                 _correlations = CorrelationFactory.GetCorrelations(nodeScriptElement);
             }
