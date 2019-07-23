@@ -33,9 +33,15 @@ namespace Webload_Script_Parser_WPF.Models
                     .First()
                     .Element("NodeScript");
 
+                //Transaction will navigate the childblock elements and attach the nodescript of any correlation onto the first httpHeaderElement using the overloaded
+                //constructor
                 foreach (var httpHeaderElement in httpHeaderElements)
                 {
-                    _requests.Add(new Request(httpHeaderElement, nodeScriptElement));
+                    if (httpHeaderElement == httpHeaderElements.First())
+                    {
+                        _requests.Add(new Request(httpHeaderElement, nodeScriptElement));
+                    }
+                    _requests.Add(new Request(httpHeaderElement));
                 }
             }
         }
