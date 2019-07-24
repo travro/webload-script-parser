@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Webload_Script_Parser_WPF"
         mc:Ignorable="d"
-        Title="WebLoad Script Parser" MinHeight="480" Height="800" MinWidth="640" Width="1280" Background="LightGray">
+        Title="WebLoad Script Parser" 
+        MinHeight="480" 
+        Height="800" 
+        MinWidth="640" 
+        Width="1280" 
+        Background="LightSlateGray">
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -18,9 +23,13 @@
                     <MenuItem Header="File" Click="MenuExportFileEventHandler"/>
                     <MenuItem Header="Push to Database" IsEnabled="False"/>
                 </MenuItem>
-                <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>                
+                <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>
         </Menu>
-        <TextBox Grid.Row="1" x:Name="Text_Box" Margin="0" TextWrapping="NoWrap" Text="No File Selected"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        
+        <TreeView 
+            Grid.Row="1"
+            x:Name="Tree_View" >
+        </TreeView>
     </Grid>
 </Window>

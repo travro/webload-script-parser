@@ -1,7 +1,9 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using Microsoft.Win32;
 using System.IO;
 using Webload_Script_Parser_WPF.Models;
+using System.Windows.Controls;
 
 namespace Webload_Script_Parser_WPF
 {
@@ -11,7 +13,6 @@ namespace Webload_Script_Parser_WPF
     public partial class MainWindow : Window
     {
         TransactionRepository repo;
-        string title = "Webload Script Parser";
         public MainWindow()
         {
             InitializeComponent();
@@ -28,27 +29,55 @@ namespace Webload_Script_Parser_WPF
                 repo = new TransactionRepository();
                 TransactionBlockParser.Parse(oFD.FileName, repo);
 
-                Text_Box.Text = "\n";
+                //Build Treeview
+                Tree_View.Items.Clear();
+                TreeViewItem transTreeViewItem = new TreeViewItem();
+                transTreeViewItem.Header = new TextBlock()
+                {
+                    Text = oFD.FileName,
+                    FontWeight = FontWeights.SemiBold
+                };
+                transTreeViewItem.IsExpanded = true;
+                Tree_View.Items.Add(transTreeViewItem);
+
 
                 foreach (Transaction t in repo.Transactions)
                 {
-                    Text_Box.AppendText($"{t.Name}\n");
+                    TreeViewItem tranTreeViewItem = new TreeViewItem();
+                    tranTreeViewItem.Header = new TextBlock()
+                    {
+                        Text = t.Name,
+                        Foreground = Brushes.Blue
+                    };
+                    tranTreeViewItem.IsExpanded = true;
+                    transTreeViewItem.Items.Add(tranTreeViewItem);
 
                     foreach (Request r in t.Requests)
                     {
-                        Text_Box.AppendText($"-- {r.Verb.ToString()} {r.Parameters} \n");
+                        TreeViewItem reqTreeViewItem = new TreeViewItem();
+                        reqTreeViewItem.Header = new TextBlock()
+                        {
+                            Text = $"{ r.Verb } { r.Parameters }",
+                            Foreground = /*(r.Equals(t.Requests[0])) ? Brushes.Red :*/ Brushes.Black
+                        };
+                        reqTreeViewItem.IsExpanded = true;
+                        tranTreeViewItem.Items.Add(reqTreeViewItem);
 
                         if (r.Correlations != null)
                         {
                             foreach (Correlation c in r.Correlations)
                             {
-                                Text_Box.AppendText($"-- --: {c.Name}, {c.OriginalValue}\n");
+                                TreeViewItem corrTreeViewItem = new TreeViewItem();
+                                corrTreeViewItem.Header = new TextBlock()
+                                {
+                                    Text = $"{c.Name} {c.OriginalValue}",
+                                    Foreground = Brushes.Magenta
+                                };
+                                reqTreeViewItem.Items.Add(corrTreeViewItem);
                             }
                         }
                     }
-                    Text_Box.AppendText("\n--------------------\n\n");
                 }
-                Text_Box.AppendText($"\nLine count:{Text_Box.LineCount}");
             }
         }
         private void MenuExportFileEventHandler(object sender, RoutedEventArgs e)
@@ -62,20 +91,20 @@ namespace Webload_Script_Parser_WPF
                 using (StreamWriter _writer = new StreamWriter(sFD.FileName))
                 {
                     //export as text file
-                    if (sFD.FilterIndex == 1)
-                    {
-                        int textLines = Text_Box.LineCount;
-                        int currentline = 1;
+                    //if (sFD.FilterIndex == 1)
+                    //{
+                    //    int textLines = Text_Box.LineCount;
+                    //    int currentline = 1;
 
-                        while (currentline < textLines)
-                        {
-                            _writer.WriteLine(Text_Box.GetLineText(currentline));
-                            currentline++;
-                        }
-                    }
-                    //export as csv file
-                    else
-                    {
+                    //    while (currentline < textLines)
+                    //    {
+                    //        _writer.WriteLine(Text_Box.GetLineText(currentline));
+                    //        currentline++;
+                    //    }
+                    //}
+                    ////export as csv file
+                    //else
+                    //{
                         _writer.WriteLine("Transaction,Request,Parameters");
                         foreach (Transaction t in repo.Transactions)
                         {
@@ -92,7 +121,7 @@ namespace Webload_Script_Parser_WPF
                                 }
                             }
                         }
-                    }
+                    //}
                 }
             }
         }
