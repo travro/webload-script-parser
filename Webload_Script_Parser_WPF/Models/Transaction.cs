@@ -24,20 +24,20 @@ namespace Webload_Script_Parser_WPF.Models
 
             foreach (var jsCBE in jsChildBlockElements)
             {
-                var httpHeaderElements = jsCBE.Descendants("PropertyPage")
-                    .Where(desc => desc.Attribute("Name").Value == "HTTPHeaders")
-                    .Elements();
-
                 XElement nodeScriptElement = jsCBE.Descendants("PropertyPage")
                     .Where(desc => desc.Attribute("Name").Value == "JavaScript")
                     .First()
-                    .Element("NodeScript");
+                    .Element("NodeScript")?? new XElement("NodeScript");
+
+                IEnumerable<XElement> httpHeaderElements = jsCBE.Descendants("PropertyPage")
+                    .Where(desc => desc.Attribute("Name").Value == "HTTPHeaders")
+                    .Elements()?? new List<XElement>();
 
                 //Transaction will navigate the childblock elements and attach the nodescript of any correlation onto the first httpHeaderElement using the overloaded
-                //constructor
+                //Request constructor
                 foreach (var httpHeaderElement in httpHeaderElements)
                 {
-                    if (httpHeaderElement == httpHeaderElements.First())
+                    if (httpHeaderElement == httpHeaderElements.First() && nodeScriptElement.Value.Contains("setCorr"))
                     {
                         _requests.Add(new Request(httpHeaderElement, nodeScriptElement));
                     }

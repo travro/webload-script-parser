@@ -23,10 +23,7 @@ namespace Webload_Script_Parser_WPF.Models
         {
             Verb = ParseRequestVerb(httpHeaderElement);
             Parameters = ParseRequestParams(httpHeaderElement);
-            if (nodeScriptElement != null && nodeScriptElement.Value.Contains("setCorrelation") /*&& Verb == RequestVerb.GET*/)
-            {
-                _correlations = CorrelationFactory.GetCorrelations(nodeScriptElement);
-            }
+            _correlations = CorrelationFactory.GetCorrelations(nodeScriptElement);
         }
         public enum RequestVerb
         {
@@ -54,7 +51,7 @@ namespace Webload_Script_Parser_WPF.Models
             int domainIndex = val.IndexOf(domain) + domain.Length;
             int paramIndex = val.IndexOf(' ', domainIndex);
 
-            return val.Substring(domainIndex/*, paramIndex - domainIndex*/);
+            return val.Substring(domainIndex, paramIndex - domainIndex);
         }
     }
 }
