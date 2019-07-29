@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataLayer\DataSet.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
     <Compile Include="Models\Request.cs" />
@@ -91,6 +92,12 @@
     <Compile Include="Models\TransactionRepository.cs" />
     <Compile Include="Parsers\CorrelationParamParser.cs" />
     <Compile Include="Parsers\TransactionBlockParser.cs" />
+    <Compile Include="Views\DataTablePage.xaml.cs">
+      <DependentUpon>DataTablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeViewPage.xaml.cs">
+      <DependentUpon>TreeViewPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +110,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DataTablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -143,9 +158,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataLayer\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

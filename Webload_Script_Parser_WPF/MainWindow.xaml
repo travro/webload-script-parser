@@ -25,10 +25,9 @@
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>
         </Menu>
-        
-        <TreeView 
+        <Frame
             Grid.Row="1"
-            x:Name="Tree_View" Background="WhiteSmoke">
-        </TreeView>
+            Margin="0"
+            Name="Main_Frame"/>
     </Grid>
 </Window>
