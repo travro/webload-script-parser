@@ -9,8 +9,7 @@
         MinHeight="480" 
         Height="800" 
         MinWidth="640" 
-        Width="1280" 
-        Background="LightSlateGray">
+        Width="1280">
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -29,7 +28,7 @@
         
         <TreeView 
             Grid.Row="1"
-            x:Name="Tree_View" >
+            x:Name="Tree_View" Background="WhiteSmoke">
         </TreeView>
     </Grid>
 </Window>

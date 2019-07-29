@@ -35,13 +35,21 @@ namespace Webload_Script_Parser_WPF.Models
 
                 //Transaction will navigate the childblock elements and attach the nodescript of any correlation onto the first httpHeaderElement using the overloaded
                 //Request constructor
+                //The first request is the visible request shown in the actual .wlp file
                 foreach (var httpHeaderElement in httpHeaderElements)
                 {
                     if (httpHeaderElement == httpHeaderElements.First() && nodeScriptElement.Value.Contains("setCorr"))
                     {
-                        _requests.Add(new Request(httpHeaderElement, nodeScriptElement));
+                        _requests.Add(new Request(httpHeaderElement, nodeScriptElement, true));
                     }
-                    _requests.Add(new Request(httpHeaderElement));
+                    else if(httpHeaderElement == httpHeaderElements.First())
+                    {
+                        _requests.Add(new Request(httpHeaderElement, true));
+                    }
+                    else
+                    {
+                        _requests.Add(new Request(httpHeaderElement, false));
+                    }                    
                 }
             }
         }

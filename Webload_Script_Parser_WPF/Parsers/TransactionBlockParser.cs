@@ -5,9 +5,9 @@ using System.Linq;
 using Webload_Script_Parser_WPF.Models;
 using System;
 
-namespace Webload_Script_Parser_WPF
+namespace Webload_Script_Parser_WPF.Parsers
 {
-    public class TransactionBlockParser
+    public static class TransactionBlockParser
     {
         //Given a filepath and repo, will populate repo with Transaction objects
         public static void Parse(string path, TransactionRepository repo)

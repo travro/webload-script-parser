@@ -3,6 +3,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using System.IO;
 using Webload_Script_Parser_WPF.Models;
+using Webload_Script_Parser_WPF.Parsers;
 using System.Windows.Controls;
 
 namespace Webload_Script_Parser_WPF
@@ -47,7 +48,8 @@ namespace Webload_Script_Parser_WPF
                     tranTreeViewItem.Header = new TextBlock()
                     {
                         Text = t.Name,
-                        Foreground = Brushes.Blue
+                        Foreground = Brushes.Blue,
+                        FontSize = 14.5                       
                     };
                     tranTreeViewItem.IsExpanded = true;
                     transTreeViewItem.Items.Add(tranTreeViewItem);
@@ -58,7 +60,7 @@ namespace Webload_Script_Parser_WPF
                         reqTreeViewItem.Header = new TextBlock()
                         {
                             Text = $"{ r.Verb } { r.Parameters }",
-                            Foreground = /*(r.Equals(t.Requests[0])) ? Brushes.Red :*/ Brushes.Black
+                            Foreground = (r.Visible) ? Brushes.DarkRed : Brushes.Gray
                         };
                         reqTreeViewItem.IsExpanded = true;
                         tranTreeViewItem.Items.Add(reqTreeViewItem);
@@ -70,8 +72,8 @@ namespace Webload_Script_Parser_WPF
                                 TreeViewItem corrTreeViewItem = new TreeViewItem();
                                 corrTreeViewItem.Header = new TextBlock()
                                 {
-                                    Text = $"{c.Name} {c.OriginalValue}",
-                                    Foreground = Brushes.Magenta
+                                    Text = $"{c.Rule} {c.OriginalValue}",
+                                    Foreground = Brushes.Violet
                                 };
                                 reqTreeViewItem.Items.Add(corrTreeViewItem);
                             }
@@ -116,7 +118,7 @@ namespace Webload_Script_Parser_WPF
                                 {
                                     foreach (Correlation c in r.Correlations)
                                     {
-                                        _writer.WriteLine($"Corr: {c.Name}, {c.OriginalValue}");
+                                        _writer.WriteLine($"Corr: {c.Rule}, {c.OriginalValue}");
                                     }
                                 }
                             }

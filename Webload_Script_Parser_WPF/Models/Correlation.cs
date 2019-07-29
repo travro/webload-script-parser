@@ -4,12 +4,12 @@ namespace Webload_Script_Parser_WPF.Models
 {
     public class Correlation
     {
-        public string Name { get; set; }
+        public string Rule { get; set; }
         public string OriginalValue { get; set; }
 
-        public Correlation( string name, string originalValue)
+        public Correlation( string rule, string originalValue)
         {
-            Name = name; OriginalValue = originalValue;
+            Rule = rule; OriginalValue = originalValue;
         }
     }
 }

@@ -89,7 +89,8 @@
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionRepository.cs" />
-    <Compile Include="TransactionBlockParser.cs" />
+    <Compile Include="Parsers\CorrelationParamParser.cs" />
+    <Compile Include="Parsers\TransactionBlockParser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

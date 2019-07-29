@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
+using Webload_Script_Parser_WPF.Parsers;
 
 namespace Webload_Script_Parser_WPF.Models
 {
@@ -13,9 +12,6 @@ namespace Webload_Script_Parser_WPF.Models
             string correlationLine = "setCorrelation";
             string correlationName = "[CorrelationName]";
             string correlationValue = "[OriginalValue]";
-            int _leftBound;
-            int _rightBound;
-            int substringLength;    
 
             using (System.IO.StringReader reader = new System.IO.StringReader(element.Value))
             {
@@ -23,44 +19,15 @@ namespace Webload_Script_Parser_WPF.Models
                 {
                     string line = reader.ReadLine();
                     if (line == null) break;
-
                     if (line.Contains(correlationLine))
                     {
-                        _leftBound = IndexOfBound(line, '\"', 1);
-                        _rightBound = IndexOfBound(line, '\"', 2);
-                        substringLength = _rightBound - _leftBound + 1;
-
-                        correlationName = line.Substring(_leftBound, substringLength);
-
+                        correlationName = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.First);
+                        correlationValue = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.Third);
                         _listCorrelations.Add(new Correlation(correlationName, correlationValue));
-                    }            
+                    }
                 }
             }
             return _listCorrelations.ToArray();
-        }
-        private static int IndexOfBound(string line, char c, int ordinal)
-        {
-            if (ordinal < 1) ordinal = 1;
-            if (ordinal > line.Length - 1) ordinal = line.Length - 1;
-
-            for(int i = 0; i < line.Length; i++)
-            {
-                if (line[i] != c) continue;
-                if (line[i] == c && ordinal == 1)
-                {
-                    return i;
-                }
-                else
-                {
-                    ordinal--;
-                }
-
-            }
-            return 0;
-        }
-        private static int LengthBetweenBounds(int l, int r)
-        {
-            return r - l;
         }
     }
 }

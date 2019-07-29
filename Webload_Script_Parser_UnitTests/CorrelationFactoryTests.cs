@@ -8,7 +8,7 @@ using Webload_Script_Parser_WPF.Models;
 namespace Webload_Script_Parser_UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class CorrelationFactoryTests
     {
         string path = "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\Scripts_XML_Formatted\\LM_PRM_191_AdminViewRoster_Feb06.wlp";
         XElement nodeScript;
@@ -61,13 +61,8 @@ namespace Webload_Script_Parser_UnitTests
         public void CorrelationFactory_GivenElement_FirstElementContainsCorr()
         {
             nodeScript = AssignNodeScript(nodeScript, path);
-            Assert.IsTrue(CorrelationFactory.GetCorrelations(nodeScript)[0].Name.Contains("corr"));
+            Assert.IsTrue(CorrelationFactory.GetCorrelations(nodeScript)[0].Rule.Contains("corr"));
         }
-
-
-
-
-        //
         //Assert.IsTrue(CorrelationFactory.GetCorrelations(nodeScript).Count > 0);
 
         private XElement AssignNodeScript(XElement element, string filepath)
