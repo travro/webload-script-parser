@@ -74,7 +74,7 @@ namespace Webload_Script_Parser_WPF.Views
                             corrTreeViewItem.Header = new TextBlock()
                             {
                                 Text = $"{c.Rule} {c.OriginalValue}",
-                                Foreground = Brushes.Violet
+                                Foreground = Brushes.DarkViolet
                             };
                             reqTreeViewItem.Items.Add(corrTreeViewItem);
                         }

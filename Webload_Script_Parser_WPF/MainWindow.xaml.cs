@@ -14,11 +14,12 @@ namespace Webload_Script_Parser_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        TransactionRepository repo;
-        TreeViewPage treeViewPage;
+        TransactionRepository _repo;
+        TreeViewPage _treeViewPage;
+        DataTablePage _dataTablePage;
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
         private void MenuFileOpenEventHandler(object sender, RoutedEventArgs e)
         {
@@ -28,13 +29,16 @@ namespace Webload_Script_Parser_WPF
             oFD.Multiselect = false;
             if (oFD.ShowDialog() == true)
             {
-
                 Title = oFD.FileName;
-                repo = new TransactionRepository();
-                TransactionBlockParser.Parse(oFD.FileName, repo);
+                _repo = new TransactionRepository();
+                TransactionBlockParser.Parse(oFD.FileName, _repo);
+                _treeViewPage = new TreeViewPage(oFD.FileName, _repo);
+                _dataTablePage = new DataTablePage(_repo);
 
-                treeViewPage = new TreeViewPage(oFD.FileName, repo);
-                Main_Frame.Content = treeViewPage;
+
+                Main_Frame.Content = _treeViewPage;
+                Tree_View_Button.IsEnabled = true;
+                Data_Table_Button.IsEnabled = true;
             }
         }
         private void MenuExportFileEventHandler(object sender, RoutedEventArgs e)
@@ -63,7 +67,7 @@ namespace Webload_Script_Parser_WPF
                     //else
                     //{
                     _writer.WriteLine("Transaction,Request,Parameters");
-                    foreach (Transaction t in repo.Transactions)
+                    foreach (Transaction t in _repo.Transactions)
                     {
                         foreach (Request r in t.Requests)
                         {
@@ -87,5 +91,14 @@ namespace Webload_Script_Parser_WPF
             Application.Current.Shutdown();
         }
 
+        private void Tree_View_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Main_Frame.Content = _treeViewPage;
+        }
+
+        private void Data_Table_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Main_Frame.Content = Main_Frame.Content = _dataTablePage;
+        }
     }
 }

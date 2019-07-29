@@ -7,8 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DataTablePage">
-
-    <Grid>
+    <DataGrid x:Name="Data_Grid">
         
-    </Grid>
+    </DataGrid>
 </Page>

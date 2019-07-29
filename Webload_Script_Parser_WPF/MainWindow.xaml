@@ -13,6 +13,7 @@
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
@@ -25,8 +26,31 @@
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>
         </Menu>
+        <ToolBar Grid.Row="1" 
+                 ToolBarTray.IsLocked="True">
+            <Button 
+                x:Name="Tree_View_Button" 
+                IsEnabled="False" 
+                Click="Tree_View_Button_Click" 
+                Margin="0,1,0,-1.8" 
+                Width="70" 
+                VerticalAlignment="Stretch"
+                Content="Tree View"
+                Background="LightBlue"
+                />
+            <Button 
+                x:Name="Data_Table_Button" 
+                IsEnabled="False" 
+                Click="Data_Table_Button_Click"
+                Margin="0,1,0,-1.8" 
+                Width="70" 
+                VerticalAlignment="Stretch"
+                Content="Data Table"
+                Background="LightBlue"/>
+        </ToolBar>
         <Frame
-            Grid.Row="1"
+            NavigationUIVisibility="Hidden"
+            Grid.Row="2"
             Margin="0"
             Name="Main_Frame"/>
     </Grid>
