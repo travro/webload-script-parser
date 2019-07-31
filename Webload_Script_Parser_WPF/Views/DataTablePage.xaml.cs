@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Webload_Script_Parser_WPF.Models;
 using System.Data;
-
 namespace Webload_Script_Parser_WPF.Views
 {
     /// <summary>
@@ -22,6 +21,8 @@ namespace Webload_Script_Parser_WPF.Views
     /// </summary>
     public partial class DataTablePage : Page
     {
+
+
         public DataTablePage()
         {
             InitializeComponent();
@@ -34,29 +35,44 @@ namespace Webload_Script_Parser_WPF.Views
 
             DataTable transTable = new DataTable("Transactions");
             transTable.Columns.Add(new DataColumn("name"));
-            transTable.Columns.Add(new DataColumn("scen_id"));
 
             DataTable requestTable = new DataTable("Requests");
             requestTable.Columns.Add(new DataColumn("verb"));
             requestTable.Columns.Add(new DataColumn("parameters"));
-            requestTable.Columns.Add(new DataColumn("trans_id"));
 
             DataTable corrTable = new DataTable("Correlations");
-            corrTable.Columns.Add(new DataColumn("name"));
+            corrTable.Columns.Add(new DataColumn("rule"));
+            corrTable.Columns.Add(new DataColumn("ext_logic"));
             corrTable.Columns.Add(new DataColumn("original_val"));
-            corrTable.Columns.Add(new DataColumn("req_id"));
 
-            foreach(Transaction t in repo.Transactions)
+            foreach (Transaction t in repo.Transactions)
             {
-                var newRow = transTable.NewRow();
-                newRow["name"] = t.Name;
-                newRow["scen_id"] = 1;
+                var newTransRow = transTable.NewRow();
+                newTransRow["name"] = t.Name;
+                transTable.Rows.Add(newTransRow);
 
+                foreach (Request r in t.Requests)
+                {
+                    var newRequestRow = requestTable.NewRow();
+                    newRequestRow["verb"] = r.Verb;
+                    newRequestRow["parameters"] = r.Parameters;
+                    requestTable.Rows.Add(newRequestRow);
+
+                    foreach (Correlation c in r.Correlations)
+                    {
+                        var newCorrRow = corrTable.NewRow();
+                        newCorrRow["rule"] = c.Rule;
+                        newCorrRow["ext_logic"] = c.ExtractionLogic;
+                        newCorrRow["original_val"] = c.OriginalValue;
+                        corrTable.Rows.Add(newCorrRow);
+                    }
+                }
             }
-
             ds.Tables.AddRange(new DataTable[] { transTable, requestTable, corrTable });
 
-            Data_Grid.DataContext = transTable;                
+            Data_Grid_Transactions.ItemsSource = transTable.DefaultView;
+            Data_Grid_Requests.ItemsSource = requestTable.DefaultView;
+            Data_Grid_Correlations.ItemsSource = corrTable.DefaultView;
 
         }
     }

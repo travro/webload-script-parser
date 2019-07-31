@@ -35,7 +35,6 @@ namespace Webload_Script_Parser_WPF
                 _treeViewPage = new TreeViewPage(oFD.FileName, _repo);
                 _dataTablePage = new DataTablePage(_repo);
 
-
                 Main_Frame.Content = _treeViewPage;
                 Tree_View_Button.IsEnabled = true;
                 Data_Table_Button.IsEnabled = true;
@@ -98,7 +97,7 @@ namespace Webload_Script_Parser_WPF
 
         private void Data_Table_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame.Content = Main_Frame.Content = _dataTablePage;
+            Main_Frame.Content = _dataTablePage;
         }
     }
 }

@@ -42,7 +42,6 @@ namespace Webload_Script_Parser_WPF.Views
             transTreeViewItem.IsExpanded = true;
             Tree_View.Items.Add(transTreeViewItem);
 
-
             foreach (Transaction t in repo.Transactions)
             {
                 TreeViewItem tranTreeViewItem = new TreeViewItem();
@@ -66,18 +65,15 @@ namespace Webload_Script_Parser_WPF.Views
                     reqTreeViewItem.IsExpanded = true;
                     tranTreeViewItem.Items.Add(reqTreeViewItem);
 
-                    if (r.Correlations != null)
+                    foreach (Correlation c in r.Correlations)
                     {
-                        foreach (Correlation c in r.Correlations)
+                        TreeViewItem corrTreeViewItem = new TreeViewItem();
+                        corrTreeViewItem.Header = new TextBlock()
                         {
-                            TreeViewItem corrTreeViewItem = new TreeViewItem();
-                            corrTreeViewItem.Header = new TextBlock()
-                            {
-                                Text = $"{c.Rule} {c.OriginalValue}",
-                                Foreground = Brushes.DarkViolet
-                            };
-                            reqTreeViewItem.Items.Add(corrTreeViewItem);
-                        }
+                            Text = $"{c.Rule}, {c.ExtractionLogic}, {c.OriginalValue}",
+                            Foreground = Brushes.DarkViolet
+                        };
+                        reqTreeViewItem.Items.Add(corrTreeViewItem);
                     }
                 }
             }

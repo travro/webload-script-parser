@@ -7,7 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DataTablePage">
-    <DataGrid x:Name="Data_Grid">
-        
-    </DataGrid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DataGrid  Grid.Row="0" x:Name="Data_Grid_Transactions"/>
+        <DataGrid  Grid.Row="1" x:Name="Data_Grid_Requests"/>
+        <DataGrid  Grid.Row="2" x:Name="Data_Grid_Correlations"/>
+    </Grid>
+
+
+
 </Page>
