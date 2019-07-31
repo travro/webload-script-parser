@@ -9,9 +9,6 @@ namespace Webload_Script_Parser_WPF.Models
         public static Correlation[] GetCorrelations(XElement element)
         {
             List<Correlation> _listCorrelations = new List<Correlation>();
-            string correlationLine = "setCorrelation";
-            string correlationName = "[CorrelationName]";
-            string correlationValue = "[OriginalValue]";
 
             using (System.IO.StringReader reader = new System.IO.StringReader(element.Value))
             {
@@ -19,11 +16,12 @@ namespace Webload_Script_Parser_WPF.Models
                 {
                     string line = reader.ReadLine();
                     if (line == null) break;
-                    if (line.Contains(correlationLine))
+                    if (line.Contains("setCorrelation"))
                     {
-                        correlationName = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.First);
-                        correlationValue = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.Third);
-                        _listCorrelations.Add(new Correlation(correlationName, correlationValue));
+                        string name = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.First)?? "[Name]";
+                        string extractionLogic = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.Second)?? "[ExtractionLogic]";
+                        string originalValue = CorrelationParamParser.Parse(line, CorrelationParamParser.Ordinal.Third)?? "[OriginalValue]";
+                        _listCorrelations.Add(new Correlation(name, extractionLogic, originalValue));
                     }
                 }
             }

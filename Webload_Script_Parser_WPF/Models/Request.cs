@@ -6,11 +6,10 @@ namespace Webload_Script_Parser_WPF.Models
     public class Request
     {
         private Correlation[] _correlations;
-
         public bool Visible { get; }
         public Request.RequestVerb Verb { get; }
         public string Parameters { get; }
-        public Correlation[] Correlations => _correlations;
+        public Correlation[] Correlations => _correlations ?? new Correlation[] {}; /*new Correlation("", "")*/
 
         public Request(RequestVerb verb, string parameters)
         {

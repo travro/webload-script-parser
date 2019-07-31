@@ -4,24 +4,26 @@ namespace Webload_Script_Parser_WPF.Models
 {
     public class TransactionRepository
     {
-        public List<Transaction> Transactions { get; }
+        public List<Transaction> _transactions;
+
+        public Transaction[] Transactions => _transactions.ToArray();
 
         public TransactionRepository()
         {
-            Transactions = new List<Transaction>();
+            _transactions= new List<Transaction>();
         }
         public void AddTransaction(Transaction t)
         {
-            Transactions.Add(t);
+            _transactions.Add(t);
         }
 
         public bool Contains(Transaction t)
         {
-            return Transactions.Exists(element => element.Name == t.Name);
+            return _transactions.Exists(element => element.Name == t.Name);
         }
         public bool Contains(string s)
         {
-            return Transactions.Exists(element => element.Name == s);
+            return _transactions.Exists(element => element.Name == s);
         }
     }
 }
