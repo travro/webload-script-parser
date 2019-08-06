@@ -4,7 +4,8 @@ using Microsoft.Win32;
 using System.IO;
 using Webload_Script_Parser_WPF.Models;
 using Webload_Script_Parser_WPF.Parsers;
-using Webload_Script_Parser_WPF.Views;
+using Webload_Script_Parser_WPF.Pages;
+using Webload_Script_Parser_WPF.Windows;
 using System.Windows.Controls;
 
 namespace Webload_Script_Parser_WPF
@@ -16,7 +17,7 @@ namespace Webload_Script_Parser_WPF
     {
         TransactionRepository _repo;
         TreeViewPage _treeViewPage;
-        DataTablePage _dataTablePage;
+        CorrelationTablePage _corrTablePage;
         public MainWindow()
         {
             InitializeComponent(); 
@@ -33,11 +34,11 @@ namespace Webload_Script_Parser_WPF
                 _repo = new TransactionRepository();
                 TransactionBlockParser.Parse(oFD.FileName, _repo);
                 _treeViewPage = new TreeViewPage(oFD.FileName, _repo);
-                _dataTablePage = new DataTablePage(_repo);
+                _corrTablePage = new CorrelationTablePage(_repo);
 
                 Main_Frame.Content = _treeViewPage;
                 Tree_View_Button.IsEnabled = true;
-                Data_Table_Button.IsEnabled = true;
+                Corr_Table_Button.IsEnabled = true;
             }
         }
         private void MenuExportFileEventHandler(object sender, RoutedEventArgs e)
@@ -90,14 +91,18 @@ namespace Webload_Script_Parser_WPF
             Application.Current.Shutdown();
         }
 
+        private void MenuPushDBEventHandler(object sender, RoutedEventArgs e)
+        {
+            ResolveDatabase resolveDatabase = new ResolveDatabase();
+            resolveDatabase.Show();
+        }
         private void Tree_View_Button_Click(object sender, RoutedEventArgs e)
         {
             Main_Frame.Content = _treeViewPage;
         }
-
-        private void Data_Table_Button_Click(object sender, RoutedEventArgs e)
+        private void Corr_Table_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame.Content = _dataTablePage;
+            Main_Frame.Content = _corrTablePage;
         }
     }
 }

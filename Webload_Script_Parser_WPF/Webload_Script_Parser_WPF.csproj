@@ -65,6 +65,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,19 +85,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataLayer\DataSet.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionRepository.cs" />
+    <Compile Include="Pages\CorrelationTablePage.xaml.cs">
+      <DependentUpon>CorrelationTablePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Parsers\CorrelationParamParser.cs" />
     <Compile Include="Parsers\TransactionBlockParser.cs" />
-    <Compile Include="Views\DataTablePage.xaml.cs">
+    <Compile Include="Pages\DataTablePage.xaml.cs">
       <DependentUpon>DataTablePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TreeViewPage.xaml.cs">
+    <Compile Include="Pages\TreeViewPage.xaml.cs">
       <DependentUpon>TreeViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ResolveDatabase.xaml.cs">
+      <DependentUpon>ResolveDatabase.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -110,11 +116,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\DataTablePage.xaml">
+    <Page Include="Pages\CorrelationTablePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TreeViewPage.xaml">
+    <Page Include="Pages\DataTablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TreeViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ResolveDatabase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,7 +158,9 @@
     <None Include="Webload_Script_Parser_WPF_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -158,6 +174,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DAL\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
