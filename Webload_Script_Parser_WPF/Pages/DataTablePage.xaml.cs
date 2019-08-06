@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Webload_Script_Parser_WPF.Models;
 using System.Data;
-namespace Webload_Script_Parser_WPF.Views
+namespace Webload_Script_Parser_WPF.Pages
 {
     /// <summary>
     /// Interaction logic for DataTablePage.xaml
