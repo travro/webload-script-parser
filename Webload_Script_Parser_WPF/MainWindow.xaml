@@ -13,7 +13,7 @@
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
@@ -36,7 +36,7 @@
                 Width="70" 
                 VerticalAlignment="Stretch"
                 Content="Script"
-                Background="LightBlue"
+                Background="CadetBlue"
                 />
             <Button 
                 x:Name="Corr_Table_Button" 
@@ -46,7 +46,7 @@
                 Width="70" 
                 VerticalAlignment="Stretch"
                 Content="Correlations"
-                Background="LightBlue"/>
+                Background="CadetBlue"/>
         </ToolBar>
         <Frame
             NavigationUIVisibility="Hidden"

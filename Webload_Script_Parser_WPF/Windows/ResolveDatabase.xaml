@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Webload_Script_Parser_WPF.Windows"
         mc:Ignorable="d"
-        Title="Resolving Database" Height="165" Width="500">
+        Title="Resolving Database" Height="165" Width="348.911">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="Text_Block" Grid.Row="0" FontSize="10" Grid.RowSpan="2" Margin="10,6,0,0" >
-            Checking to see if a Webload Script database named WLScriptsDB exists on your machine</TextBlock>
+        <TextBlock x:Name="Text_Block" Grid.Row="0" FontSize="10" Grid.RowSpan="2" Margin="10,6,0,0" HorizontalAlignment="Center" >
+            Checking for an instance of WLScriptsDB on your machine</TextBlock>
         <StackPanel x:Name="Stack_Panel" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="Cancel_Button" Content="Cancel" Margin="5" Height="20" Width="90" Click="Cancel_Button_Click"/>
-            <Button x:Name="Add_Button" Content="Add" Margin="5" Height="20" Width="90" IsEnabled="False" Click="Add_Button_Click"/>
+            <Button x:Name="Next_Button" Content="Next" Margin="5" Height="20" Width="90" IsEnabled="False" Click="Next_Button_Click"/>
         </StackPanel>
     </Grid>
 </Window>
