@@ -12,28 +12,36 @@ namespace Webload_Script_Parser_WPF.Parsers
         //Given a filepath and repo, will populate repo with Transaction objects
         public static void Parse(string path, TransactionRepository repo)
         {
-            using (FileStream _fStream = new FileStream(path, FileMode.Open))
+            try
             {
-                using (XmlReader _xReader = XmlReader.Create(_fStream))
+                using (FileStream _fStream = new FileStream(path, FileMode.Open))
                 {
-                    XDocument _XDoc = XDocument.Load(_xReader);
-
-                    //Filter out Webload Sleeptime, JSObjects, and End Trasactions
-                    var jsParentBlockElements = _XDoc
-                        .Descendants("Agenda")
-                        .Elements("JavaScriptObject")
-                        .Where(element => element.Element("Properties")
-                        .Element("PropertyPage")
-                        .Element("ItemName")
-                        .Value
-                        .Contains("BeginTransaction::"));
-
-                    //Add each XElement to the repo as a Transaction object
-                    foreach (var jsPBE in jsParentBlockElements)
+                    using (XmlReader _xReader = XmlReader.Create(_fStream))
                     {
-                        repo.AddTransaction(new Transaction(jsPBE));
+                        XDocument _XDoc = XDocument.Load(_xReader);
+
+                        //Filter out Webload Sleeptime, JSObjects, and End Trasactions
+                        var jsParentBlockElements = _XDoc
+                            .Descendants("Agenda")
+                            .Elements("JavaScriptObject")
+                            .Where(element => element.Element("Properties")
+                            .Element("PropertyPage")
+                            .Element("ItemName")
+                            .Value
+                            .Contains("BeginTransaction::"));
+
+                        //Add each XElement to the repo as a Transaction object
+                        foreach (var jsPBE in jsParentBlockElements)
+                        {
+                            repo.AddTransaction(new Transaction(jsPBE));
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
