@@ -85,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ScriptItemControl.xaml.cs">
+      <DependentUpon>ScriptItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
     <Compile Include="Models\Request.cs" />
@@ -101,9 +105,19 @@
     <Compile Include="Pages\TreeViewPage.xaml.cs">
       <DependentUpon>TreeViewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ResolveDatabase.xaml.cs">
-      <DependentUpon>ResolveDatabase.xaml</DependentUpon>
+    <Compile Include="Windows\PushToDBWindow.xaml.cs">
+      <DependentUpon>PushToDBWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ResolveDBWindow.xaml.cs">
+      <DependentUpon>ResolveDBWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScriptItemListWindow.xaml.cs">
+      <DependentUpon>ScriptItemListWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\ScriptItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,7 +142,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ResolveDatabase.xaml">
+    <Page Include="Windows\PushToDBWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ResolveDBWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ScriptItemListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,8 +196,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DAL\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

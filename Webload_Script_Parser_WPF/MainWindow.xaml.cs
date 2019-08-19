@@ -93,8 +93,8 @@ namespace Webload_Script_Parser_WPF
 
         private void MenuPushDBEventHandler(object sender, RoutedEventArgs e)
         {
-            ResolveDatabase resolveDatabase = new ResolveDatabase();
-            resolveDatabase.Show();
+            ResolveDBWindow resolveDatabase = new ResolveDBWindow();
+            resolveDatabase.ShowDialog();
         }
         private void Tree_View_Button_Click(object sender, RoutedEventArgs e)
         {

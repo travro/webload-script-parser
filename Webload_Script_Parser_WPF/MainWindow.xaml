@@ -10,7 +10,7 @@
         Height="800" 
         MinWidth="640" 
         Width="1280">
-    <Grid Margin="0">
+    <Grid Margin="0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="30"/>
@@ -26,32 +26,10 @@
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>
         </Menu>
-        <ToolBar Grid.Row="1" 
-                 ToolBarTray.IsLocked="True">
-            <Button 
-                x:Name="Tree_View_Button" 
-                IsEnabled="False" 
-                Click="Tree_View_Button_Click" 
-                Margin="0,1,0,-1.8" 
-                Width="70" 
-                VerticalAlignment="Stretch"
-                Content="Script"
-                Background="CadetBlue"
-                />
-            <Button 
-                x:Name="Corr_Table_Button" 
-                IsEnabled="False" 
-                Click="Corr_Table_Button_Click"
-                Margin="0,1,0,-1.8" 
-                Width="70" 
-                VerticalAlignment="Stretch"
-                Content="Correlations"
-                Background="CadetBlue"/>
+        <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True">
+            <Button x:Name="Tree_View_Button" IsEnabled="False" Click="Tree_View_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Script" />
+            <Button  x:Name="Corr_Table_Button" IsEnabled="False" Click="Corr_Table_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Correlations"/>
         </ToolBar>
-        <Frame
-            NavigationUIVisibility="Hidden"
-            Grid.Row="2"
-            Margin="0"
-            Name="Main_Frame"/>
+        <Frame NavigationUIVisibility="Hidden" Grid.Row="2"  Margin="0" Name="Main_Frame"/>
     </Grid>
 </Window>

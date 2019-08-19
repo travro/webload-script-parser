@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Webload_Script_Parser_WPF.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DataTablePage">
+      Title="DataTablePage" Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
