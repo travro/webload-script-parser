@@ -1,0 +1,49 @@
+﻿<Window x:Class="Webload_Script_Parser_WPF.Windows.PushToDBWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Webload_Script_Parser_WPF.Windows"
+        xmlns:uc="clr-namespace:Webload_Script_Parser_WPF.Controls"
+        mc:Ignorable="d"
+        Title="Push to Database" Height="450" Width="800" ResizeMode="NoResize" Background="WhiteSmoke" WindowStyle="ToolWindow">    
+    <Grid Margin="50,20,50,20">
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="MaxHeight" Value="30"/>
+                <Setter Property="MinWidth" Value="60"/>
+            </Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0">Test Name (LM, TM, Mobile, etc):</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
+        <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="TestNames"/>
+        <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="BuildNames"/>
+        <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="ScenarioNames" IsEnabled="False"/>
+        <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="ScenarioDates" IsEnabled="False"/>
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" >
+            <Button x:Name="Cancel" Click="Cancel_Click" >Cancel</Button>
+            <Button x:Name="Push">Push</Button>
+        </StackPanel>
+    </Grid>
+</Window>
