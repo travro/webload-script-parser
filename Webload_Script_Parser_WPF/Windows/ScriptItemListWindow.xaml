@@ -9,6 +9,6 @@
         WindowStyle="ToolWindow"
         >
     <Grid>
-        <ListView x:Name="List_View"/>
+        <ListView x:Name="List_View" ItemsSource="{Binding SelectableList}" SelectionChanged="List_View_SelectionChanged"/>
     </Grid>
 </Window>

@@ -12,21 +12,48 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Webload_Script_Parser_WPF.Models;
+using Webload_Script_Parser_WPF.Controls;
+using System.ComponentModel;
 
 namespace Webload_Script_Parser_WPF.Windows
 {
     /// <summary>
     /// Interaction logic for ScriptItemListWindow.xaml
     /// </summary>
-    public partial class ScriptItemListWindow : Window
+    public partial class ScriptItemListWindow : Window, INotifyPropertyChanged
     {
+        public string[] SelectableList { get; }
         public ScriptItemListWindow()
         {
             InitializeComponent();
-            
-            foreach(string testName in AttributesRepository.Repository.TestNames)
+        }
+        public ScriptItemListWindow(ScriptItemControl.ScriptAttribute attribute)
+        {
+            InitializeComponent();
+            DataContext = this;
+
+            switch (attribute)
             {
-                List_View.Items.Add(testName);
+                case ScriptItemControl.ScriptAttribute.TestNames: SelectableList = AttributesRepository.Repository.TestNames; break;
+                case ScriptItemControl.ScriptAttribute.BuildNames: SelectableList = AttributesRepository.Repository.TestBuilds; break;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void List_View_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            string selection = (sender as ListView).SelectedValue.ToString();
+            NotifyPropertyChanged(selection);
+            Close();
+        }
+
+        public void NotifyPropertyChanged(string selection)
+        {
+            if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(selection));
             }
         }
     }

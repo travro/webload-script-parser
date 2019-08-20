@@ -36,7 +36,7 @@ namespace Webload_Script_Parser_WPF.Models
             using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
             {
                 cnn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT [NAME] FROM dbo.[TESTS] ORDER BY [NAME]", cnn))
+                using (SqlCommand cmd = new SqlCommand("USE WLScriptsDB SELECT DISTINCT [NAME] FROM dbo.[TESTS] ORDER BY [NAME]", cnn))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -53,7 +53,7 @@ namespace Webload_Script_Parser_WPF.Models
             using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
             {
                 cnn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT [BUILD] FROM dbo.[TESTS] ORDER BY [BUILD]", cnn))
+                using (SqlCommand cmd = new SqlCommand("USE WLScriptsDB SELECT DISTINCT [BUILD] FROM dbo.[TESTS] ORDER BY [BUILD]", cnn))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {

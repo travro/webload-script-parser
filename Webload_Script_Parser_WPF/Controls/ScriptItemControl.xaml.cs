@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Webload_Script_Parser_WPF.Models;
 using Webload_Script_Parser_WPF.Windows;
+using System.ComponentModel;
 
 namespace Webload_Script_Parser_WPF.Controls
 {
@@ -23,37 +24,50 @@ namespace Webload_Script_Parser_WPF.Controls
     public partial class ScriptItemControl : UserControl
     {
 
-        public string ListType
+        public string SelectedValue { get; private set; }
+        public ScriptAttribute Attribute
         {
-            get { return (string)GetValue(ListTypeProperty); }
+            get { return (ScriptAttribute)GetValue(ListTypeProperty); }
             set { SetValue(ListTypeProperty, value); }
         }
-        public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(string), typeof(ScriptItemControl));
+        public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(ScriptAttribute), typeof(ScriptItemControl));
 
 
         public ScriptItemControl()
         {
             InitializeComponent();
             this.DataContext = this;
+            SelectedValue = "No item selected";
         }
         #region handlers
         private void Select_Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var listWindow = new ScriptItemListWindow();
+                var listWindow = new ScriptItemListWindow(Attribute);
+                listWindow.PropertyChanged += UpdateSelectedValue;
                 listWindow.ShowDialog();
             }
             catch (Exception scriptItemException)
             {
-
                 MessageBox.Show(scriptItemException.ToString());
             }
         }
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Text_Block.Text = "test";
         }
-        #endregion handlers        
+        private void UpdateSelectedValue(object sender, PropertyChangedEventArgs args)
+        {
+            Text_Block.Text = SelectedValue = args.PropertyName;
+        }
+        #endregion handlers
+        public enum ScriptAttribute
+        {
+            TestNames = 0,
+            BuildNames = 1,
+            ScenarioNames = 2,
+            ScenarioDates = 3
+        }
     }
 }

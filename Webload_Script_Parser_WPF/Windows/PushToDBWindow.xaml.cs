@@ -22,11 +22,12 @@ namespace Webload_Script_Parser_WPF.Windows
         public PushToDBWindow()
         {
             InitializeComponent();
-        }
+        }        
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
     }
 }

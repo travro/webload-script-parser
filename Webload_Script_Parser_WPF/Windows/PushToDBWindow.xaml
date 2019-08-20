@@ -37,13 +37,13 @@
         <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
-        <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="TestNames"/>
-        <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="BuildNames"/>
-        <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="ScenarioNames" IsEnabled="False"/>
-        <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="ScenarioDates" IsEnabled="False"/>
+        <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
+        <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
+        <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
+        <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" >
             <Button x:Name="Cancel" Click="Cancel_Click" >Cancel</Button>
-            <Button x:Name="Push">Push</Button>
+            <Button x:Name="Push" IsEnabled="False">Push</Button>
         </StackPanel>
     </Grid>
 </Window>
