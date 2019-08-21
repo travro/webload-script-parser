@@ -33,11 +33,14 @@ namespace Webload_Script_Parser_WPF.Pages
             var correlations = repo.Transactions.SelectMany(t => t.Requests).SelectMany(r => r.Correlations);
 
             DataTable corrTable = new DataTable("Correlations");
-            corrTable.Columns.Add(new DataColumn("rule"));
-            corrTable.Columns.Add(new DataColumn("ext_logic"));
-            corrTable.Columns.Add(new DataColumn("original_val"));
+            //corrTable.Columns.Add(new DataColumn("rule"));
+            //corrTable.Columns.Add(new DataColumn("ext_logic"));
+            //corrTable.Columns.Add(new DataColumn("original_val"));
+            corrTable.Columns.Add(new DataColumn() { ColumnName = "rule", Caption="Rule" });
+            corrTable.Columns.Add(new DataColumn() { ColumnName = "ext_logic", Caption = "Extraction Logic" });
+            corrTable.Columns.Add(new DataColumn() { ColumnName = "original_val", Caption = "Original Value" });
 
-            foreach(Correlation c in correlations)
+            foreach (Correlation c in correlations)
             {
                 var newCorrRow = corrTable.NewRow();
                 newCorrRow["rule"] = c.Rule;
@@ -45,7 +48,6 @@ namespace Webload_Script_Parser_WPF.Pages
                 newCorrRow["original_val"] = c.OriginalValue;
                 corrTable.Rows.Add(newCorrRow);
             }
-
             Data_Grid_Correlations.ItemsSource = corrTable.DefaultView;
         }
     }
