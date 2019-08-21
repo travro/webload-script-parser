@@ -40,7 +40,6 @@ namespace Webload_Script_Parser_WPF.Parsers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
