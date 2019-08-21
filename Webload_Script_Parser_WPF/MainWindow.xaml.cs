@@ -20,7 +20,7 @@ namespace Webload_Script_Parser_WPF
         CorrelationTablePage _corrTablePage;
         public MainWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
         private void MenuFileOpenEventHandler(object sender, RoutedEventArgs e)
         {
@@ -32,21 +32,30 @@ namespace Webload_Script_Parser_WPF
             {
                 Title = oFD.FileName;
                 _repo = new TransactionRepository();
-                TransactionBlockParser.Parse(oFD.FileName, _repo);
+                try
+                {
+                    TransactionBlockParser.Parse(oFD.FileName, _repo);
+                }
+                catch (System.Exception openFileException)
+                {
+                    MessageBox.Show(openFileException.ToString());
+                }
                 _treeViewPage = new TreeViewPage(oFD.FileName, _repo);
                 _corrTablePage = new CorrelationTablePage(_repo);
 
                 Main_Frame.Content = _treeViewPage;
                 Tree_View_Button.IsEnabled = true;
                 Corr_Table_Button.IsEnabled = true;
+                Header_SaveAs.IsEnabled = true;
             }
         }
         private void MenuExportFileEventHandler(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sFD = new SaveFileDialog();
             sFD.Title = "Save Text to File";
-            sFD.Filter = "Text files (.txt)|*txt|CSV files (.csv)|*.csv";
-            sFD.DefaultExt = "txt";
+            //sFD.Filter = "Text files (.txt)|*txt|CSV files (.csv)|*.csv";
+            sFD.Filter = "CSV files (.csv)|*.csv";
+            sFD.DefaultExt = "csv";
             if (sFD.ShowDialog() == true)
             {
                 using (StreamWriter _writer = new StreamWriter(sFD.FileName))
@@ -72,14 +81,6 @@ namespace Webload_Script_Parser_WPF
                         foreach (Request r in t.Requests)
                         {
                             _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
-
-                            if (r.Correlations.Length > 0)
-                            {
-                                foreach (Correlation c in r.Correlations)
-                                {
-                                    _writer.WriteLine($"Corr: {c.Rule}, {c.OriginalValue}");
-                                }
-                            }
                         }
                     }
                     //}
