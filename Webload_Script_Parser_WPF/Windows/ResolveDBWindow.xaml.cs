@@ -18,7 +18,7 @@ using System.Data;
 using System.Configuration;
 using System.Text.RegularExpressions;
 
-namespace Webload_Script_Parser_WPF.Windows
+namespace WLScriptParser.Windows
 {
     /// <summary>
     /// Interaction logic for ResolveDatabase.xaml

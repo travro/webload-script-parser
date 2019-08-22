@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Webload_Script_Parser_WPF.Properties
+namespace WLScriptParser.Properties
 {
 
 

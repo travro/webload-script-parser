@@ -60,9 +60,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Webload_Script_Parser_WPF\Webload_Script_Parser_WPF.csproj">
+    <ProjectReference Include="..\Webload_Script_Parser_WPF\WLScriptParser.csproj">
       <Project>{0482af34-ad3e-4814-915d-1e5589813d50}</Project>
-      <Name>Webload_Script_Parser_WPF</Name>
+      <Name>WLScriptParser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

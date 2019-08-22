@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
-using Webload_Script_Parser_WPF.Parsers;
+using WLScriptParser.Parsers;
 
-namespace Webload_Script_Parser_WPF.Models
+namespace WLScriptParser.Models
 {
     public static class CorrelationFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Webload_Script_Parser_WPF.Models
+namespace WLScriptParser.Models
 {
     public class Correlation
     {

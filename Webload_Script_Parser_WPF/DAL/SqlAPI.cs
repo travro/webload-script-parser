@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webload_Script_Parser_WPF.DAL
+namespace WLScriptParser.DAL
 {
     public class SqlAPI
     {

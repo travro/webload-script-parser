@@ -11,11 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Webload_Script_Parser_WPF.Models;
-using Webload_Script_Parser_WPF.Controls;
+using WLScriptParser.Models;
+using WLScriptParser.Controls;
 using System.ComponentModel;
 
-namespace Webload_Script_Parser_WPF.Windows
+namespace WLScriptParser.Windows
 {
     /// <summary>
     /// Interaction logic for ScriptItemListWindow.xaml

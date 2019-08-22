@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace Webload_Script_Parser_WPF.Parsers
+namespace WLScriptParser.Parsers
 {
     public static class CorrelationParamParser
     {

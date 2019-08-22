@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Webload_Script_Parser_WPF
+namespace WLScriptParser
 {
     /// <summary>
     /// Interaction logic for App.xaml

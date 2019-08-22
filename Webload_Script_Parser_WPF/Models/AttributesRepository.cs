@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace Webload_Script_Parser_WPF.Models
+namespace WLScriptParser.Models
 {
     public sealed class AttributesRepository
     {

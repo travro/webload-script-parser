@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Webload_Script_Parser_WPF.Windows
+namespace WLScriptParser.Windows
 {
     /// <summary>
     /// Interaction logic for PushToDBWindow.xaml

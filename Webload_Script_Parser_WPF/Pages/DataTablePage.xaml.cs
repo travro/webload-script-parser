@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Webload_Script_Parser_WPF.Models;
+using WLScriptParser.Models;
 using System.Data;
-namespace Webload_Script_Parser_WPF.Pages
+namespace WLScriptParser.Pages
 {
     /// <summary>
     /// Interaction logic for DataTablePage.xaml

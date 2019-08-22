@@ -2,13 +2,13 @@
 using System.Windows.Media;
 using Microsoft.Win32;
 using System.IO;
-using Webload_Script_Parser_WPF.Models;
-using Webload_Script_Parser_WPF.Parsers;
-using Webload_Script_Parser_WPF.Pages;
-using Webload_Script_Parser_WPF.Windows;
+using WLScriptParser.Models;
+using WLScriptParser.Parsers;
+using WLScriptParser.Pages;
+using WLScriptParser.Windows;
 using System.Windows.Controls;
 
-namespace Webload_Script_Parser_WPF
+namespace WLScriptParser
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

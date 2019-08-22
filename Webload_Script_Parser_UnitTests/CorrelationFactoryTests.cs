@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Webload_Script_Parser_WPF.Models;
+using WLScriptParser.Models;
 
 namespace Webload_Script_Parser_UnitTests
 {

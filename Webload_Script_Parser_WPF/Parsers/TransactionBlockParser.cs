@@ -2,10 +2,10 @@
 using System.Xml;
 using System.Xml.Linq;
 using System.Linq;
-using Webload_Script_Parser_WPF.Models;
+using WLScriptParser.Models;
 using System;
 
-namespace Webload_Script_Parser_WPF.Parsers
+namespace WLScriptParser.Parsers
 {
     public static class TransactionBlockParser
     {
