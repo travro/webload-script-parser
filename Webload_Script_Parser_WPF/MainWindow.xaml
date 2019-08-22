@@ -21,7 +21,7 @@
                 <MenuItem Header="_Open" Click="MenuFileOpenEventHandler"/>
                 <MenuItem Header="_Save As..." x:Name="Header_SaveAs" IsEnabled="False">
                     <MenuItem Header="File" Click="MenuExportFileEventHandler"/>
-                    <MenuItem Header="Push to Database" Click="MenuPushDBEventHandler"/>
+                    <MenuItem Header="Push to Database" Click="MenuPushDBEventHandler" IsEnabled="False"/>
                 </MenuItem>
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using WLScriptParser.DAL;
 
 namespace WLScriptParser.Models
 {
@@ -30,6 +31,7 @@ namespace WLScriptParser.Models
         }
         private AttributesRepository()
         {
+            
             _testNames = new List<string>();
             _testBuilds = new List<string>();
 

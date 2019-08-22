@@ -27,15 +27,15 @@ namespace WLScriptParser.Windows
         {
             InitializeComponent();
         }
-        public ScriptItemListWindow(ScriptItemControl.ScriptAttribute attribute)
+        public ScriptItemListWindow(ScriptAttribute attribute)
         {
             InitializeComponent();
             DataContext = this;
 
             switch (attribute)
             {
-                case ScriptItemControl.ScriptAttribute.TestNames: SelectableList = AttributesRepository.Repository.TestNames; break;
-                case ScriptItemControl.ScriptAttribute.BuildNames: SelectableList = AttributesRepository.Repository.TestBuilds; break;
+                case ScriptAttribute.TestNames: SelectableList = AttributesRepository.Repository.TestNames; break;
+                case ScriptAttribute.BuildNames: SelectableList = AttributesRepository.Repository.TestBuilds; break;
             }
         }
 

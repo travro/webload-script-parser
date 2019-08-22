@@ -93,6 +93,7 @@
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\ScriptAttribute.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionRepository.cs" />
     <Compile Include="Pages\CorrelationTablePage.xaml.cs">

@@ -22,7 +22,7 @@ namespace WLScriptParser.Controls
     /// Interaction logic for ScriptItemControl.xaml
     /// </summary>
     public partial class ScriptItemControl : UserControl
-    {
+    {        
 
         public string SelectedValue { get; private set; }
         public ScriptAttribute Attribute
@@ -62,12 +62,12 @@ namespace WLScriptParser.Controls
             Text_Block.Text = SelectedValue = args.PropertyName;
         }
         #endregion handlers
-        public enum ScriptAttribute
-        {
-            TestNames = 0,
-            BuildNames = 1,
-            ScenarioNames = 2,
-            ScenarioDates = 3
-        }
+        //public enum ScriptAttribute
+        //{
+        //    TestNames = 0,
+        //    BuildNames = 1,
+        //    ScenarioNames = 2,
+        //    ScenarioDates = 3
+        //}
     }
 }
