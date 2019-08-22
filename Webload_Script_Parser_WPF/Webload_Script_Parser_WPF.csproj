@@ -88,6 +88,7 @@
     <Compile Include="Controls\ScriptItemControl.xaml.cs">
       <DependentUpon>ScriptItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DAL\SqlAPI.cs" />
     <Compile Include="Models\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
