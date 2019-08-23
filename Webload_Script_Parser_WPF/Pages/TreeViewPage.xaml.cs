@@ -26,7 +26,7 @@ namespace WLScriptParser.Pages
         {
             InitializeComponent();
         }
-        public TreeViewPage(string filename, TransactionRepository repo)
+        public TreeViewPage(TransactionRepository repo, string filename)
         {
             InitializeComponent();
             _fileName = filename;
@@ -36,8 +36,9 @@ namespace WLScriptParser.Pages
             TreeViewItem transTreeViewItem = new TreeViewItem();
             transTreeViewItem.Header = new TextBlock()
             {
-                Text = _fileName,
-                FontWeight = FontWeights.SemiBold
+                Text = _fileName.Substring(_fileName.LastIndexOf('\\')),
+                FontWeight = FontWeights.SemiBold,
+                FontSize = 16
             };
             transTreeViewItem.IsExpanded = true;
             Tree_View.Items.Add(transTreeViewItem);

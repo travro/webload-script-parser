@@ -6,44 +6,51 @@
         xmlns:local="clr-namespace:WLScriptParser.Windows"
         xmlns:uc="clr-namespace:WLScriptParser.Controls"
         mc:Ignorable="d"
-        Title="Push to Database" Height="450" Width="800" ResizeMode="NoResize" Background="WhiteSmoke" WindowStyle="ToolWindow">    
-    <Grid Margin="50,20,50,20">
-        <Grid.Resources>
-            <Style TargetType="Button">
-                <Setter Property="Margin" Value="2"/>
-                <Setter Property="MaxHeight" Value="30"/>
-                <Setter Property="MinWidth" Value="60"/>
-            </Style>
-            <Style TargetType="StackPanel">
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-            </Style>
-            <Style TargetType="TextBlock">
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>            
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0">Test Name (LM, TM, Mobile, etc):</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
-        <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
-        <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
-        <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
-        <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" >
+        Title="Push to Database" Height="250" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MaxHeight" Value="30"/>
+            <Setter Property="MinWidth" Value="60"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel Orientation="Vertical" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GroupBox Header="Select The Attributes for The Push" Margin="50,10,50,20">
+            <Grid Height="100" >
+                <Grid.Resources>
+
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0">Test Name (LM, TM, Mobile, etc):</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
+                <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
+                <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
+                <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
+                <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
+            </Grid>
+
+        </GroupBox>
+        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" Height="24" Margin="0,0,50,0">
             <Button x:Name="Cancel" Click="Cancel_Click" >Cancel</Button>
             <Button x:Name="Push" IsEnabled="False">Push</Button>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
