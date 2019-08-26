@@ -16,10 +16,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="MenuFileOpenEventHandler"/>
@@ -30,11 +27,10 @@
                 <MenuItem Header="E_xit" Click="MenuFileExitEventHander"/>
             </MenuItem>
         </Menu>
-        <ToolBar Grid.Row="1" Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
-            <Button x:Name="Tree_View_Button" IsEnabled="False" Click="Tree_View_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Script" />
-            <Button  x:Name="Corr_Table_Button" IsEnabled="False" Click="Corr_Table_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Correlations"/>
+        <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True">
+            <Button x:Name="Transactions_Button" IsEnabled="False" Click="Transactions_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Transactions" />
+            <Button  x:Name="Correlations_Button" IsEnabled="False" Click="Correlations_Button_Click" Margin="0,1,0,-1.8" Width="70" VerticalAlignment="Stretch" Content="Correlations"/>
         </ToolBar>
-        <Frame NavigationUIVisibility="Hidden" Grid.Row="2" Grid.Column="0"  Margin="0" x:Name="Main_Frame_Left"/>
-        <Frame NavigationUIVisibility="Hidden" Grid.Row="2"  Grid.Column="1" Margin="0" x:Name="Main_Frame_Right"/>
+        <Frame x:Name="Main_Frame" Grid.Row="2"/>
     </Grid>
 </Window>

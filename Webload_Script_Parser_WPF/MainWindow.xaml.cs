@@ -15,14 +15,10 @@ namespace WLScriptParser
     /// </summary>
     public partial class MainWindow : Window
     {
-        TransactionRepository _repoLeft;
-        string _scriptNameLeft;
-        TransactionRepository _repoRight;
-        string _scriptNameRight;
-        TreeViewPage _treeViewPageLeft;
-        TreeViewPage _treeViewPageRight;
-        CorrelationTablePage _corrTablePageLeft;
-        CorrelationTablePage _corrTablePageRight;
+        TransactionRepository _repoLeft, _repoRight;
+        string _scriptNameLeft, _scriptNameRight;
+        TransactionsPage _transactionsPage;
+        CorrelationsPage _correlationsPage;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,33 +26,6 @@ namespace WLScriptParser
         }
         private void MenuFileOpenEventHandler(object sender, RoutedEventArgs e)
         {
-            //OpenFileDialog oFD = new OpenFileDialog();
-            //oFD.Title = "Select Webload Project File";
-            //oFD.Filter = "WLoad Project Files (*.wlp)| *.wlp";
-            //oFD.Multiselect = false;
-            //if (oFD.ShowDialog() == true)
-            //{
-            //    Title = oFD.FileName;
-            //    _repo = new TransactionRepository();
-            //    try
-            //    {
-            //        TransactionBlockParser.Parse(oFD.FileName, _repo);
-            //    }
-            //    catch (System.Exception openFileException)
-            //    {
-            //        MessageBox.Show(openFileException.ToString());
-            //    }
-            //    _treeViewPage = new TreeViewPage(oFD.FileName, _repoLeft);
-            //    _treeViewPage2 = new TreeViewPage(oFD.FileName, _repoRight);
-            //    _corrTablePage = new CorrelationTablePage(_repoLeft);
-            //    _corrTablePage2 = new CorrelationTablePage(_repoRight);
-
-            //    Main_Frame_Left.Content = _treeViewPage;
-            //    Main_Frame_Right.Content = _treeViewPage2;
-            //    Tree_View_Button.IsEnabled = true;
-            //    Corr_Table_Button.IsEnabled = true;
-            //    //Header_SaveAs.IsEnabled = true;
-            //}
             OpenScriptFileWindow openScriptFileWindow = new OpenScriptFileWindow();
             openScriptFileWindow.Owner = this;
             openScriptFileWindow.ClosedWithResults += FillMainReposEventHandler;
@@ -104,21 +73,18 @@ namespace WLScriptParser
         {
             Application.Current.Shutdown();
         }
-
         private void MenuPushDBEventHandler(object sender, RoutedEventArgs e)
         {
             ResolveDBWindow resolveDatabase = new ResolveDBWindow();
             resolveDatabase.ShowDialog();
         }
-        private void Tree_View_Button_Click(object sender, RoutedEventArgs e)
+        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame_Left.Content = _treeViewPageLeft;
-            Main_Frame_Right.Content = _treeViewPageRight;
+            Main_Frame.Content = _transactionsPage;
         }
-        private void Corr_Table_Button_Click(object sender, RoutedEventArgs e)
+        private void Correlations_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame_Left.Content = _corrTablePageLeft;
-            Main_Frame_Right.Content = _corrTablePageRight;
+            Main_Frame.Content = _correlationsPage;
         }
         private void FillMainReposEventHandler(object sender, ReposFilledEventArgs args)
         {
@@ -137,15 +103,10 @@ namespace WLScriptParser
         }
         private void ShowContent()
         {
-            _treeViewPageLeft = new TreeViewPage(_repoLeft, _scriptNameLeft);
-            _treeViewPageRight = new TreeViewPage(_repoRight, _scriptNameRight);
-            _corrTablePageLeft = new CorrelationTablePage(_repoLeft);
-            _corrTablePageRight = new CorrelationTablePage(_repoRight);
-
-            Main_Frame_Left.Content = _treeViewPageLeft;
-            Main_Frame_Right.Content = _treeViewPageRight;
-            Tree_View_Button.IsEnabled = true;
-            Corr_Table_Button.IsEnabled = true;
+            _transactionsPage = new TransactionsPage(_repoLeft,_repoRight, _scriptNameLeft, _scriptNameRight);
+            _correlationsPage = new CorrelationsPage(_repoLeft, _repoRight);
+            Main_Frame.Content = _transactionsPage;
+            Transactions_Button.IsEnabled = Correlations_Button.IsEnabled =  true;
         }
     }
 }

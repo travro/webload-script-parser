@@ -85,8 +85,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ScriptItemControl.xaml.cs">
-      <DependentUpon>ScriptItemControl.xaml</DependentUpon>
+    <Compile Include="Controls\ScriptAttributesControl.xaml.cs">
+      <DependentUpon>ScriptAttributesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScriptCorrelationsControl.xaml.cs">
+      <DependentUpon>ScriptCorrelationsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScriptTransactionsControl.xaml.cs">
+      <DependentUpon>ScriptTransactionsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DAL\SqlAPI.cs" />
     <Compile Include="Models\AttributesRepository.cs" />
@@ -96,16 +102,16 @@
     <Compile Include="Models\ScriptAttribute.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionRepository.cs" />
-    <Compile Include="Pages\CorrelationTablePage.xaml.cs">
-      <DependentUpon>CorrelationTablePage.xaml</DependentUpon>
+    <Compile Include="Pages\CorrelationsPage.xaml.cs">
+      <DependentUpon>CorrelationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TransactionsPage.xaml.cs">
+      <DependentUpon>TransactionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parsers\CorrelationParamParser.cs" />
     <Compile Include="Parsers\TransactionBlockParser.cs" />
     <Compile Include="Pages\DataTablePage.xaml.cs">
       <DependentUpon>DataTablePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TreeViewPage.xaml.cs">
-      <DependentUpon>TreeViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OpenScriptFileWindow.xaml.cs">
       <DependentUpon>OpenScriptFileWindow.xaml</DependentUpon>
@@ -119,7 +125,15 @@
     <Compile Include="Windows\ScriptItemListWindow.xaml.cs">
       <DependentUpon>ScriptItemListWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ScriptItemControl.xaml">
+    <Page Include="Controls\ScriptAttributesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScriptCorrelationsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScriptTransactionsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,7 +149,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\CorrelationTablePage.xaml">
+    <Page Include="Pages\CorrelationsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,7 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TreeViewPage.xaml">
+    <Page Include="Pages\TransactionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
