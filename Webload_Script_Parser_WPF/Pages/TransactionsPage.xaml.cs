@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WLScriptParser.Models;
+using WLScriptParser.Models.Repositories;
 using WLScriptParser.Controls;
 
 namespace WLScriptParser.Pages
@@ -25,16 +26,14 @@ namespace WLScriptParser.Pages
         public TransactionsPage()
         {
             InitializeComponent();
+            Frame_Left.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
+            Frame_Right.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
         }
-        public TransactionsPage(
-            TransactionRepository repoLeft, 
-            TransactionRepository repoRight,
-            string fileNameLeft,
-            string fileNameRight)
+        public TransactionsPage(Script scriptLeft, Script scriptRight)
         {
             InitializeComponent();
-            Frame_Left.Content = new ScriptTransactionsControl(repoLeft, fileNameLeft);
-            Frame_Right.Content = new ScriptTransactionsControl(repoRight, fileNameRight);
+            Frame_Left.Content = new ScriptTransactionsControl(scriptLeft);
+            Frame_Right.Content = new ScriptTransactionsControl(scriptRight);
         }
     }
 }

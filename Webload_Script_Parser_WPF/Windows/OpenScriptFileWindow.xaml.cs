@@ -23,32 +23,34 @@ namespace WLScriptParser.Windows
     /// </summary>
     public partial class OpenScriptFileWindow : Window
     {
-        TransactionRepository _repoLeft;
+        //Script _scriptLeft;
         string _scriptNameLeft;
-        TransactionRepository _repoRight;
+        //Script _scriptRight;
         string _scriptNameRight;
         public OpenScriptFileWindow()
         {
-            _scriptNameLeft = "Left Script";
-            _scriptNameRight = "Right Script";
+            _scriptNameLeft = "";
+            _scriptNameRight = "";
             InitializeComponent();
         }
 
         private void Button_Left_Click(object sender, RoutedEventArgs e)
         {
-            _repoLeft = FillRepo(Text_Block_Left, _repoLeft, out _scriptNameLeft);
-            CheckRepositoryInstances();
+            //_scriptLeft = FillRepo(Text_Block_Left, _scriptLeft, out _scriptNameLeft);
+            SelectScript(Text_Block_Left, out _scriptNameLeft);
+            OK_Button.IsEnabled = (BothScriptsChosen()) ? true : false;
         }
 
         private void Button_Right_Click(object sender, RoutedEventArgs e)
         {
-            _repoRight = FillRepo(Text_Block_right, _repoRight, out _scriptNameRight);
-            CheckRepositoryInstances();
+            //_scriptRight = FillRepo(Text_Block_right, _scriptRight, out _scriptNameRight);
+            SelectScript(Text_Block_Right, out _scriptNameRight);
+            OK_Button.IsEnabled = (BothScriptsChosen()) ? true : false;
         }
 
-        private TransactionRepository FillRepo(TextBlock textBlock, TransactionRepository repository, out string scriptName)
+        private void SelectScript(TextBlock textBlock, out string scriptName)
         {
-            repository = new TransactionRepository();
+            scriptName = "";
 
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
@@ -59,30 +61,23 @@ namespace WLScriptParser.Windows
 
             if (openFileDialog.ShowDialog() == true)
             {
-                scriptName = openFileDialog.Title = openFileDialog.FileName;
-
                 try
                 {
-                    TransactionBlockParser.Parse(openFileDialog.FileName, repository);
-                    textBlock.Text = openFileDialog.FileName;
+                    //TransactionBlockParser.Parse(openFileDialog.FileName, script);
+                    textBlock.Text = scriptName = openFileDialog.FileName;
                 }
                 catch (System.Exception openFileException)
                 {
                     MessageBox.Show(openFileException.ToString());
                 }
             }
-            else
-            {
-                scriptName = "name not assigned";
-            }
-            return repository;
         }
 
         public event EventHandler<ReposFilledEventArgs> ClosedWithResults;
        
-        private void CheckRepositoryInstances()
+        private bool BothScriptsChosen()
         {
-            OK_Button.IsEnabled = (_repoLeft != null && _repoRight != null)? true: false;
+            return (_scriptNameLeft != null && _scriptNameLeft != "" && _scriptNameRight != null && _scriptNameRight != "");
         }
 
         private void OK_Button_Click(object sender, RoutedEventArgs e)
@@ -93,9 +88,7 @@ namespace WLScriptParser.Windows
                 {
                     ClosedWithResults(this, new ReposFilledEventArgs()
                     {
-                        RepoLeft = _repoLeft,
                         ScriptNameLeft = _scriptNameLeft,
-                        RepoRight = _repoRight,
                         ScriptNameRight = _scriptNameRight
                     });
                 }
@@ -116,9 +109,7 @@ namespace WLScriptParser.Windows
 
     public class ReposFilledEventArgs: EventArgs
     {
-        public TransactionRepository RepoLeft { get; set; }
         public string ScriptNameLeft { get; set; }
-        public TransactionRepository RepoRight { get; set; }
         public string ScriptNameRight { get; set; }
     }
 }

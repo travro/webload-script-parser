@@ -98,10 +98,11 @@
     <Compile Include="Models\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
+    <Compile Include="Models\Repositories\ScriptRepository.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\ScriptAttribute.cs" />
     <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransactionRepository.cs" />
+    <Compile Include="Models\Script.cs" />
     <Compile Include="Pages\CorrelationsPage.xaml.cs">
       <DependentUpon>CorrelationsPage.xaml</DependentUpon>
     </Compile>

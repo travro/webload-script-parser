@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WLScriptParser.Models;
+using WLScriptParser.Models.Repositories;
 
 namespace WLScriptParser.Controls
 {
@@ -21,31 +22,28 @@ namespace WLScriptParser.Controls
     /// </summary>
     public partial class ScriptTransactionsControl : UserControl
     {
-        string _fileName;
-
         public ScriptTransactionsControl()
         {
             InitializeComponent();
         }
 
-        public ScriptTransactionsControl(TransactionRepository repo, string filename)
+        public ScriptTransactionsControl(Script script)
         {
             InitializeComponent();
-            _fileName = filename;
 
             //Build Treeview
             Tree_View.Items.Clear();
             TreeViewItem transTreeViewItem = new TreeViewItem();
             transTreeViewItem.Header = new TextBlock()
             {
-                Text = _fileName.Substring(_fileName.LastIndexOf('\\') + 1),
+                Text = script.FileName.Substring(script.FileName.LastIndexOf('\\') + 1),
                 FontWeight = FontWeights.SemiBold,
                 FontSize = 16
             };
             transTreeViewItem.IsExpanded = true;
             Tree_View.Items.Add(transTreeViewItem);
 
-            foreach (Transaction t in repo.Transactions)
+            foreach (Transaction t in script.Transactions)
             {
                 TreeViewItem tranTreeViewItem = new TreeViewItem();
                 tranTreeViewItem.Header = new TextBlock()

@@ -26,10 +26,10 @@ namespace WLScriptParser.Controls
         {
             InitializeComponent();
         }
-        public ScriptCorrelationsControl(TransactionRepository repo)
+        public ScriptCorrelationsControl(Script script)
         {
             InitializeComponent();
-            var correlations = repo.Transactions.SelectMany(t => t.Requests).SelectMany(r => r.Correlations);
+            var correlations = script.Transactions.SelectMany(t => t.Requests).SelectMany(r => r.Correlations);
 
             DataTable corrTable = new DataTable("Correlations");
             corrTable.Columns.Add(new DataColumn() { ColumnName = "rule", Caption = "Rule" });

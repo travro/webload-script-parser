@@ -27,7 +27,7 @@ namespace WLScriptParser.Pages
         {
             InitializeComponent();
         }
-        public DataTablePage(TransactionRepository repo)
+        public DataTablePage(Script repo)
         {
             InitializeComponent();
 

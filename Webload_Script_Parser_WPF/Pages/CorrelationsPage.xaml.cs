@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WLScriptParser.Models;
+using WLScriptParser.Models.Repositories;
 using WLScriptParser.Controls;
 
 namespace WLScriptParser.Pages
@@ -25,9 +26,11 @@ namespace WLScriptParser.Pages
         public CorrelationsPage()
         {
             InitializeComponent();
+            Frame_Left.Content = new ScriptCorrelationsControl(ScriptRepository.Repository.ScriptLeft);
+            Frame_Right.Content = new ScriptCorrelationsControl(ScriptRepository.Repository.ScriptRight);
         }
 
-        public CorrelationsPage(TransactionRepository repoLeft, TransactionRepository repoRight)
+        public CorrelationsPage(Script repoLeft, Script repoRight)
         {
             InitializeComponent();
             Frame_Left.Content = new ScriptCorrelationsControl(repoLeft);

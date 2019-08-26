@@ -2,15 +2,21 @@
 
 namespace WLScriptParser.Models
 {
-    public class TransactionRepository
+    public class Script
     {
-        public List<Transaction> _transactions;
+        private List<Transaction> _transactions;
 
         public Transaction[] Transactions => _transactions.ToArray();
+        public string FileName { get; set; }
 
-        public TransactionRepository()
+        public Script()
         {
             _transactions= new List<Transaction>();
+        }
+        public Script(string fileName)
+        {
+            FileName = fileName;
+            _transactions = new List<Transaction>();
         }
         public void AddTransaction(Transaction t)
         {
