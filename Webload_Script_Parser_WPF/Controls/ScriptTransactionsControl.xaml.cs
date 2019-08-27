@@ -33,15 +33,15 @@ namespace WLScriptParser.Controls
 
             //Build Treeview
             Tree_View.Items.Clear();
-            TreeViewItem transTreeViewItem = new TreeViewItem();
-            transTreeViewItem.Header = new TextBlock()
+            TreeViewItem scriptItem = new TreeViewItem();
+            scriptItem.Header = new TextBlock()
             {
                 Text = script.FileName.Substring(script.FileName.LastIndexOf('\\') + 1),
                 FontWeight = FontWeights.SemiBold,
                 FontSize = 16
             };
-            transTreeViewItem.IsExpanded = true;
-            Tree_View.Items.Add(transTreeViewItem);
+            scriptItem.IsExpanded = true;
+            Tree_View.Items.Add(scriptItem);
 
             foreach (Transaction t in script.Transactions)
             {
@@ -53,7 +53,7 @@ namespace WLScriptParser.Controls
                     FontSize = 14.5
                 };
                 tranTreeViewItem.IsExpanded = true;
-                transTreeViewItem.Items.Add(tranTreeViewItem);
+                scriptItem.Items.Add(tranTreeViewItem);
 
                 foreach (Request r in t.Requests)
                 {
