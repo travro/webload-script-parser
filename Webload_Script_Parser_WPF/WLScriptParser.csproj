@@ -95,7 +95,7 @@
       <DependentUpon>ScriptTransactionsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DAL\SqlAPI.cs" />
-    <Compile Include="Models\AttributesRepository.cs" />
+    <Compile Include="Models\Repositories\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />
     <Compile Include="Models\Repositories\ScriptRepository.cs" />

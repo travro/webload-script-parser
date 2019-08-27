@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WLScriptParser.Models;
+using WLScriptParser.Models.Repositories;
 
 namespace Webload_Script_Parser_UnitTests
 {

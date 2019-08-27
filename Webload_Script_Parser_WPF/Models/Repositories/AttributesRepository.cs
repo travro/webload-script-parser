@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using WLScriptParser.DAL;
 
-namespace WLScriptParser.Models
+namespace WLScriptParser.Models.Repositories
 {
     public sealed class AttributesRepository
     {

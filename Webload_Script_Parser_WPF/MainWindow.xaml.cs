@@ -18,8 +18,6 @@ namespace WLScriptParser
     /// </summary>
     public partial class MainWindow : Window
     {
-        Script _repoLeft, _repoRight;
-        string _scriptNameLeft, _scriptNameRight;
         TransactionsPage _transactionsPage;
         CorrelationsPage _correlationsPage;
         public MainWindow()
@@ -60,14 +58,14 @@ namespace WLScriptParser
                     ////export as csv file
                     //else
                     //{
-                    _writer.WriteLine("Transaction,Request,Parameters");
-                    foreach (Transaction t in _repoLeft.Transactions)
-                    {
-                        foreach (Request r in t.Requests)
-                        {
-                            _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
-                        }
-                    }
+                    //_writer.WriteLine("Transaction,Request,Parameters");
+                    //foreach (Transaction t in _repoLeft.Transactions)
+                    //{
+                    //    foreach (Request r in t.Requests)
+                    //    {
+                    //        _writer.WriteLine($"{t.Name},{r.Verb},{r.Parameters}");
+                    //    }
+                    //}
                     //}
                 }
             }
@@ -93,8 +91,6 @@ namespace WLScriptParser
         {
             try
             {
-                //_scriptNameLeft = args.ScriptNameLeft;  
-               // _scriptNameRight = args.ScriptNameRight;
                 ScriptRepository.Create(args.ScriptNameLeft, args.ScriptNameRight);
             }
             catch (System.Exception mainRepoFillException)
@@ -105,10 +101,8 @@ namespace WLScriptParser
         }
         private void ShowContent()
         {
-           // _transactionsPage = new TransactionsPage(_repoLeft,_repoRight, _scriptNameLeft, _scriptNameRight);
             _transactionsPage = new TransactionsPage();
             Transactions_Button.IsEnabled = true;
-            //_correlationsPage = new CorrelationsPage(_repoLeft, _repoRight);
             _correlationsPage = new CorrelationsPage();            
             Correlations_Button.IsEnabled =  true;
 
