@@ -63,7 +63,7 @@ namespace WLScriptParser.Windows
             {
                 try
                 {
-                    //TransactionBlockParser.Parse(openFileDialog.FileName, script);
+                    //ScriptTransactionParser.Parse(openFileDialog.FileName, script);
                     textBlock.Text = scriptName = openFileDialog.FileName;
                 }
                 catch (System.Exception openFileException)

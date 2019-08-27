@@ -27,7 +27,7 @@ namespace WLScriptParser.Pages
         {
             InitializeComponent();
             Frame_Left.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
-            Frame_Right.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
+            Frame_Right.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptRight);
         }
         public TransactionsPage(Script scriptLeft, Script scriptRight)
         {

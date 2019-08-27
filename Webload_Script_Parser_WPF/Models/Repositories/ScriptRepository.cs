@@ -27,8 +27,8 @@ namespace WLScriptParser.Models.Repositories
 
         private ScriptRepository(string filePathLeft, string filePathRight)
         {
-            ScriptLeft = TransactionBlockParser.Parse(filePathLeft);
-            ScriptRight = TransactionBlockParser.Parse(filePathRight);
+            ScriptLeft = ScriptTransactionParser.Parse(filePathLeft);
+            ScriptRight = ScriptTransactionParser.Parse(filePathRight);
         }
 
         public static void Create(string filePathLeft, string filePathRight)

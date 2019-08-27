@@ -7,7 +7,7 @@ using System;
 
 namespace WLScriptParser.Parsers
 {
-    public static class TransactionBlockParser
+    public static class ScriptTransactionParser
     {
         //Given a filepath and repo, will populate repo with Transaction objects
         public static void Parse(string path, Script script)
@@ -35,7 +35,7 @@ namespace WLScriptParser.Parsers
                         //Add each XElement to the repo as a Transaction object
                         foreach (var jsPBE in jsParentBlockElements)
                         {
-                            script.AddTransaction(new Transaction(jsPBE));
+                            script.Transactions.Add(new Transaction(jsPBE));
                         }
                     }
                 }
@@ -71,7 +71,7 @@ namespace WLScriptParser.Parsers
                         //Add each XElement to the repo as a Transaction object
                         foreach (var jsPBE in jsParentBlockElements)
                         {
-                            script.AddTransaction(new Transaction(jsPBE));
+                            script.Transactions.Add(new Transaction(jsPBE));
                         }
                     }
                 }

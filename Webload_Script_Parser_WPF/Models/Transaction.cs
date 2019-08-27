@@ -7,18 +7,18 @@ namespace WLScriptParser.Models
 {
     public class Transaction
     {
-        private List<Request> _requests;
-        public Request[] Requests => _requests.ToArray();
+        public List<Request> Requests { get; }
+        //public Request[] Requests => _requests.ToArray();
         public string Name { get; set; }
         public Transaction(string name)
         {
             Name = name;
-            _requests = new List<Request>();
+            Requests = new List<Request>();
         }
         public Transaction(XElement element)
         {
             Name = ParseTransactionName(element);
-            _requests = new List<Request>();
+            Requests = new List<Request>();
 
             var jsChildBlockElements = element.Elements("JavaScriptObject");
 
@@ -40,15 +40,15 @@ namespace WLScriptParser.Models
                 {
                     if (httpHeaderElement == httpHeaderElements.First() && nodeScriptElement.Value.Contains("setCorr"))
                     {
-                        _requests.Add(new Request(httpHeaderElement, nodeScriptElement, true));
+                        Requests.Add(new Request(httpHeaderElement, nodeScriptElement, true));
                     }
                     else if(httpHeaderElement == httpHeaderElements.First())
                     {
-                        _requests.Add(new Request(httpHeaderElement, true));
+                        Requests.Add(new Request(httpHeaderElement, true));
                     }
                     else
                     {
-                        _requests.Add(new Request(httpHeaderElement, false));
+                        Requests.Add(new Request(httpHeaderElement, false));
                     }                    
                 }
             }

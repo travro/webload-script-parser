@@ -110,7 +110,7 @@
       <DependentUpon>TransactionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parsers\CorrelationParamParser.cs" />
-    <Compile Include="Parsers\TransactionBlockParser.cs" />
+    <Compile Include="Parsers\ScriptTransactionParser.cs" />
     <Compile Include="Pages\DataTablePage.xaml.cs">
       <DependentUpon>DataTablePage.xaml</DependentUpon>
     </Compile>
