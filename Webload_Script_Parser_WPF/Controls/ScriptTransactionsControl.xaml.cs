@@ -49,7 +49,7 @@ namespace WLScriptParser.Controls
                 tranTreeViewItem.Header = new TextBlock()
                 {
                     Text = t.Name,
-                    Foreground = Brushes.Blue,
+                    Foreground = Brushes.Blue,                    
                     FontSize = 14.5
                 };
                 tranTreeViewItem.IsExpanded = true;

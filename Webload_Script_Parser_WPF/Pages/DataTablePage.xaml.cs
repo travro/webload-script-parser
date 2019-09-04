@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WLScriptParser.Models;
+using WLScriptParser.Utilities;
 using System.Data;
 namespace WLScriptParser.Pages
 {
@@ -26,53 +27,36 @@ namespace WLScriptParser.Pages
         public DataTablePage()
         {
             InitializeComponent();
+            DataContext = this;
         }
-        public DataTablePage(Script repo)
+        public DataTablePage(Script s1, Script s2)
         {
             InitializeComponent();
+            DataContext = this;
 
-            DataSet ds = new DataSet("Transaction Set");
+            var dataSet = new TransactionDataSet(s1, s2);
 
-            DataTable transTable = new DataTable("Transactions");
-            transTable.Columns.Add(new DataColumn("name"));
-
-            DataTable requestTable = new DataTable("Requests");
-            requestTable.Columns.Add(new DataColumn("verb"));
-            requestTable.Columns.Add(new DataColumn("parameters"));
-
-            DataTable corrTable = new DataTable("Correlations");
-            corrTable.Columns.Add(new DataColumn("rule"));
-            corrTable.Columns.Add(new DataColumn("ext_logic"));
-            corrTable.Columns.Add(new DataColumn("original_val"));
-
-            foreach (Transaction t in repo.Transactions)
+            if (dataSet.DataSet.Tables != null)
             {
-                var newTransRow = transTable.NewRow();
-                newTransRow["name"] = t.Name;
-                transTable.Rows.Add(newTransRow);
-
-                foreach (Request r in t.Requests)
+                foreach (DataTable table in dataSet.DataSet.Tables)
                 {
-                    var newRequestRow = requestTable.NewRow();
-                    newRequestRow["verb"] = r.Verb;
-                    newRequestRow["parameters"] = r.Parameters;
-                    requestTable.Rows.Add(newRequestRow);
 
-                    foreach (Correlation c in r.Correlations)
+                    Stack_Panel.Children.Add(new TextBlock()
                     {
-                        var newCorrRow = corrTable.NewRow();
-                        newCorrRow["rule"] = c.Rule;
-                        newCorrRow["ext_logic"] = c.ExtractionLogic;
-                        newCorrRow["original_val"] = c.OriginalValue;
-                        corrTable.Rows.Add(newCorrRow);
-                    }
+                        Text = table.TableName
+                    });
+                    Stack_Panel.Children.Add(new DataGrid()
+                    { 
+                        ItemsSource = table.DefaultView                    
+                    });
+
+                    
                 }
             }
-            ds.Tables.AddRange(new DataTable[] { transTable, requestTable, corrTable });
-
-            Data_Grid_Transactions.ItemsSource = transTable.DefaultView;
-            Data_Grid_Requests.ItemsSource = requestTable.DefaultView;
-            Data_Grid_Correlations.ItemsSource = corrTable.DefaultView;
+            else
+            {
+                MessageBox.Show("Dataset Tables are null");
+            }
 
         }
     }

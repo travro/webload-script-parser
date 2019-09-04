@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
+using WLScriptParser.Parsers;
 
 namespace WLScriptParser.Models
 {
@@ -17,14 +18,14 @@ namespace WLScriptParser.Models
         }
         public Request(XElement element, bool visible)
         {
-            Verb = ParseRequestVerb(element);
-            Parameters = ParseRequestParams(element);
+            Verb = RequestParamParser.ParseRequestVerb(element.Attribute("Text").Value);
+            Parameters = RequestParamParser.ParseRequestParamters(element.Attribute("Text").Value);
             Visible = visible;
         }
         public Request(XElement httpHeaderElement, XElement nodeScriptElement, bool visible)
         {
-            Verb = ParseRequestVerb(httpHeaderElement);
-            Parameters = ParseRequestParams(httpHeaderElement);
+            Verb = RequestParamParser.ParseRequestVerb(httpHeaderElement.Attribute("Text").Value);
+            Parameters = RequestParamParser.ParseRequestParamters(httpHeaderElement.Attribute("Text").Value);
             Visible = visible;
             _correlations = CorrelationFactory.GetCorrelations(nodeScriptElement);
         }
@@ -36,25 +37,30 @@ namespace WLScriptParser.Models
             DELETE = 3,
             CONNECT = 4
         }
-        private Request.RequestVerb ParseRequestVerb(XElement element)
-        {
-            string val = element.Attribute("Text").Value;
-            if (val.StartsWith(" CONNECT")) return Request.RequestVerb.CONNECT;
-            if (val.StartsWith(" DELETE")) return Request.RequestVerb.DELETE;
-            if (val.StartsWith(" POST")) return Request.RequestVerb.POST;
-            if (val.StartsWith(" PUT")) return Request.RequestVerb.PUT;
-            if (val.StartsWith(" GET")) return Request.RequestVerb.GET;
-            return Request.RequestVerb.GET;
-        }
-        private string ParseRequestParams(XElement element)
-        {
-            string val = element.Attribute("Text").Value;
-            string sumTotalSite = "sumtotaldevelopment.net";
-            string domain = (val.Contains(sumTotalSite)) ? sumTotalSite : "https://";
-            int domainIndex = val.IndexOf(domain) + domain.Length;
-            int paramIndex = val.IndexOf(' ', domainIndex);
+        //private Request.RequestVerb ParseRequestVerb(XElement element)
+        //{
+        //    string val = element.Attribute("Text").Value;
+        //    if (val.StartsWith(" CONNECT")) return Request.RequestVerb.CONNECT;
+        //    if (val.StartsWith(" DELETE")) return Request.RequestVerb.DELETE;
+        //    if (val.StartsWith(" POST")) return Request.RequestVerb.POST;
+        //    if (val.StartsWith(" PUT")) return Request.RequestVerb.PUT;
+        //    if (val.StartsWith(" GET")) return Request.RequestVerb.GET;
+        //    return Request.RequestVerb.GET;
+        //}
+        //private string ParseRequestParams(XElement element)
+        //{
+        //    string val = element.Attribute("Text").Value;
+        //    string sumTotalSite = "sumtotaldevelopment.net";
+        //    string domain = (val.Contains(sumTotalSite)) ? sumTotalSite : "https://";
+        //    int domainLastIndex = val.IndexOf(domain) + domain.Length;
+        //    int paramIndex = val.IndexOf(' ', domainLastIndex);
+        //    //int paramIndex = val.IndexOfAny(new[] { '?', ' ' }, domainLastIndex);
 
-            return val.Substring(domainIndex, paramIndex - domainIndex);
+        //    return val.Substring(domainLastIndex, paramIndex - domainLastIndex);
+        //}
+        public string GetRequestString()
+        {
+            return Verb.ToString() + Parameters;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WLScriptParser
     public partial class MainWindow : Window
     {
         TransactionsPage _transactionsPage;
+        DataTablePage _dataTablePage;
         CorrelationsPage _correlationsPage;
         public MainWindow()
         {
@@ -87,7 +88,7 @@ namespace WLScriptParser
         {
             Main_Frame.Content = _correlationsPage;
         }
-        private void FillMainReposEventHandler(object sender, ReposFilledEventArgs args)
+        private void FillMainReposEventHandler(object sender, FilesSelected args)
         {
             try
             {
@@ -101,12 +102,26 @@ namespace WLScriptParser
         }
         private void ShowContent()
         {
-            _transactionsPage = new TransactionsPage();
-            Transactions_Button.IsEnabled = true;
-            _correlationsPage = new CorrelationsPage();            
-            Correlations_Button.IsEnabled =  true;
+            //_transactionsPage = new TransactionsPage();
+            //Main_Frame.Content = _transactionsPage;
+            ////Transactions_Button.IsEnabled = true;
 
-            Main_Frame.Content = _transactionsPage;
+
+            //_correlationsPage = new CorrelationsPage();            
+            // //Correlations_Button.IsEnabled =  true;
+            //Main_Frame.Content = _correlationsPage;
+
+
+
+            try
+            {
+                _dataTablePage = new DataTablePage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
+                Main_Frame.Content = _dataTablePage;
+            }
+            catch (System.Exception mainwindowException)
+            {
+                MessageBox.Show(mainwindowException.ToString());
+            }
         }
     }
 }

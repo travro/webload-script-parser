@@ -10,7 +10,7 @@ namespace Webload_Script_Parser_UnitTests
     [TestClass]
     public class CorrelationFactoryTests
     {
-        string path = "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\Scripts_XML_Formatted\\LM_PRM_191_AdminViewRoster_Feb06.wlp";
+        string path = ConfigurationData.FilePath1 + ConfigurationData.FileName1 + ConfigurationData.Extension;
         XElement nodeScript;
 
         [TestMethod]

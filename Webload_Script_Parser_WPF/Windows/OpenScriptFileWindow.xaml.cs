@@ -73,7 +73,7 @@ namespace WLScriptParser.Windows
             }
         }
 
-        public event EventHandler<ReposFilledEventArgs> ClosedWithResults;
+        public event EventHandler<FilesSelected> ClosedWithResults;
        
         private bool BothScriptsChosen()
         {
@@ -86,7 +86,7 @@ namespace WLScriptParser.Windows
             {
                 try
                 {
-                    ClosedWithResults(this, new ReposFilledEventArgs()
+                    ClosedWithResults(this, new FilesSelected()
                     {
                         ScriptNameLeft = _scriptNameLeft,
                         ScriptNameRight = _scriptNameRight
@@ -107,7 +107,7 @@ namespace WLScriptParser.Windows
         }
     }
 
-    public class ReposFilledEventArgs: EventArgs
+    public class FilesSelected: EventArgs
     {
         public string ScriptNameLeft { get; set; }
         public string ScriptNameRight { get; set; }
