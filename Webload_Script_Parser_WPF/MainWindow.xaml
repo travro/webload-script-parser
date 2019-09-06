@@ -10,15 +10,14 @@
         Height="800" 
         MinWidth="640" 
         Width="1280">
-    <Grid Margin="0">
+    <Grid Margin="0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <!--<RowDefinition Height="30"/>-->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Header="_File">
+            <MenuItem Header="_File" >
                 <MenuItem Header="_Open" Click="MenuFileOpenEventHandler"/>
                 <MenuItem Header="_Save As..." x:Name="Header_SaveAs" IsEnabled="False">
                     <MenuItem Header="File" Click="MenuExportFileEventHandler"/>

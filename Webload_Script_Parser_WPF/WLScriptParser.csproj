@@ -115,7 +115,7 @@
     <Compile Include="Pages\DataTablePage.xaml.cs">
       <DependentUpon>DataTablePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\ColoredTreeViewsBuilder.cs" />
+    <Compile Include="Utilities\ColorDispenser.cs" />
     <Compile Include="Utilities\RequestTableBuilder.cs" />
     <Compile Include="Utilities\ScriptTransactionsComparer.cs" />
     <Compile Include="Utilities\TransactionDataSet.cs" />

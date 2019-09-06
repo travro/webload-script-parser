@@ -9,7 +9,7 @@
       Title="DataTablePage" Background="White">
     <Grid x:Name="Main_Grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="Stack_Panel" Orientation="Vertical"/>
+            <StackPanel x:Name="Stack_Panel" Orientation="Vertical" Margin="8,0,8,0"/>
         </ScrollViewer>
     </Grid>
 </Page>

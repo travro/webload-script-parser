@@ -34,30 +34,88 @@ namespace WLScriptParser.Pages
             InitializeComponent();
             DataContext = this;
 
-            var dataSet = new TransactionDataSet(s1, s2);
+            var transDataSet = new TransactionDataSet(s1, s2);
+            if (!transDataSet.CreateTransactionTables()) MessageBox.Show("The transaction count or names of these two scripts do not match");
 
-            if (dataSet.DataSet.Tables != null)
+
+            if (transDataSet.DataSet.Tables != null)
             {
-                foreach (DataTable table in dataSet.DataSet.Tables)
+                foreach (DataTable table in transDataSet.DataSet.Tables)
                 {
-
                     Stack_Panel.Children.Add(new TextBlock()
                     {
-                        Text = table.TableName
-                    });
-                    Stack_Panel.Children.Add(new DataGrid()
-                    { 
-                        ItemsSource = table.DefaultView                    
-                    });
+                        Text = "\n" + table.TableName,
+                        FontSize = 16,
+                        Foreground = Brushes.Black,
 
+                        //HorizontalAlignment = HorizontalAlignment.Center
+                    });
+                    DockPanel dockPanelNames = new DockPanel()
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        LastChildFill = true
+                    };   
                     
+                    var fontSize = 14;
+                    var foreGround = Brushes.White;
+                    var backGround = Brushes.DarkGray;
+                    var nameBlockLeft = new TextBlock()
+                    {
+                        Text = table.Columns[0].ColumnName,
+                        FontSize = fontSize,
+                        Foreground = foreGround,
+                        Background = backGround,   
+                        Width = 800,                        
+                    };
+
+                    var nameBlockRight = new TextBlock()
+                    {
+                        Text = table.Columns[1].ColumnName,
+                        FontSize = fontSize,
+                        Foreground = foreGround,
+                        Background = backGround
+                    };
+
+                    DockPanel.SetDock(nameBlockLeft, Dock.Left);
+                    DockPanel.SetDock(nameBlockRight, Dock.Right);
+
+                    dockPanelNames.Children.Add(nameBlockLeft);
+                    dockPanelNames.Children.Add(nameBlockRight);
+
+                    Stack_Panel.Children.Add(dockPanelNames);
+
+                    foreach (DataRow row in table.Rows)
+                    {
+                        DockPanel dockPanelValues = new DockPanel();
+                        var valueBlockLeft = new TextBlock()
+                        {
+                            Text = (row[0] as Request).GetRequestString(),
+                            Background = new SolidColorBrush((row[0] as Request).Color),
+                            FontSize = fontSize,
+                            Width = 800
+                        };
+
+                        var valueBlockRight = new TextBlock()
+                        {
+                            Text = (row[1] as Request).GetRequestString(),
+                            Background = new SolidColorBrush((row[1] as Request).Color),
+                            FontSize = fontSize
+                        };
+
+                        DockPanel.SetDock(valueBlockLeft, Dock.Left);
+                        DockPanel.SetDock(valueBlockRight, Dock.Right);
+
+                        dockPanelValues.Children.Add(valueBlockLeft);
+                        dockPanelValues.Children.Add(valueBlockRight);
+
+                        Stack_Panel.Children.Add(dockPanelValues);
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("Dataset Tables are null");
             }
-
         }
     }
 }

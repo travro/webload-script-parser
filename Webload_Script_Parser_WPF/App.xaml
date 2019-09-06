@@ -7,9 +7,9 @@
         <Style TargetType="Window">
             <Setter Property="Background" Value="LightGray"/>
         </Style>
-        <Style TargetType="Grid">
-            <Setter Property="Background" Value="WhiteSmoke"/>
-        </Style>
+        <!--<Style TargetType="Grid">
+            <Setter Property="Background" Value="Gray"/>
+        </Style>-->
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="WhiteSmoke"/>
