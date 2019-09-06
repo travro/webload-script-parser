@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WLScriptParser.Models;
+using System.Windows.Media;
 
 namespace WLScriptParser.Utilities
 {
     public static class RequestTableBuilder
     {
+
+
         public static Request[,] GetRequestTable(IEnumerable<Request> r1, IEnumerable<Request> r2)
         {
             //Clone the request IEnumerables into new lists, ensuring pure functunality
@@ -23,7 +26,7 @@ namespace WLScriptParser.Utilities
             List<Request> shorterList = (longerList == r1Clone) ? r2Clone : r1Clone;
             int listLengthDiff = Math.Abs(longerList.Count - shorterList.Count);
 
-            string blankRequestParams = "--Blank--";
+            string blankRequestParams = "--Not Available in This Script--";
 
             //Prime the shorter list with blank Requests to equal the length of the longer
             while (listLengthDiff > 0)
@@ -31,15 +34,20 @@ namespace WLScriptParser.Utilities
                 shorterList.Add(new Request(Request.RequestVerb.GET, blankRequestParams));
                 listLengthDiff--;
             }
+            ColorDispenser colorDispenser = new ColorDispenser(16);
 
             //Logic for building the list results after comparisons
             for (int i = 0; i < longerList.Count; i++)
             {
+
+
+
                 //if both blank
                 if (longerList[i].Parameters == blankRequestParams && shorterList[i].Parameters == blankRequestParams)
                 {
                     longerList.RemoveAt(i);
                     shorterList.RemoveAt(i);
+                    if (i > 0) i--;
                     continue;
                 }
                 //if equality or only one is blank
@@ -50,6 +58,11 @@ namespace WLScriptParser.Utilities
                         ||
                         longerList[i] == shorterList[i])
                 {
+                    if (longerList[i].Color == null && shorterList[i].Color == null)
+                    {
+                        longerList[i].Color = shorterList[i].Color = colorDispenser.GetNextColor();
+                    }
+
                     continue;
                 }
 
@@ -58,18 +71,29 @@ namespace WLScriptParser.Utilities
                 if (longerList[i] != shorterList[i])
                 {
                     var blankRequest = new Request(Request.RequestVerb.GET, blankRequestParams);
+                    blankRequest.Color = Color.FromRgb(255, 0, 0);
 
-                    if (!ListExtension.ContainsSameAmount(shorterList, longerList[i], longerList))
+                    if (!longerList.ContainsSameAmount(longerList[i], shorterList))
                     {
                         shorterList.Insert(i, blankRequest);
                         longerList.Add(blankRequest);
                         continue;
                     }
-                    if (!ListExtension.ContainsSameAmount(longerList, shorterList[i], shorterList))
+                    else
+                    {
+                        longerList.ColorMatchingRequests(longerList[i], shorterList, colorDispenser.GetNextColor());
+                    }
+
+
+                    if (!shorterList.ContainsSameAmount(shorterList[i], longerList))
                     {
                         longerList.Insert(i, blankRequest);
                         shorterList.Add(blankRequest);
                         continue;
+                    }
+                    else
+                    {
+                        shorterList.ColorMatchingRequests(shorterList[i], longerList, colorDispenser.GetNextColor());
                     }
                 }
             }
@@ -94,13 +118,27 @@ namespace WLScriptParser.Utilities
     }
     public static class ListExtension
     {
-        
+
         //Extension method for checking the occurence of the request in the list compared to its occurence in listToCompare
         public static bool ContainsSameAmount(this List<Request> list, Request request, List<Request> listToCompare)
         {
             int listAmt = list.Count(item => item.GetRequestString() == request.GetRequestString());
             int listToCompareAmt = listToCompare.Count(item => item.GetRequestString() == request.GetRequestString());
             return listAmt == listToCompareAmt;
+        }
+        public static void ColorMatchingRequests(this List<Request> list, Request request, List<Request> listToCompare, Color color)
+        {
+            var thisList = list.Where(r => r.Parameters == request.Parameters);
+            var otherList = listToCompare.Where(r => r.Parameters == request.Parameters);
+
+            foreach (var r in thisList)
+            {
+                r.Color = color;
+            }
+            foreach (var r in otherList)
+            {
+                r.Color = color;
+            }
         }
     }
 }

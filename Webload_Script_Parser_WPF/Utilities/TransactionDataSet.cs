@@ -24,7 +24,7 @@ namespace WLScriptParser.Utilities
 
 
            // CreateFileNameTable();
-            CreateTransactionTables();
+            //CreateTransactionTables();
         }
         public bool CreateFileNameTable()
         {
@@ -47,7 +47,7 @@ namespace WLScriptParser.Utilities
         }
         public bool CreateTransactionTables()
         {
-            if (ScriptTransactionsComparer.CompareAll(_s1, _s2))
+            if (ScriptTransactionsComparer.CompareCount(_s1, _s2))
             {
                 for(int i = 0; i < _s1.Transactions.Count; i++)
                 {
@@ -55,20 +55,21 @@ namespace WLScriptParser.Utilities
 
                     table.Columns.AddRange(new DataColumn[]
                     {
-                    new DataColumn(_s1Name),
-                    new DataColumn(_s2Name)
+                    new DataColumn(){ ColumnName = _s1Name, DataType = typeof(Request) },                        
+                    new DataColumn(){ ColumnName = _s2Name, DataType = typeof(Request)}
                     });
 
-                    Request[,] requestsArr = RequestTableBuilder.GetRequestTable(_s1.Transactions[i].Requests, _s2.Transactions[i].Requests);
+                    Request[,] requestsArr = RequestTableBuilder.GetRequestTable(_s1.Transactions[i].Requests.Where(r => r.Visible == true), _s2.Transactions[i].Requests.Where(r => r.Visible == true));
 
                     for(int j =0; j < requestsArr.GetLength(0); j++)
                     {
                         DataRow row = table.NewRow();
-                        row[_s1Name] = requestsArr[j, 0].GetRequestString();
-                        row[_s2Name] = requestsArr[j, 1].GetRequestString();
+                        row[0] = requestsArr[j, 0];
+                        row[1] = requestsArr[j, 1];
                         table.Rows.Add(row);
                     }
                     DataSet.Tables.Add(table);
+                    
                 }
                 return true;
             }

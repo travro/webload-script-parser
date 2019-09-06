@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using WLScriptParser.Parsers;
+using System.Windows.Media;
 
 namespace WLScriptParser.Models
 {
@@ -8,6 +9,7 @@ namespace WLScriptParser.Models
     {
         private Correlation[] _correlations;
         public bool Visible { get; }
+        public Color Color { get; set; }
         public Request.RequestVerb Verb { get; }
         public string Parameters { get; }
         public Correlation[] Correlations => _correlations ?? new Correlation[] {}; /*new Correlation("", "")*/
@@ -60,7 +62,7 @@ namespace WLScriptParser.Models
         //}
         public string GetRequestString()
         {
-            return Verb.ToString() + Parameters;
+            return Verb.ToString() + " " + Parameters;
         }
     }
 }
