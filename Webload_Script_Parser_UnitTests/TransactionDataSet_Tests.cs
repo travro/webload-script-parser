@@ -24,6 +24,7 @@ namespace Webload_Script_Parser_UnitTests
             s1 = ScriptTransactionParser.Parse(filepath1 + s1FileName + extension);
             s2 = ScriptTransactionParser.Parse(filepath2 + s2FileName + extension);
             tdS = new TransactionDataSet(s1, s2);
+            tdS.CreateTransactionTables();
         }
         //assertions
         [TestMethod]

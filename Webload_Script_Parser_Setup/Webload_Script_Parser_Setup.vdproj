@@ -15,14 +15,32 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_785E8AA486904A18B3D0D83642B1722C"
+        "MsmKey" = "8:_34C32330F49A45EF984010133CEB96CB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AF07D568E6E04B2A915B9DAB3A586E36"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C16F23E649402A5FFA725E31A19C8E7A"
-        "OwnerKey" = "8:_785E8AA486904A18B3D0D83642B1722C"
+        "OwnerKey" = "8:_34C32330F49A45EF984010133CEB96CB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C16F23E649402A5FFA725E31A19C8E7A"
+        "OwnerKey" = "8:_AF07D568E6E04B2A915B9DAB3A586E36"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C608809CC9714E2BA27DD39454C61793"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -34,7 +52,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_785E8AA486904A18B3D0D83642B1722C"
+        "OwnerKey" = "8:_AF07D568E6E04B2A915B9DAB3A586E36"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_34C32330F49A45EF984010133CEB96CB"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -45,7 +69,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Webload_Script_Parser_Setup.msi"
+        "OutputFilename" = "8:Debug\\WLScriptParser.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -55,6 +79,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -71,6 +111,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -131,6 +187,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C608809CC9714E2BA27DD39454C61793"
+            {
+            "SourcePath" = "8:..\\columns_icon_1_vVA_icon.ico"
+            "TargetName" = "8:columns_icon_1_vVA_icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_788725E3BC1E4EB28278AE3F95D8B08A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -157,6 +233,28 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                }
+            }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_B4ADDCAC17CB4CBFA7FD6CA42EC26A25"
+            {
+            "Name" = "8:#1912"
+            "AlwaysCreate" = "11:TRUE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:ProgramFilesFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_788725E3BC1E4EB28278AE3F95D8B08A"
+                    {
+                    "Name" = "8:WLScriptParser"
+                    "AlwaysCreate" = "11:TRUE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_8B9ECF3AC900452DA441684850B48ECF"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_ECF4E33BE6D149D5BC4F5CDC1731315D"
@@ -188,7 +286,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Webload_Script_Parser_Setup"
         "ProductCode" = "8:{4C5FEA73-34EE-4FFC-AE7F-E7AEA47F6BD4}"
-        "PackageCode" = "8:{A512803B-9BEB-4222-BC91-8B2A5B2682D1}"
+        "PackageCode" = "8:{1C1451D5-AD48-4C81-8558-D79456EBA128}"
         "UpgradeCode" = "8:{D0136B8F-A069-40BC-A01D-852010B22A22}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -707,12 +805,40 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_785E8AA486904A18B3D0D83642B1722C"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_34C32330F49A45EF984010133CEB96CB"
             {
-            "SourcePath" = "8:..\\Webload_Script_Parser_WPF\\obj\\Debug\\Webload_Script_Parser_WPF.exe"
+            "SourcePath" = "8:..\\Webload_Script_Parser_WPF\\obj\\Release\\WLScriptParser.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_ECF4E33BE6D149D5BC4F5CDC1731315D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{0482AF34-AD3E-4814-915D-1E5589813D50}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AF07D568E6E04B2A915B9DAB3A586E36"
+            {
+            "SourcePath" = "8:..\\Webload_Script_Parser_WPF\\obj\\Release\\WLScriptParser.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_788725E3BC1E4EB28278AE3F95D8B08A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

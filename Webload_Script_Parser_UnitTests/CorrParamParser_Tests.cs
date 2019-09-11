@@ -12,7 +12,7 @@ namespace Webload_Script_Parser_UnitTests
     {
         //string correlation = "setCorrelationValue(\"corr_New2_r5___VIEWSTATEGENERATOR_3\", GetElementValueByName(\"__VIEWSTATEGENERATOR\"), \"D6B05CC4\");";
        //string correlation2 = "setCorrelationValue(\"corr_WSFederation_wresult_7\", decodeXML(GetElementValueByName(\"wresult\")), \"&lt;trust:RequestSecurityTokenResponseCollection xmlns:trust=\"httpl://docs.oasis-open.org/ws-sx/ws-trust/200512\"&gt;&lt;trust:RequestSecurityTokenResponse&gt;&lt;trust:Lifetime&gt;&lt;wsu:Created xmlns:wsu=\"http://docs.oas...\");";
-       string correlation3 = "setCorrelationValue(\"corr_New16_r2_IsHybridOrNativeClient_3\", extractValue(\";IsHybridOrNativeClient=\", \"&amp;\", document.wlSource, 1), \"False\")";
+       //string correlation3 = "setCorrelationValue(\"corr_New16_r2_IsHybridOrNativeClient_3\", extractValue(\";IsHybridOrNativeClient=\", \"&amp;\", document.wlSource, 1), \"False\")";
         string corr4 = "setCorrelationValue(\"corr_New20_r16_PackageItemId_81\", extractValue( \"rmChangeNextPackage('\", \"'\", document.wlSource, 2), \"E92190CB-3703-4576-A652-CA3F59AE0827\");";
 
 
@@ -25,7 +25,7 @@ namespace Webload_Script_Parser_UnitTests
         [TestMethod]
         public void CorrelationParamParser_GivenLine_ReturnsCorrectValue()
         {
-            Assert.AreEqual(CorrelationParamParser.Parse(corr4, CorrelationParamParser.Ordinal.Third), "extractValue(\";IsHybridOrNativeClient=\",\"&amp;\",document.wlSource,1)");
+            Assert.AreEqual(CorrelationParamParser.Parse(corr4, CorrelationParamParser.Ordinal.Third), "---");
         }
 
         private XElement AssignNodeScript(XElement element, string filepath)
