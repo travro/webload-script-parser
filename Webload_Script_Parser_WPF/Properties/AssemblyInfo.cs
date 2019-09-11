@@ -8,9 +8,9 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WLScriptParser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Parses and compares two Webload scripts")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SumTotalGnV")]
 [assembly: AssemblyProduct("WLScriptParser")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

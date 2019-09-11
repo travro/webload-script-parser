@@ -27,7 +27,7 @@ namespace WLScriptParser.Models
                 XElement nodeScriptElement = jsCBE.Descendants("PropertyPage")
                     .Where(desc => desc.Attribute("Name").Value == "JavaScript")
                     .First()
-                    .Element("NodeScript")?? new XElement("NodeScript");
+                    .Element("PersistentCorrelation")?? new XElement("PersistentCorrelation");
 
                 IEnumerable<XElement> httpHeaderElements = jsCBE.Descendants("PropertyPage")
                     .Where(desc => desc.Attribute("Name").Value == "HTTPHeaders")

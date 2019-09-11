@@ -8,68 +8,71 @@ namespace WLScriptParser.Parsers
         public static string Parse(string line, Ordinal ord)
         {
             //Capture outermost parenthesis
-            Stack<char> paramStack = new Stack<char>();
+            Stack<char> quoteStack = new Stack<char>();
+            int secondParamStartingIndex = 0;
+            int secondParamEndingIndex = 0;
             List<string> argList = new List<string>();
-            StringBuilder buildingString = new StringBuilder();
+            StringBuilder buildingString = new StringBuilder();  
 
-            foreach(char c in line)
+
+            //get the first correlation argument
+            for (int i = 0; i < line.Length; i++)
             {
-                switch (c)
+                if(line[i] == '\"')
                 {
-                    case ' ': continue;
-                    case '(':
-                        paramStack.Push(c);
-                        if (paramStack.Count > 1)
-                        {
-                            buildingString.Append(c);
-                            continue;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    case ')':
-                        paramStack.Pop();
-                        if (paramStack.Count >= 1)
-                        {
-                            buildingString.Append(c);
-                            continue;
-                        }
-                        else if(paramStack.Count == 0)
-                        {
-                            argList.Add(buildingString.ToString());
-                            break;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    case ',':
-                        if (paramStack.Count > 1)
-                        {
-                            buildingString.Append(c);
-                            continue;
-                        }
-                        else
-                        {
-                            argList.Add(buildingString.ToString());
-                            buildingString = new StringBuilder();
-                            continue;
-                        }
-                    default:
-                        if (paramStack.Count >= 1)
-                        {
-                            buildingString.Append(c);
-                            continue;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                } 
+                    if (quoteStack.Count == 0) 
+                    {
+                        quoteStack.Push(line[i]);
+                        continue;
+                    }
+                    else{
+                        quoteStack.Pop();
+                        secondParamStartingIndex = i;
+                        argList.Add(buildingString.ToString());
+                        buildingString = new StringBuilder();
+                        break;
+                    }
+                }
+                else
+                {
+                    if(quoteStack.Count > 0)
+                    {
+                        buildingString.Append(line[i]);
+                    }
+                }
             }
 
-            for(int i = 0; i < line.Length)
+            //get the third
+            for(int j = line.Length - 1; j >=0; j--)
+            {
+                if (line[j] == '\"')
+                {
+                    if (quoteStack.Count == 0)
+                    {
+                        quoteStack.Push(line[j]);
+                        continue;
+                    }
+                    else
+                    {
+                        quoteStack.Pop();
+                        secondParamEndingIndex = j;
+                        argList.Add(buildingString.ToString());
+                        buildingString = new StringBuilder();
+                        break;
+                    }
+                }
+                else
+                {
+                    if (quoteStack.Count > 0)
+                    {
+                        buildingString.Append(line[j]);
+                    }
+                }
+            }
+
+            argList.Insert(1,line.Substring(secondParamStartingIndex, secondParamEndingIndex - secondParamStartingIndex));
+
+
 
 
             string error = "--no argument captured--";

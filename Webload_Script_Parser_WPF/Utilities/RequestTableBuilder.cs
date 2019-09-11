@@ -24,12 +24,12 @@ namespace WLScriptParser.Utilities
             List<Request> shorterList = (longerList == r1Clone) ? r2Clone : r1Clone;
             int listLengthDiff = Math.Abs(longerList.Count - shorterList.Count);
 
-            string blankRequestParams = "-- Request Not Available in This Script--";
+            string blankRequestParams = "-------------------";
 
             //Prime the shorter list with blank Requests to equal the length of the longer
             while (listLengthDiff > 0)
             {
-                shorterList.Add(new Request(Request.RequestVerb.GET, blankRequestParams));
+                shorterList.Add(new Request(Request.RequestVerb.MISSING, blankRequestParams));
                 listLengthDiff--;
             }
 
@@ -38,6 +38,9 @@ namespace WLScriptParser.Utilities
             //Logic for building the list results after comparisons
             for (int i = 0; i < longerList.Count; i++)
             {
+                //if both are matched regardless, continue
+                if (longerList[i].Matched && shorterList[i].Matched) continue;
+
                 //if both blank, remove them and back up the iterator
                 if (longerList[i].Parameters == blankRequestParams && shorterList[i].Parameters == blankRequestParams)
                 {
@@ -47,7 +50,7 @@ namespace WLScriptParser.Utilities
                     continue;
                 }
                 //if equality
-                if (longerList[i].Parameters == shorterList[i].Parameters)
+                if (longerList[i].Equals(shorterList[i]))
                 {
                     if (!longerList[i].Matched && !shorterList[i].Matched)
                     {
@@ -66,31 +69,45 @@ namespace WLScriptParser.Utilities
 
                 //if neither are blank and neither are equal, check that the requests of each list exists in equal amounts within the opposing list
                 //using the defined List<> extension method "ContainSameAmount" defined below
-                if (longerList[i].Parameters != shorterList[i].Parameters)
+                if (!longerList[i].Equals(shorterList[i]))
                 {
-                    var blankRequest = new Request(Request.RequestVerb.GET, blankRequestParams);
+                    var blankRequest = new Request(Request.RequestVerb.MISSING, blankRequestParams);
 
-                    if (!longerList.ContainsSameAmount(longerList[i], shorterList))
+
+                    if (longerList[i].Matched)
                     {
-                        shorterList.Insert(i, blankRequest);
-                        longerList.Add(blankRequest);
+                        //move to shorterlist
+                    }
+                    else
+                    {
+                        if (longerList.HasUnmatchedMatch(longerList[i], shorterList))
+                        {
+                            longerList.MatchRequest(longerList[i], shorterList, matchingIndexer++);
+                        }
+                        else
+                        {
+                            shorterList.Insert(i, blankRequest);
+                            longerList.Add(blankRequest);
+                            continue;
+                        }
+                    }
+
+                    if (shorterList[i].Matched)
+                    {
                         continue;
                     }
                     else
                     {
-                        if (!longerList[i].Matched) longerList.MatchRequests(longerList[i], shorterList, matchingIndexer++);
-                    }
-
-
-                    if (!shorterList.ContainsSameAmount(shorterList[i], longerList))
-                    {
-                        longerList.Insert(i, blankRequest);
-                        shorterList.Add(blankRequest);
-                        continue;
-                    }
-                    else
-                    {
-                        if (!shorterList[i].Matched) shorterList.MatchRequests(shorterList[i], longerList, matchingIndexer++);
+                        if (shorterList.HasUnmatchedMatch(shorterList[i], longerList))
+                        {
+                            shorterList.MatchRequest(shorterList[i], longerList, matchingIndexer++);
+                        }
+                        else
+                        {
+                            longerList.Insert(i, blankRequest);
+                            shorterList.Add(blankRequest);
+                            continue;
+                        }
                     }
                 }
             }
@@ -117,27 +134,38 @@ namespace WLScriptParser.Utilities
     {
 
         //Extension method for checking the occurence of the request in the list compared to its occurence in listToCompare
-        public static bool ContainsSameAmount(this List<Request> list, Request request, List<Request> listToCompare)
+        public static bool HasUnmatchedMatch(this List<Request> list, Request request, List<Request> listToCompare)
         {
-            int listAmt = list.Count(item => item.GetRequestString() == request.GetRequestString());
-            int listToCompareAmt = listToCompare.Count(item => item.GetRequestString() == request.GetRequestString());
-            return listAmt == listToCompareAmt;
-        }
-        public static void MatchRequests(this List<Request> list, Request request, List<Request> listToCompare, int matchingId)
-        {
-            var thisList = list.Where(r => r.Parameters == request.Parameters);
-            var otherList = listToCompare.Where(r => r.Parameters == request.Parameters);
+            //int listAmt = list.Count(item => item.GetRequestString() == request.GetRequestString());
+            //int listToCompareAmt = listToCompare.Count(item => item.GetRequestString() == request.GetRequestString());
+            //return listAmt == listToCompareAmt;
+            Request comparedRequest = listToCompare.Find(r => r.Equals(request) && r.Matched == false);
+            return (comparedRequest != null) ? comparedRequest.Equals(request) : false;
 
-            foreach (var r in thisList)
-            {
-                r.Matched = true;
-                r.MatchingId = matchingId;
-            }
-            foreach (var r in otherList)
-            {
-                r.Matched = true;
-                r.MatchingId = matchingId;
-            }
+            //return listToCompare.Find(r => r.Equals(request) && r.Matched == false).Equals(request);
+
+        }
+        public static void MatchRequest(this List<Request> list, Request request, List<Request> listToCompare, int matchingId)
+        {
+            //var thisList = list.Where(r => r.Parameters == request.Parameters);
+            //var otherList = listToCompare.Where(r => r.Parameters == request.Parameters);
+
+            //foreach (var r in thisList)
+            //{
+            //    r.Matched = true;
+            //    r.MatchingId = matchingId;
+            //}
+            //foreach (var r in otherList)
+            //{
+            //    r.Matched = true;
+            //    r.MatchingId = matchingId;
+            //}
+            request.Matched = true;
+            request.MatchingId = matchingId;
+            Request comparedRequest = listToCompare.Find(r => r.Equals(request) && r.Matched == false);
+            comparedRequest.Matched = true;
+            comparedRequest.MatchingId = matchingId;
+
         }
     }
 }

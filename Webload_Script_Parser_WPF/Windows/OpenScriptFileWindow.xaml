@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WLScriptParser.Windows"
         mc:Ignorable="d"
         Title="Open" Height="260" Width="1024" WindowStyle="ToolWindow" ResizeMode="CanResize">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Background="LightGray">
         <StackPanel.Resources>
             <Style TargetType="Button">
                 <Setter Property="Background" Value="LightGray"/>

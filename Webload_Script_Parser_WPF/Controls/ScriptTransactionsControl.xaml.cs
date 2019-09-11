@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WLScriptParser.Models;
 using WLScriptParser.Models.Repositories;
+using WLScriptParser.Utilities;
 
 namespace WLScriptParser.Controls
 {
@@ -31,6 +32,8 @@ namespace WLScriptParser.Controls
         {
             InitializeComponent();
 
+            ColorDispenser colorDispenser = new ColorDispenser(55);
+
             //Build Treeview
             Tree_View.Items.Clear();
             TreeViewItem scriptItem = new TreeViewItem();
@@ -38,7 +41,9 @@ namespace WLScriptParser.Controls
             {
                 Text = script.FileName.Substring(script.FileName.LastIndexOf('\\') + 1),
                 FontWeight = FontWeights.SemiBold,
-                FontSize = 16
+                Background = Brushes.DarkOrange,
+                FontSize = 13.5,
+                
             };
             scriptItem.IsExpanded = true;
             Tree_View.Items.Add(scriptItem);
@@ -49,19 +54,21 @@ namespace WLScriptParser.Controls
                 tranTreeViewItem.Header = new TextBlock()
                 {
                     Text = t.Name,
-                    Foreground = Brushes.Blue,                    
-                    FontSize = 14.5
+                    Foreground = Brushes.Orange,                    
+                    FontSize = 12
                 };
                 tranTreeViewItem.IsExpanded = true;
                 scriptItem.Items.Add(tranTreeViewItem);
 
-                foreach (Request r in t.Requests)
+                foreach (Request r in t.Requests.Where(r => r.Visible == true))
                 {
                     TreeViewItem reqTreeViewItem = new TreeViewItem();
                     reqTreeViewItem.Header = new TextBlock()
                     {
                         Text = $"{ r.Verb } { r.Parameters }",
-                        Foreground = (r.Visible) ? Brushes.DarkRed : Brushes.Gray
+                        Foreground = Brushes.Black,
+                        Background = new SolidColorBrush(colorDispenser.GetColorBySeed(r.MatchingId)),
+                        Width = 750
                     };
                     reqTreeViewItem.IsExpanded = true;
                     tranTreeViewItem.Items.Add(reqTreeViewItem);
@@ -72,7 +79,8 @@ namespace WLScriptParser.Controls
                         corrTreeViewItem.Header = new TextBlock()
                         {
                             Text = $"{c.Rule}, {c.ExtractionLogic}, {c.OriginalValue}",
-                            Foreground = Brushes.DarkViolet
+                            Foreground = Brushes.LightPink
+
                         };
                         reqTreeViewItem.Items.Add(corrTreeViewItem);
                     }

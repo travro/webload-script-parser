@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using WLScriptParser.Parsers;
 
 namespace WLScriptParser.Models
 {
-    public class Request
-    {
+    public class Request { 
         private Correlation[] _correlations;
         public bool Visible { get; }
         public bool Matched { get; set; }
@@ -43,7 +43,8 @@ namespace WLScriptParser.Models
             POST = 1,
             PUT = 2,
             DELETE = 3,
-            CONNECT = 4
+            CONNECT = 4,
+            MISSING = 5
         }
         //private Request.RequestVerb ParseRequestVerb(XElement element)
         //{
@@ -69,6 +70,10 @@ namespace WLScriptParser.Models
         public string GetRequestString()
         {
             return Verb.ToString() + " " + Parameters;
+        }
+        public bool Equals(Request request)
+        {
+            return (Verb == request.Verb && Parameters == request.Parameters);
         }
     }
 }

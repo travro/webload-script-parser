@@ -14,21 +14,21 @@ namespace WLScriptParser.Utilities
 
         public ColorDispenser()
         {
-            _r = 180;
-            _g = 255;
+            _r = 255;
+            _g = 180;
             _b = 0;
-            _step = 25;
+            _step = 10;
             _stepsTaken = 0;
         }
         public ColorDispenser(byte step)
         {
-            _r = 180;
-            _g = 255;
+            _r = 255;
+            _g = 180;
             _b = 0;
-            byte maxstep = 75;
-            if (step > maxstep) step = maxstep;
-            if (step < 5) step = 5;
-            _step = step;
+            byte maxstep = 12;
+            byte minstep = 1;
+            if (step > maxstep) step = maxstep; else _step = step;
+            if (step < minstep) step = minstep; else _step = step;
             _stepsTaken = 0;
         }
         public Color GetNextColor()
@@ -61,22 +61,27 @@ namespace WLScriptParser.Utilities
         }
         public void Reset()
         {
-            _r = 150; _g = 255; _b = 0; _stepsTaken = 0;
+            _r = 255; _g = 180; _b = 0; _stepsTaken = 0;
         }
         private void Step()
         {
-            if (_r > Byte.MinValue)
-            {
-                _r = (_r - _step > Byte.MinValue) ? _r -= _step : Byte.MinValue;
-            }
-            else if (_b < Byte.MaxValue)
-            {
-                _b = (_b + _step < Byte.MaxValue) ? _b += _step : Byte.MaxValue;
-            }
-            else
-            {
-                _g = (_g - _step > Byte.MinValue) ? _g -= _step : Byte.MinValue;
-            }
+            //if (_r > Byte.MinValue)
+            //{
+            //    _r = (_r - _step > Byte.MinValue) ? _r -= _step : Byte.MinValue;
+            //}
+            //else if (_b < Byte.MaxValue)
+            //{
+            //    _b = (_b + _step < Byte.MaxValue) ? _b += _step : Byte.MaxValue;
+            //}
+            //else
+            //{
+            //    _g = (_g - _step > Byte.MinValue) ? _g -= _step : Byte.MinValue;
+            //}
+
+            if (_g + _step > Byte.MaxValue) _g = Byte.MaxValue; else _g += _step;
+            if (_b + _step > Byte.MaxValue) _b = Byte.MaxValue; else _b += _step;
+
+
             _stepsTaken++;
         }
     }

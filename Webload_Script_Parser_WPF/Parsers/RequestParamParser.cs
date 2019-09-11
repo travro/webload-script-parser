@@ -26,7 +26,7 @@ namespace WLScriptParser.Parsers
             string domain = (line.Contains(sumTotalSite)) ? sumTotalSite : "https://";
             int domainLastIndex = line.IndexOf(domain) + domain.Length;
             //int paramIndex = line.IndexOf(' ', domainLastIndex);
-            int paramIndex = line.IndexOfAny(new[] { '?', ' ' }, domainLastIndex);
+            int paramIndex = line.IndexOfAny(new[] { '?', '%', ' ' }, domainLastIndex);
             return line.Substring(domainLastIndex, paramIndex - domainLastIndex);
         }
     }

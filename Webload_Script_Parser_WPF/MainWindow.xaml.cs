@@ -18,8 +18,8 @@ namespace WLScriptParser
     /// </summary>
     public partial class MainWindow : Window
     {
-        TransactionsPage _transactionsPage;
-        DataTablePage _dataTablePage;
+        FullScriptPage _fullScriptPage;
+        RequestComparerPage _requestComparerPage;
         CorrelationsPage _correlationsPage;
         public MainWindow()
         {
@@ -80,13 +80,13 @@ namespace WLScriptParser
             ResolveDBWindow resolveDatabase = new ResolveDBWindow();
             resolveDatabase.ShowDialog();
         }
-        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
+        private void RequestComparer_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame.Content = _transactionsPage;
+            Main_Frame.Content = _requestComparerPage;
         }
-        private void Correlations_Button_Click(object sender, RoutedEventArgs e)
+        private void FullScript_Button_Click(object sender, RoutedEventArgs e)
         {
-            Main_Frame.Content = _correlationsPage;
+            Main_Frame.Content = _fullScriptPage;
         }
         private void FillMainReposEventHandler(object sender, FilesSelected args)
         {
@@ -105,18 +105,19 @@ namespace WLScriptParser
             //_transactionsPage = new TransactionsPage();
             //Main_Frame.Content = _transactionsPage;
             ////Transactions_Button.IsEnabled = true;
-
-
+            ///
             //_correlationsPage = new CorrelationsPage();            
             // //Correlations_Button.IsEnabled =  true;
             //Main_Frame.Content = _correlationsPage;
-
-
-
             try
             {
-                _dataTablePage = new DataTablePage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
-                Main_Frame.Content = _dataTablePage;
+                _requestComparerPage = new RequestComparerPage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
+                _fullScriptPage = new FullScriptPage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
+
+                Request_Comparer_Button.IsEnabled = true;
+                FullScript_Button.IsEnabled = true;
+
+                Main_Frame.Content = _requestComparerPage;
             }
             catch (System.Exception mainwindowException)
             {

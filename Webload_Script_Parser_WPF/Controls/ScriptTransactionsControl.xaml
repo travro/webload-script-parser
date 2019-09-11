@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:WLScriptParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TreeView x:Name="Tree_View"/>
+    <TreeView x:Name="Tree_View" Background="Gray"/>
 </UserControl>

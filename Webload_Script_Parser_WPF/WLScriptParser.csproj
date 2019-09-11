@@ -63,6 +63,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>columns_icon_1_vVA_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -106,14 +109,14 @@
     <Compile Include="Pages\CorrelationsPage.xaml.cs">
       <DependentUpon>CorrelationsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TransactionsPage.xaml.cs">
-      <DependentUpon>TransactionsPage.xaml</DependentUpon>
+    <Compile Include="Pages\FullScriptPage.xaml.cs">
+      <DependentUpon>FullScriptPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Parsers\CorrelationParamParser.cs" />
     <Compile Include="Parsers\RequestParamParser.cs" />
     <Compile Include="Parsers\ScriptTransactionParser.cs" />
-    <Compile Include="Pages\DataTablePage.xaml.cs">
-      <DependentUpon>DataTablePage.xaml</DependentUpon>
+    <Compile Include="Pages\RequestComparerPage.xaml.cs">
+      <DependentUpon>RequestComparerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\ColorDispenser.cs" />
     <Compile Include="Utilities\RequestTableBuilder.cs" />
@@ -159,11 +162,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DataTablePage.xaml">
+    <Page Include="Pages\RequestComparerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TransactionsPage.xaml">
+    <Page Include="Pages\FullScriptPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -225,6 +228,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="columns_icon_1_vVA_icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
