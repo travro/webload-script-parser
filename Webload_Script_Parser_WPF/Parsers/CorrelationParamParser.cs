@@ -69,13 +69,18 @@ namespace WLScriptParser.Parsers
                 } 
             }
 
+            for(int i = 0; i < line.Length)
+
+
             string error = "--no argument captured--";
+
+
 
             switch (ord)
             {
-                case Ordinal.First: return argList[0] ?? error;
-                case Ordinal.Second: return argList[1] ?? error;
-                case Ordinal.Third: return argList[2] ?? error;
+                case Ordinal.First: return (argList[0] ?? error);
+                case Ordinal.Second: return (argList[1] ?? error);
+                case Ordinal.Third: return (argList[2] ?? error);
                 default: return error;
             }
         }

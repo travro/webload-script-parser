@@ -10,8 +10,6 @@ namespace WLScriptParser.Utilities
 {
     public static class RequestTableBuilder
     {
-
-
         public static Request[,] GetRequestTable(IEnumerable<Request> r1, IEnumerable<Request> r2)
         {
             //Clone the request IEnumerables into new lists, ensuring pure functunality
@@ -26,7 +24,7 @@ namespace WLScriptParser.Utilities
             List<Request> shorterList = (longerList == r1Clone) ? r2Clone : r1Clone;
             int listLengthDiff = Math.Abs(longerList.Count - shorterList.Count);
 
-            string blankRequestParams = "--Not Available in This Script--";
+            string blankRequestParams = "-- Request Not Available in This Script--";
 
             //Prime the shorter list with blank Requests to equal the length of the longer
             while (listLengthDiff > 0)
@@ -34,15 +32,13 @@ namespace WLScriptParser.Utilities
                 shorterList.Add(new Request(Request.RequestVerb.GET, blankRequestParams));
                 listLengthDiff--;
             }
-            ColorDispenser colorDispenser = new ColorDispenser(16);
+
+            int matchingIndexer = 0;
 
             //Logic for building the list results after comparisons
             for (int i = 0; i < longerList.Count; i++)
             {
-
-
-
-                //if both blank
+                //if both blank, remove them and back up the iterator
                 if (longerList[i].Parameters == blankRequestParams && shorterList[i].Parameters == blankRequestParams)
                 {
                     longerList.RemoveAt(i);
@@ -50,28 +46,29 @@ namespace WLScriptParser.Utilities
                     if (i > 0) i--;
                     continue;
                 }
-                //if equality or only one is blank
-                if (
-                        longerList[i].Parameters == blankRequestParams && shorterList[i].Parameters != blankRequestParams
-                        ||
-                        longerList[i].Parameters != blankRequestParams && shorterList[i].Parameters == blankRequestParams
-                        ||
-                        longerList[i] == shorterList[i])
+                //if equality
+                if (longerList[i].Parameters == shorterList[i].Parameters)
                 {
-                    if (longerList[i].Color == null && shorterList[i].Color == null)
+                    if (!longerList[i].Matched && !shorterList[i].Matched)
                     {
-                        longerList[i].Color = shorterList[i].Color = colorDispenser.GetNextColor();
+                        longerList[i].Matched = shorterList[i].Matched = true;
+                        longerList[i].MatchingId = shorterList[i].MatchingId = matchingIndexer++;
+                        continue;
                     }
-
+                }
+                //if one is blank
+                if (longerList[i].Parameters == blankRequestParams && shorterList[i].Parameters != blankRequestParams
+                        ||
+                        longerList[i].Parameters != blankRequestParams && shorterList[i].Parameters == blankRequestParams)
+                {
                     continue;
                 }
 
                 //if neither are blank and neither are equal, check that the requests of each list exists in equal amounts within the opposing list
                 //using the defined List<> extension method "ContainSameAmount" defined below
-                if (longerList[i] != shorterList[i])
+                if (longerList[i].Parameters != shorterList[i].Parameters)
                 {
                     var blankRequest = new Request(Request.RequestVerb.GET, blankRequestParams);
-                    blankRequest.Color = Color.FromRgb(255, 0, 0);
 
                     if (!longerList.ContainsSameAmount(longerList[i], shorterList))
                     {
@@ -81,7 +78,7 @@ namespace WLScriptParser.Utilities
                     }
                     else
                     {
-                        longerList.ColorMatchingRequests(longerList[i], shorterList, colorDispenser.GetNextColor());
+                        if (!longerList[i].Matched) longerList.MatchRequests(longerList[i], shorterList, matchingIndexer++);
                     }
 
 
@@ -93,7 +90,7 @@ namespace WLScriptParser.Utilities
                     }
                     else
                     {
-                        shorterList.ColorMatchingRequests(shorterList[i], longerList, colorDispenser.GetNextColor());
+                        if (!shorterList[i].Matched) shorterList.MatchRequests(shorterList[i], longerList, matchingIndexer++);
                     }
                 }
             }
@@ -126,18 +123,20 @@ namespace WLScriptParser.Utilities
             int listToCompareAmt = listToCompare.Count(item => item.GetRequestString() == request.GetRequestString());
             return listAmt == listToCompareAmt;
         }
-        public static void ColorMatchingRequests(this List<Request> list, Request request, List<Request> listToCompare, Color color)
+        public static void MatchRequests(this List<Request> list, Request request, List<Request> listToCompare, int matchingId)
         {
             var thisList = list.Where(r => r.Parameters == request.Parameters);
             var otherList = listToCompare.Where(r => r.Parameters == request.Parameters);
 
             foreach (var r in thisList)
             {
-                r.Color = color;
+                r.Matched = true;
+                r.MatchingId = matchingId;
             }
             foreach (var r in otherList)
             {
-                r.Color = color;
+                r.Matched = true;
+                r.MatchingId = matchingId;
             }
         }
     }

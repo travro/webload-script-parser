@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using WLScriptParser.Parsers;
-using System.Windows.Media;
 
 namespace WLScriptParser.Models
 {
@@ -9,7 +8,8 @@ namespace WLScriptParser.Models
     {
         private Correlation[] _correlations;
         public bool Visible { get; }
-        public Color Color { get; set; }
+        public bool Matched { get; set; }
+        public int MatchingId { get; set; }
         public Request.RequestVerb Verb { get; }
         public string Parameters { get; }
         public Correlation[] Correlations => _correlations ?? new Correlation[] {}; /*new Correlation("", "")*/
@@ -17,12 +17,16 @@ namespace WLScriptParser.Models
         public Request(RequestVerb verb, string parameters)
         {
             Verb = verb; Parameters = parameters;
+            Matched = false;
+            MatchingId = -1;
         }
         public Request(XElement element, bool visible)
         {
             Verb = RequestParamParser.ParseRequestVerb(element.Attribute("Text").Value);
             Parameters = RequestParamParser.ParseRequestParamters(element.Attribute("Text").Value);
             Visible = visible;
+            Matched = false;
+            MatchingId = -1;
         }
         public Request(XElement httpHeaderElement, XElement nodeScriptElement, bool visible)
         {
@@ -30,6 +34,8 @@ namespace WLScriptParser.Models
             Parameters = RequestParamParser.ParseRequestParamters(httpHeaderElement.Attribute("Text").Value);
             Visible = visible;
             _correlations = CorrelationFactory.GetCorrelations(nodeScriptElement);
+            Matched = false;
+            MatchingId = -1;
         }
         public enum RequestVerb
         {

@@ -38,24 +38,29 @@ namespace WLScriptParser.Pages
             if (!transDataSet.CreateTransactionTables()) MessageBox.Show("The transaction count or names of these two scripts do not match");
 
 
+
             if (transDataSet.DataSet.Tables != null)
             {
+                ColorDispenser colorDispenser = new ColorDispenser(55);
+
                 foreach (DataTable table in transDataSet.DataSet.Tables)
                 {
+                    
+
+                    #region stackpanelOption
+                    
                     Stack_Panel.Children.Add(new TextBlock()
                     {
                         Text = "\n" + table.TableName,
-                        FontSize = 16,
-                        Foreground = Brushes.Black,
-
+                        FontSize = 16
                         //HorizontalAlignment = HorizontalAlignment.Center
                     });
                     DockPanel dockPanelNames = new DockPanel()
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch,
                         LastChildFill = true
-                    };   
-                    
+                    };
+
                     var fontSize = 14;
                     var foreGround = Brushes.White;
                     var backGround = Brushes.DarkGray;
@@ -64,8 +69,8 @@ namespace WLScriptParser.Pages
                         Text = table.Columns[0].ColumnName,
                         FontSize = fontSize,
                         Foreground = foreGround,
-                        Background = backGround,   
-                        Width = 800,                        
+                        Background = backGround,
+                        Width = 800,
                     };
 
                     var nameBlockRight = new TextBlock()
@@ -86,20 +91,24 @@ namespace WLScriptParser.Pages
 
                     foreach (DataRow row in table.Rows)
                     {
+                        var leftRequest = row[0] as Request;
+                        var rightRequest = row[1] as Request;
+                        
                         DockPanel dockPanelValues = new DockPanel();
                         var valueBlockLeft = new TextBlock()
                         {
-                            Text = (row[0] as Request).GetRequestString(),
-                            Background = new SolidColorBrush((row[0] as Request).Color),
+                            Text = leftRequest.GetRequestString(),
                             FontSize = fontSize,
-                            Width = 800
+                            Width = 800,
+                            Background = new SolidColorBrush(colorDispenser.GetColorBySeed(leftRequest.MatchingId))
                         };
 
                         var valueBlockRight = new TextBlock()
                         {
-                            Text = (row[1] as Request).GetRequestString(),
-                            Background = new SolidColorBrush((row[1] as Request).Color),
-                            FontSize = fontSize
+                            Text = rightRequest.GetRequestString(),
+                            FontSize = fontSize,
+                            Background = new SolidColorBrush(colorDispenser.GetColorBySeed(rightRequest.MatchingId))
+                            
                         };
 
                         DockPanel.SetDock(valueBlockLeft, Dock.Left);
@@ -109,7 +118,9 @@ namespace WLScriptParser.Pages
                         dockPanelValues.Children.Add(valueBlockRight);
 
                         Stack_Panel.Children.Add(dockPanelValues);
+                        colorDispenser.Reset();
                     }
+                    #endregion
                 }
             }
             else

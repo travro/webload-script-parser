@@ -55,21 +55,20 @@ namespace WLScriptParser.Utilities
 
                     table.Columns.AddRange(new DataColumn[]
                     {
-                    new DataColumn(){ ColumnName = _s1Name, DataType = typeof(Request) },                        
+                    new DataColumn(){ ColumnName = _s1Name, DataType = typeof(Request)},                        
                     new DataColumn(){ ColumnName = _s2Name, DataType = typeof(Request)}
                     });
 
                     Request[,] requestsArr = RequestTableBuilder.GetRequestTable(_s1.Transactions[i].Requests.Where(r => r.Visible == true), _s2.Transactions[i].Requests.Where(r => r.Visible == true));
 
-                    for(int j =0; j < requestsArr.GetLength(0); j++)
+                    for (int j = 0; j < requestsArr.GetLength(0); j++)
                     {
                         DataRow row = table.NewRow();
                         row[0] = requestsArr[j, 0];
                         row[1] = requestsArr[j, 1];
                         table.Rows.Add(row);
                     }
-                    DataSet.Tables.Add(table);
-                    
+                    DataSet.Tables.Add(table);                    
                 }
                 return true;
             }

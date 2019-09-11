@@ -78,7 +78,7 @@ namespace WLScriptParser.Parsers
                 return script;
             }
             catch (Exception fileStreamException)
-            {
+            {                
                throw fileStreamException;
             }
         }
