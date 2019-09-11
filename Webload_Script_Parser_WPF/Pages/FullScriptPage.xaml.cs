@@ -21,15 +21,15 @@ namespace WLScriptParser.Pages
     /// <summary>
     /// Interaction logic for TransactionsPage.xaml
     /// </summary>
-    public partial class TransactionsPage : Page
+    public partial class FullScriptPage : Page
     {
-        public TransactionsPage()
+        public FullScriptPage()
         {
             InitializeComponent();
             Frame_Left.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
             Frame_Right.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptRight);
         }
-        public TransactionsPage(Script scriptLeft, Script scriptRight)
+        public FullScriptPage(Script scriptLeft, Script scriptRight)
         {
             InitializeComponent();
             Frame_Left.Content = new ScriptTransactionsControl(scriptLeft);

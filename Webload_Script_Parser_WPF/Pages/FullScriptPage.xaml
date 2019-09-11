@@ -1,4 +1,4 @@
-﻿<Page x:Class="WLScriptParser.Pages.TransactionsPage"
+﻿<Page x:Class="WLScriptParser.Pages.FullScriptPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,6 +14,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Frame NavigationUIVisibility="Hidden" Grid.Column="0"  Margin="0" x:Name="Frame_Left"/>
-        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Margin="0" x:Name="Frame_Right"/>
+        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Margin="0" x:Name="Frame_Right" />
     </Grid>
 </Page>
