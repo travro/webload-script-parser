@@ -23,8 +23,8 @@ namespace Webload_Script_Parser_UnitTests
             string rightScript = ConfigurationData.FilePath2 + ConfigurationData.FileName2 + ConfigurationData.Extension;
             ScriptRepository.Create(leftScript, rightScript);
             //r1 = ScriptRepository.Repository.ScriptLeft.Transactions.SelectMany(t => t.Requests);
-            r1 = ScriptRepository.Repository.ScriptLeft.Transactions[1].Requests;
-            r2 = ScriptRepository.Repository.ScriptRight.Transactions[1].Requests;
+            r1 = ScriptRepository.Repository.ScriptLeft.Transactions[2].Requests;
+            r2 = ScriptRepository.Repository.ScriptRight.Transactions[2].Requests;
             arr = RequestTableBuilder.GetRequestTable(r1, r2);
         }
 
@@ -70,8 +70,8 @@ namespace Webload_Script_Parser_UnitTests
         public void RequestTableBuilder_ElementsOfTableFirstRow_EqualsFirstRequestsOfEachList()
         {
 
-            Assert.AreEqual(arr[0, 0].GetRequestString(), r1[0].GetRequestString());
-            //Assert.AreEqual(arr[0, 1].GetRequestString(), r2[0].GetRequestString());
+            //Assert.AreEqual(arr[0, 0].GetRequestString(), r1[0].GetRequestString());
+            Assert.AreEqual(arr[0, 1].GetRequestString(), r2[0].GetRequestString());
         }
     }
 }

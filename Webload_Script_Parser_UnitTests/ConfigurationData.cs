@@ -12,28 +12,28 @@ namespace Webload_Script_Parser_UnitTests
         public static string FilePath1 {
             get
             {
-                return "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\LM\\19.3.0.0-91\\";
+                return "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\LM\\";
             }
         }
         public static string FileName1
         {
             get
             {
-                return "LM_PRM_193_AdminGenTasks_05Aug19";
+                return "LM_PRM_ 193_ACP_06Aug19";
             }
         }
         public static string FilePath2
         {
             get
             {
-                return "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\LM\\19.3.0.0-115\\";
+                return "C:\\Users\\tsmelvin\\Documents\\WebLOAD\\Sessions\\LM\\";
             }
         }
         public static string FileName2
         {
             get
             {
-                return "LM_PRM_193_AdminGenTasks_16Aug19";
+                return "LM_PRM_ 193_ACP_16Aug19";
             }
         }
         public static string Extension

@@ -31,6 +31,16 @@ namespace Webload_Script_Parser_UnitTests
         {
             Assert.IsNotNull(tdS.DataSet);
         }
+        [TestMethod]
+        public void TDS_DataSet_Tables_IsNotNul()
+        {
+            Assert.IsNotNull(tdS.DataSet.Tables);
+        }
+        [TestMethod]
+        public void TDS_DataSet_Tables_CountGreaterThanZero()
+        {
+            Assert.IsTrue(tdS.DataSet.Tables.Count > 0);
+        }
         //[TestMethod]
         //public void TDS_DataSet_FirstTable_IsFileNameTable()
         //{
