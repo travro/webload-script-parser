@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLScriptParser", "Webload_Script_Parser_WPF\WLScriptParser.csproj", "{0482AF34-AD3E-4814-915D-1E5589813D50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLScriptParser", "WLScriptParser\WLScriptParser.csproj", "{0482AF34-AD3E-4814-915D-1E5589813D50}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Webload_Script_Parser_Setup", "Webload_Script_Parser_Setup\Webload_Script_Parser_Setup.vdproj", "{09896084-9EE3-40F4-8CE0-0DE47733F7B3}"
 EndProject
