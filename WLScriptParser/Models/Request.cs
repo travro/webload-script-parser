@@ -46,34 +46,13 @@ namespace WLScriptParser.Models
             CONNECT = 4,
             MISSING = 5
         }
-        //private Request.RequestVerb ParseRequestVerb(XElement element)
-        //{
-        //    string val = element.Attribute("Text").Value;
-        //    if (val.StartsWith(" CONNECT")) return Request.RequestVerb.CONNECT;
-        //    if (val.StartsWith(" DELETE")) return Request.RequestVerb.DELETE;
-        //    if (val.StartsWith(" POST")) return Request.RequestVerb.POST;
-        //    if (val.StartsWith(" PUT")) return Request.RequestVerb.PUT;
-        //    if (val.StartsWith(" GET")) return Request.RequestVerb.GET;
-        //    return Request.RequestVerb.GET;
-        //}
-        //private string ParseRequestParams(XElement element)
-        //{
-        //    string val = element.Attribute("Text").Value;
-        //    string sumTotalSite = "sumtotaldevelopment.net";
-        //    string domain = (val.Contains(sumTotalSite)) ? sumTotalSite : "https://";
-        //    int domainLastIndex = val.IndexOf(domain) + domain.Length;
-        //    int paramIndex = val.IndexOf(' ', domainLastIndex);
-        //    //int paramIndex = val.IndexOfAny(new[] { '?', ' ' }, domainLastIndex);
-
-        //    return val.Substring(domainLastIndex, paramIndex - domainLastIndex);
-        //}
         public string GetRequestString()
         {
             return Verb.ToString() + " " + Parameters;
         }
         public bool Equals(Request request)
         {
-            return (Verb == request.Verb && Parameters == request.Parameters);
+            return (Verb == request.Verb && Parameters.Equals(request.Parameters, System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }
