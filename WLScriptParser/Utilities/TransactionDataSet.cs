@@ -22,9 +22,11 @@ namespace WLScriptParser.Utilities
             _s2 = s2;
             _s2Name = s2.FileName.Substring(s2.FileName.LastIndexOf('\\') + 1);
 
-
-           // CreateFileNameTable();
-            //CreateTransactionTables();
+            if (_s1Name == _s2Name)
+            {
+                _s1Name += "(Left Selection)";
+                _s2Name += "(Right Selection)";
+            }
         }
         public bool CreateFileNameTable()
         {
