@@ -6,14 +6,14 @@
       xmlns:local="clr-namespace:WLScriptParser.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="TransactionsPage">
+      Title="TransactionsPage" x:Name="Page">
 
-    <Grid>
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Frame NavigationUIVisibility="Hidden" Grid.Column="0"  Margin="0" x:Name="Frame_Left"/>
         <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Margin="0" x:Name="Frame_Right" />
-    </Grid>
+    </Grid>-->
 </Page>

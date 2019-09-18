@@ -26,14 +26,16 @@ namespace WLScriptParser.Pages
         public FullScriptPage()
         {
             InitializeComponent();
-            Frame_Left.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptLeft);
-            Frame_Right.Content = new ScriptTransactionsControl(ScriptRepository.Repository.ScriptRight);
+            //Frame_Left.Content = new FullScriptConrol(ScriptRepository.Repository.ScriptLeft);
+            //Frame_Right.Content = new FullScriptConrol(ScriptRepository.Repository.ScriptRight);
         }
         public FullScriptPage(Script scriptLeft, Script scriptRight)
         {
             InitializeComponent();
-            Frame_Left.Content = new ScriptTransactionsControl(scriptLeft);
-            Frame_Right.Content = new ScriptTransactionsControl(scriptRight);
+            Page.Content = new DualScrollViewerControl(scriptLeft, scriptRight);
+            //Frame_Left.Content = new FullScriptConrol(scriptLeft);
+            //Frame_Right.Content = new FullScriptConrol(scriptRight);
+            
         }
     }
 }
