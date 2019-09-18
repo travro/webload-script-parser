@@ -21,14 +21,14 @@ namespace WLScriptParser.Controls
     /// <summary>
     /// Interaction logic for ScriptTransactionsControl.xaml
     /// </summary>
-    public partial class ScriptTransactionsControl : UserControl
+    public partial class FullScriptConrol : UserControl
     {
-        public ScriptTransactionsControl()
+        public FullScriptConrol()
         {
             InitializeComponent();
         }
 
-        public ScriptTransactionsControl(Script script)
+        public FullScriptConrol(Script script)
         {
             InitializeComponent();
 
