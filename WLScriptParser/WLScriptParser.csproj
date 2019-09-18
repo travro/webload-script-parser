@@ -88,14 +88,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DualScrollViewerControl.xaml.cs">
+      <DependentUpon>DualScrollViewerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ScriptAttributesControl.xaml.cs">
       <DependentUpon>ScriptAttributesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ScriptCorrelationsControl.xaml.cs">
       <DependentUpon>ScriptCorrelationsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ScriptTransactionsControl.xaml.cs">
-      <DependentUpon>ScriptTransactionsControl.xaml</DependentUpon>
+    <Compile Include="Controls\FullScriptControl.xaml.cs">
+      <DependentUpon>FullScriptControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DAL\SqlAPI.cs" />
     <Compile Include="Models\Repositories\AttributesRepository.cs" />
@@ -134,6 +137,10 @@
     <Compile Include="Windows\ScriptItemListWindow.xaml.cs">
       <DependentUpon>ScriptItemListWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\DualScrollViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ScriptAttributesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -142,7 +149,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ScriptTransactionsControl.xaml">
+    <Page Include="Controls\FullScriptControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
