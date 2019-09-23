@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26228.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLScriptParser", "WLScriptParser\WLScriptParser.csproj", "{0482AF34-AD3E-4814-915D-1E5589813D50}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Webload_Script_Parser_Setup", "Webload_Script_Parser_Setup\Webload_Script_Parser_Setup.vdproj", "{09896084-9EE3-40F4-8CE0-0DE47733F7B3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webload_Script_Parser_UnitTests", "Webload_Script_Parser_UnitTests\Webload_Script_Parser_UnitTests.csproj", "{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLRequestLister", "WLRequestLister\WLRequestLister.csproj", "{1208FA47-7703-45BA-B461-E9802C14E8CD}"
@@ -45,24 +43,6 @@ Global
 		{0482AF34-AD3E-4814-915D-1E5589813D50}.Release|x64.Build.0 = Release|Any CPU
 		{0482AF34-AD3E-4814-915D-1E5589813D50}.Release|x86.ActiveCfg = Release|Any CPU
 		{0482AF34-AD3E-4814-915D-1E5589813D50}.Release|x86.Build.0 = Release|Any CPU
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|Any CPU.ActiveCfg = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|ARM.ActiveCfg = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|ARM.Build.0 = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|ARM64.ActiveCfg = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|ARM64.Build.0 = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|x64.ActiveCfg = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|x64.Build.0 = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|x86.ActiveCfg = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Debug|x86.Build.0 = Debug
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|Any CPU.ActiveCfg = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|ARM.ActiveCfg = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|ARM.Build.0 = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|ARM64.ActiveCfg = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|ARM64.Build.0 = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|x64.ActiveCfg = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|x64.Build.0 = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|x86.ActiveCfg = Release
-		{09896084-9EE3-40F4-8CE0-0DE47733F7B3}.Release|x86.Build.0 = Release
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Debug|ARM.Build.0 = Debug|Any CPU
