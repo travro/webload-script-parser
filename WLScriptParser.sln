@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLScriptParser", "WLScriptP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webload_Script_Parser_UnitTests", "Webload_Script_Parser_UnitTests\Webload_Script_Parser_UnitTests.csproj", "{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLRequestLister", "WLRequestLister\WLRequestLister.csproj", "{1208FA47-7703-45BA-B461-E9802C14E8CD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,24 +59,6 @@ Global
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Release|x64.Build.0 = Release|Any CPU
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Release|x86.ActiveCfg = Release|Any CPU
 		{401D1FBC-E4B0-42CB-B28A-A81B2987CDEE}.Release|x86.Build.0 = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|ARM.Build.0 = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|x64.Build.0 = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Debug|x86.Build.0 = Debug|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|ARM.ActiveCfg = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|ARM.Build.0 = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|ARM64.Build.0 = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|x64.ActiveCfg = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|x64.Build.0 = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|x86.ActiveCfg = Release|Any CPU
-		{1208FA47-7703-45BA-B461-E9802C14E8CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
