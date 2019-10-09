@@ -12,30 +12,33 @@ namespace WLScriptParser.Parsers
             int secondParamStartingIndex = 0;
             int secondParamEndingIndex = 0;
             List<string> argList = new List<string>();
-            StringBuilder buildingString = new StringBuilder();  
+            string[] argArray = new string[] { "--no argument captured--", "--no argument captured--", "--no argument captured--" };
+            StringBuilder buildingString = new StringBuilder();
 
 
             //get the first correlation argument
             for (int i = 0; i < line.Length; i++)
             {
-                if(line[i] == '\"')
+                if (line[i] == '\"')
                 {
-                    if (quoteStack.Count == 0) 
+                    if (quoteStack.Count == 0)
                     {
                         quoteStack.Push(line[i]);
                         continue;
                     }
-                    else{
+                    else
+                    {
                         quoteStack.Pop();
                         secondParamStartingIndex = i;
-                        argList.Add(buildingString.ToString());
-                        buildingString = new StringBuilder();
+                        //argList.Add(buildingString.ToString());
+                        argArray[0] = buildingString.ToString();
+                        buildingString.Clear();
                         break;
                     }
                 }
                 else
                 {
-                    if(quoteStack.Count > 0)
+                    if (quoteStack.Count > 0)
                     {
                         buildingString.Append(line[i]);
                     }
@@ -43,7 +46,7 @@ namespace WLScriptParser.Parsers
             }
 
             //get the third
-            for(int j = line.Length - 1; j >=0; j--)
+            for (int j = line.Length - 1; j >= 0; j--)
             {
                 if (line[j] == '\"')
                 {
@@ -56,8 +59,9 @@ namespace WLScriptParser.Parsers
                     {
                         quoteStack.Pop();
                         secondParamEndingIndex = j;
-                        argList.Add(buildingString.ToString());
-                        buildingString = new StringBuilder();
+                        //argList.Add(buildingString.ToString());
+                        argArray[2] = buildingString.ToString();
+                        buildingString.Clear();
                         break;
                     }
                 }
@@ -65,26 +69,21 @@ namespace WLScriptParser.Parsers
                 {
                     if (quoteStack.Count > 0)
                     {
-                        buildingString.Append(line[j]);
+                        buildingString.Insert(0, line[j]);
                     }
                 }
             }
 
-            argList.Insert(1,line.Substring(secondParamStartingIndex, secondParamEndingIndex - secondParamStartingIndex));
+            //argList.Insert(1, line.Substring(secondParamStartingIndex, secondParamEndingIndex - secondParamStartingIndex));
 
-
-
-
-            string error = "--no argument captured--";
-
-
+            argArray[1] = line.Substring(secondParamStartingIndex, secondParamEndingIndex - secondParamStartingIndex);
 
             switch (ord)
             {
-                case Ordinal.First: return (argList[0] ?? error);
-                case Ordinal.Second: return (argList[1] ?? error);
-                case Ordinal.Third: return (argList[2] ?? error);
-                default: return error;
+                case Ordinal.First: return (argArray[0]);
+                case Ordinal.Second: return (argArray[1]);
+                case Ordinal.Third: return (argArray[2]);
+                default: return "--error--";
             }
         }
         public enum Ordinal

@@ -23,7 +23,7 @@ namespace Webload_Script_Parser_UnitTests
         [TestMethod]
         public void CorrelationParamParser_GivenLine_ReturnsCorrectValue()
         {
-            Assert.AreEqual(CorrelationParamParser.Parse(corr4, CorrelationParamParser.Ordinal.Third), "---");
+            Assert.AreEqual(CorrelationParamParser.Parse(corr4, CorrelationParamParser.Ordinal.Third), "E92190CB-3703-4576-A652-CA3F59AE0827");
         }
 
         private XElement AssignNodeScript(XElement element, string filepath)
