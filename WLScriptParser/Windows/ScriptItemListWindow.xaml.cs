@@ -46,7 +46,7 @@ namespace WLScriptParser.Windows
         {
 
             string selection = (sender as ListView).SelectedValue.ToString();
-            NotifyPropertyChanged(selection);
+            NotifyPropertyChanged(selection);            
             Close();
         }
 

@@ -41,10 +41,10 @@
                 <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
-                <uc:ScriptItemControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
-                <uc:ScriptItemControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
-                <uc:ScriptItemControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
-                <uc:ScriptItemControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
+                <uc:ScriptAttributesControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
+                <uc:ScriptAttributesControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
+                <uc:ScriptAttributesControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
+                <uc:ScriptAttributesControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
             </Grid>
 
         </GroupBox>

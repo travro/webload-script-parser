@@ -21,7 +21,7 @@ namespace WLScriptParser.Controls
     /// <summary>
     /// Interaction logic for ScriptItemControl.xaml
     /// </summary>
-    public partial class ScriptItemControl : UserControl
+    public partial class ScriptAttributesControl : UserControl
     {        
 
         public string SelectedValue { get; private set; }
@@ -30,10 +30,10 @@ namespace WLScriptParser.Controls
             get { return (ScriptAttribute)GetValue(ListTypeProperty); }
             set { SetValue(ListTypeProperty, value); }
         }
-        public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(ScriptAttribute), typeof(ScriptItemControl));
+        public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(ScriptAttribute), typeof(ScriptAttributesControl));
 
 
-        public ScriptItemControl()
+        public ScriptAttributesControl()
         {
             InitializeComponent();
             this.DataContext = this;
