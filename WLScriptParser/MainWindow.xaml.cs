@@ -114,6 +114,8 @@ namespace WLScriptParser
                 _requestComparerPage = new RequestComparerPage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
                 _fullScriptPage = new FullScriptPage(ScriptRepository.Repository.ScriptLeft, ScriptRepository.Repository.ScriptRight);
 
+                Header_SaveAs.IsEnabled = true;
+                Header_PushDB.IsEnabled = true;
                 Request_Comparer_Button.IsEnabled = true;
                 FullScript_Button.IsEnabled = true;
 
