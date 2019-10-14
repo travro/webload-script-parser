@@ -22,8 +22,8 @@
         </Style>
     </Window.Resources>
     <StackPanel Orientation="Vertical" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <GroupBox Header="Select The Attributes for The Push" Margin="50,10,50,20">
-            <Grid Height="100" >
+        <GroupBox Header="Select This Script's Attributes for Database Insertion" Margin="40,10,40,10">
+            <Grid Height="110" Margin="10,15,10,5">
                 <Grid.Resources>
 
                 </Grid.Resources>
@@ -37,20 +37,20 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2.5*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0">Test Name (LM, TM, Mobile, etc):</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0">Test Name (ie: LM,TM,...):</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="0">Build Version (##.#.#.#-##):</TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="0">Scenario (ACP, Profile, Scorm, etc):</TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="0">Date:</TextBlock>
-                <uc:ScriptAttributesControl Grid.Row="0" Grid.Column="1" x:Name="SIC_Test_Names" Attribute="TestNames"/>
-                <uc:ScriptAttributesControl Grid.Row="1" Grid.Column="1" x:Name="SIC_Build_Names" Attribute="BuildNames"/>
-                <uc:ScriptAttributesControl Grid.Row="2" Grid.Column="1" x:Name="SIC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
-                <uc:ScriptAttributesControl Grid.Row="3" Grid.Column="1" x:Name ="SIC_Scenario_Dates"  Attribute="ScenarioDates" IsEnabled="False"/>
+                <TextBlock Grid.Row="2" Grid.Column="0">Script(ie: ACP,Goals,...):</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0">Recorded Date:</TextBlock>
+                <uc:ScriptAttributesControl Grid.Row="0" Grid.Column="1" x:Name="SAC_Test_Names" Attribute="TestNames"/>
+                <uc:ScriptAttributesControl Grid.Row="1" Grid.Column="1" x:Name="SAC_Build_Names" Attribute="BuildNames"/>
+                <uc:ScriptAttributesControl Grid.Row="2" Grid.Column="1" x:Name="SAC_Scenario_Names"  Attribute="ScenarioNames" IsEnabled="False"/>
+                <DatePicker Grid.Row="3" Grid.Column="1" x:Name ="Date_Picker"  Margin="15,5,0.4,0"/>
             </Grid>
 
         </GroupBox>
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" Height="24" Margin="0,0,50,0">
             <Button x:Name="Cancel" Click="Cancel_Click" >Cancel</Button>
-            <Button x:Name="Push" IsEnabled="False">Push</Button>
+            <Button x:Name="Push" IsEnabled="False" Click="Push_Click">Push</Button>
         </StackPanel>
     </StackPanel>
 </Window>
