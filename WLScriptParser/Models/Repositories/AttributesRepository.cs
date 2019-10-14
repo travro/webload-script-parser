@@ -13,8 +13,12 @@ namespace WLScriptParser.Models.Repositories
         private static AttributesRepository repo = null;
         private ObservableCollection<string> _testNames;
         private ObservableCollection<string> _testBuilds;
+        private ObservableCollection<string> _scriptNames;
+        private ObservableCollection<DateTime> _scriptDates;
         public string[] TestNames => _testNames.ToArray();
         public string[] TestBuilds => _testBuilds.ToArray();
+        public string[] ScriptNames => _scriptNames.ToArray()?? new string[] { };
+        public DateTime[] ScriptDates => _scriptDates.ToArray()?? new DateTime[] { };
         //private  List<object> _scenarioNames;
         //private  List<object> _scenarioDates;
         public static AttributesRepository Repository
@@ -31,12 +35,16 @@ namespace WLScriptParser.Models.Repositories
         }
         private AttributesRepository()
         {
+            _testNames = SqlAPI.GetTestAttribrutes(ScriptAttribute.TestNames);
+            _testBuilds = SqlAPI.GetTestAttribrutes(ScriptAttribute.BuildNames);
+        }
 
-            // _testNames = new List<string>();            
-            // _testBuilds = new List<string>();
-            _testNames = SqlAPI.QueryAttributes(ScriptAttribute.TestNames);
-            _testBuilds = SqlAPI.QueryAttributes(ScriptAttribute.BuildNames);
+        public void BuildScriptCollections(string testName, string buildVersion)
+        {
+            if (_scriptNames == null) _scriptNames = new ObservableCollection<string>(); else _scriptNames.Clear();
+            if (_scriptDates == null) _scriptDates = new ObservableCollection<DateTime>(); else _scriptDates.Clear();
 
+            SqlAPI.FillScriptCollections(_scriptNames, _scriptDates, testName, buildVersion);
         }
     }
 }
