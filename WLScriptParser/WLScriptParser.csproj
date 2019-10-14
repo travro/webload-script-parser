@@ -140,6 +140,9 @@
     <Compile Include="Windows\ResolveDBWindow.xaml.cs">
       <DependentUpon>ResolveDBWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ScriptItemAddWindow.xaml.cs">
+      <DependentUpon>ScriptItemAddWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ScriptItemListWindow.xaml.cs">
       <DependentUpon>ScriptItemListWindow.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ResolveDBWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ScriptItemAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
