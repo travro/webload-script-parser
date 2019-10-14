@@ -21,10 +21,9 @@ namespace WLScriptParser.Controls
     /// <summary>
     /// Interaction logic for ScriptItemControl.xaml
     /// </summary>
-    public partial class ScriptAttributesControl : UserControl
+    public partial class ScriptAttributesControl : UserControl, INotifyPropertyChanged
     {        
 
-        public string SelectedValue { get; private set; }
         public ScriptAttribute Attribute
         {
             get { return (ScriptAttribute)GetValue(ListTypeProperty); }
@@ -32,13 +31,38 @@ namespace WLScriptParser.Controls
         }
         public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(ScriptAttribute), typeof(ScriptAttributesControl));
 
+        public string SelectedValue
+        {
+            get { return (string)GetValue(SelectionProperty); }
+            private set { SetValue(SelectionProperty, value); }
+        }
+        public static readonly DependencyProperty SelectionProperty = DependencyProperty.Register("SelectionType", typeof(string), typeof(ScriptAttributesControl));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string DefaultValue { get; }
 
         public ScriptAttributesControl()
         {
             InitializeComponent();
             this.DataContext = this;
-            SelectedValue = "No item selected";
+            SelectedValue = DefaultValue = "No Selection Made";
         }
+        
+        public void Clear()
+        {
+            Text_Block.Text = SelectedValue = DefaultValue;
+            NotifyPropertyChanged();
+        }
+        #region helpermethods
+        private void NotifyPropertyChanged()
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(SelectedValue));
+            }
+        }
+        #endregion
         #region handlers
         private void Select_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -55,11 +79,13 @@ namespace WLScriptParser.Controls
         }
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            Text_Block.Text = "test";
+            var scritItemAddWindow = new ScriptItemAddWindow();
+            scritItemAddWindow.Show();
         }
         private void UpdateSelectedValue(object sender, PropertyChangedEventArgs args)
         {
             Text_Block.Text = SelectedValue = args.PropertyName;
+            NotifyPropertyChanged();
         }
         #endregion handlers
     }

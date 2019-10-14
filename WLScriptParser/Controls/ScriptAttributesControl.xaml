@@ -12,7 +12,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" x:Name="Text_Block" HorizontalAlignment="Left" Margin="15,0,0,0.4" MaxWidth="200" Text="{Binding SelectedValue, Mode=OneWay}"/> 
+        <TextBlock Grid.Column="0" x:Name="Text_Block" HorizontalAlignment="Left" Margin="15,0,0,0.4" MaxWidth="200" Text="{Binding SelectedValue}"/> 
         <Button Grid.Column="1" x:Name="Select_Button" Content="Select" Click="Select_Button_Click"/>
         <Button Grid.Column="2" x:Name="Add_Button" Content="Add" Click="Add_Button_Click" />
     </Grid>
