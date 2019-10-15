@@ -12,9 +12,12 @@ namespace WLScriptParser.DAL
     public static class SqlAPI
     {
         /**
-         * Called during AttributesRepository instantiation
+         * Returns: Collection of Test names
+         * Params:
+         *      attribute: the Script attribute that will determine the column of values to be returned
+         *          default: TestNames
          * */
-        public static ObservableCollection<string> GetTestAttribrutes(ScriptAttribute attribute)
+        public static ObservableCollection<string> GetTestCollections(ScriptAttribute attribute)
         {
             ObservableCollection<string> list = new ObservableCollection<string>();
 
@@ -46,10 +49,15 @@ namespace WLScriptParser.DAL
             return list;
         }
         /**
-         * Called by AttributesRepository once TestNames and BuildNames (build version) is selected by user to fill remaining Observaable Collections
+         * Populates script collections given as parameters
+         * Params:
+         *  scriptNames: the observable string collection of script names to be populated
+         *  scriptDates: the observable string collection of recorded dates to be populated
+         *  testName: the name parameter for retrieving a test id
+         *  buildVersion: the build parameter for retrieving a test id
          * 
          * **/
-        public static void FillScriptCollections(ObservableCollection<string> scriptNames, ObservableCollection<DateTime> scriptDates, string testName, string buildVersion)
+        public static void GetScriptCollections(ObservableCollection<string> scriptNames, ObservableCollection<DateTime> scriptDates, string testName, string buildVersion)
         {
             /**
             DataTable scriptTable = new DataTable();
@@ -77,6 +85,7 @@ namespace WLScriptParser.DAL
                 cnn.Open();
                 using (var cmd = new SqlCommand())
                 {
+                    cmd.Connection = cnn;
                     cmd.CommandText = "SELECT script_name, recording_date FROM Scripts WHERE test_id = " +
                         "(SELECT id FROM Tests WHERE test_name = @testName and build_version = @buildVersion)";
 
@@ -86,7 +95,7 @@ namespace WLScriptParser.DAL
                             new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
                     });
 
-                    cmd.Connection = cnn;
+
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -99,6 +108,89 @@ namespace WLScriptParser.DAL
                 }
                 cnn.Close();
             }
+        }
+        /**
+         * Returns: Id column value from a test record
+         * Params:
+         *  testName: the name parameter for the SQL query
+         *  buildVersion: the build paraemter for the SQL query
+         * **/
+        public static int GetTestId(string testName, string buildVersion)
+        {
+            object id;
+
+            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            {
+                cnn.Open();
+
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = cnn;
+                    cmd.CommandText = "SELECT test_id FROM Scripts WHERE test_id = " +
+                        "(SELECT id FROM Tests WHERE test_name = @testName and build_version = @buildVersion)";
+                    cmd.Parameters.AddRange(new SqlParameter[]
+                    {
+                            new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
+                            new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
+                    });
+                    id = cmd.ExecuteScalar();
+                }
+                cnn.Close();
+            }
+            return (id != null) ? (Int32)id : -1;
+        }
+
+        public static int PushNewTest(string testName, string buildVersion)
+        {
+            object id;
+
+            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            {
+                cnn.Open();
+
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = cnn;
+                    cmd.CommandText = "INSERT INTO Tests values (@testName, @buildVersion)" +
+                        "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                    cmd.Parameters.AddRange(new SqlParameter[]
+                    {
+                            new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
+                            new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
+                    });
+
+                    id = cmd.ExecuteScalar();
+                }
+                cnn.Close();
+            }
+            return (id != null) ? (int)id : -1;
+        }
+
+        public static int PushNewScript(string scriptName, DateTime dt, int testId)
+        {
+            object id;
+
+            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            {
+                cnn.Open();
+
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = cnn;
+                    cmd.CommandText = "INSERT INTO Scripts values (@scriptName, @recordingDate, @testId)" +
+                        "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                    cmd.Parameters.AddRange(new SqlParameter[]
+                    {
+                            new SqlParameter(){ ParameterName = "@scriptName", SqlDbType = SqlDbType.NVarChar, Value = scriptName},
+                            new SqlParameter(){ ParameterName = "@recordingDate", SqlDbType = SqlDbType.Date, Value = dt},
+                            new SqlParameter(){ ParameterName = "@testId", SqlDbType = SqlDbType.Int, Value = testId }
+                    });
+
+                    id = cmd.ExecuteScalar();
+                }
+                cnn.Close();
+            }
+            return (id != null) ? (int)id : -1;
         }
     }
 }

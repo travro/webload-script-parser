@@ -35,8 +35,8 @@ namespace WLScriptParser.Models.Repositories
         }
         private AttributesRepository()
         {
-            _testNames = SqlAPI.GetTestAttribrutes(ScriptAttribute.TestNames);
-            _testBuilds = SqlAPI.GetTestAttribrutes(ScriptAttribute.BuildNames);
+            _testNames = SqlAPI.GetTestCollections(ScriptAttribute.TestNames);
+            _testBuilds = SqlAPI.GetTestCollections(ScriptAttribute.BuildNames);
         }
 
         public void BuildScriptCollections(string testName, string buildVersion)
@@ -44,7 +44,7 @@ namespace WLScriptParser.Models.Repositories
             if (_scriptNames == null) _scriptNames = new ObservableCollection<string>(); else _scriptNames.Clear();
             if (_scriptDates == null) _scriptDates = new ObservableCollection<DateTime>(); else _scriptDates.Clear();
 
-            SqlAPI.FillScriptCollections(_scriptNames, _scriptDates, testName, buildVersion);
+            SqlAPI.GetScriptCollections(_scriptNames, _scriptDates, testName, buildVersion);
         }
     }
 }

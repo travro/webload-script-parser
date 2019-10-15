@@ -26,17 +26,17 @@ namespace WLScriptParser.Controls
 
         public ScriptAttribute Attribute
         {
-            get { return (ScriptAttribute)GetValue(ListTypeProperty); }
-            set { SetValue(ListTypeProperty, value); }
+            get { return (ScriptAttribute)GetValue(AttributeProperty); }
+            set { SetValue(AttributeProperty, value); }
         }
-        public static readonly DependencyProperty ListTypeProperty = DependencyProperty.Register("ListType", typeof(ScriptAttribute), typeof(ScriptAttributesControl));
+        public static readonly DependencyProperty AttributeProperty = DependencyProperty.Register("Attribute", typeof(ScriptAttribute), typeof(ScriptAttributesControl));
 
         public string SelectedValue
         {
             get { return (string)GetValue(SelectionProperty); }
             private set { SetValue(SelectionProperty, value); }
         }
-        public static readonly DependencyProperty SelectionProperty = DependencyProperty.Register("SelectionType", typeof(string), typeof(ScriptAttributesControl));
+        public static readonly DependencyProperty SelectionProperty = DependencyProperty.Register("SelectedValue", typeof(string), typeof(ScriptAttributesControl));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,11 +51,11 @@ namespace WLScriptParser.Controls
         
         public void Clear()
         {
-            Text_Block.Text = SelectedValue = DefaultValue;
-            NotifyPropertyChanged();
+            SelectedValue = DefaultValue;
+            OnPropertyChanged();
         }
         #region helpermethods
-        private void NotifyPropertyChanged()
+        private void OnPropertyChanged()
         {
             if (PropertyChanged != null)
             {
@@ -84,8 +84,8 @@ namespace WLScriptParser.Controls
         }
         private void UpdateSelectedValue(object sender, PropertyChangedEventArgs args)
         {
-            Text_Block.Text = SelectedValue = args.PropertyName;
-            NotifyPropertyChanged();
+            SelectedValue = args.PropertyName;
+            OnPropertyChanged();
         }
         #endregion handlers
     }

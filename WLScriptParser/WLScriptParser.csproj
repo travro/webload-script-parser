@@ -106,6 +106,7 @@
     <Compile Include="Controls\FullScriptControl.xaml.cs">
       <DependentUpon>FullScriptControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ScriptPushCoordinator.cs" />
     <Compile Include="DAL\SqlAPI.cs" />
     <Compile Include="Models\Repositories\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />

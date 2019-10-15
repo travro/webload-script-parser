@@ -49,8 +49,8 @@
 
         </GroupBox>
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" Height="24" Margin="0,0,50,0">
-            <Button x:Name="Cancel" Click="Cancel_Click" >Cancel</Button>
-            <Button x:Name="Push" IsEnabled="False" Click="Push_Click">Push</Button>
+            <Button x:Name="Button_Cancel" Click="Cancel_Click" >Cancel</Button>
+            <Button x:Name="Button_Push" IsEnabled="False" Click="Push_Click">Push</Button>
         </StackPanel>
     </StackPanel>
 </Window>
