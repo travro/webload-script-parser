@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WLScriptParser.Models.Repositories;
 
 namespace WLScriptParser.Windows
 {
@@ -22,14 +23,10 @@ namespace WLScriptParser.Windows
         public ScriptItemAddWindow()
         {
             InitializeComponent();
-        }
-
-        private void Add_Button_Click(object sender, RoutedEventArgs e)
-        {
             
         }
 
-        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

@@ -5,15 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WLScriptParser.Windows"
         mc:Ignorable="d"
-        Title="ScriptItemAddWindow" Height="107.725" Width="732.767">
+        Title="Add Script Name" Height="107.725" Width="454.367">
     <Grid Margin="10,0,10,0" Height="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.5*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" x:Name="Text_Box" MaxLength="25" />
-        <Button Grid.Column="1" x:Name="Add_Button" Content="Add" Click="Add_Button_Click" Margin="10,0,0,0"/>
-        <Button Grid.Column="2" x:Name="Cancel_Button" Content="Cancel" Click="Cancel_Button_Click" Margin="10,0,0,0"/>
+        <Button Grid.Column="1" x:Name="Button_Close" Content="Close" Click="Button_Close_Click" Margin="10,0,0,0"/>
     </Grid>
 </Window>
