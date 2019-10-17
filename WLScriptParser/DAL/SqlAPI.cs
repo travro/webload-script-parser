@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -166,7 +167,7 @@ namespace WLScriptParser.DAL
             return (id != null) ? (int)id : -1;
         }
 
-        public static int PushNewScript(string scriptName, DateTime dt, int testId)
+        public static void PushNewScript(Script script, string scriptName, DateTime dt, int testId)
         {
             object id;
 
@@ -186,11 +187,113 @@ namespace WLScriptParser.DAL
                             new SqlParameter(){ ParameterName = "@testId", SqlDbType = SqlDbType.Int, Value = testId }
                     });
 
-                    id = cmd.ExecuteScalar();
+                    try
+                    {
+                        id = cmd.ExecuteScalar();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                 }
+                //return (id != null) ? (int)id : -1;  <------------make sure to call Push with id converted to int
+                //call push transactions
+                PushTransactions(script.Transactions, (Int32)id, cnn);
                 cnn.Close();
             }
-            return (id != null) ? (int)id : -1;
+
         }
+        #region helpermethods
+        private static void PushTransactions(List<Transaction> transactions, int scriptId, SqlConnection cnn)
+        {
+
+            foreach (var transaction in transactions)
+            {
+                var cmd = new SqlCommand();
+                cmd.Connection = cnn;
+                cmd.CommandText = "INSERT INTO TRANSACTIONS VALUES (@transName, @scriptId)" +
+                    "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                cmd.Parameters.AddRange(new SqlParameter[]
+                {
+                    new SqlParameter(){ ParameterName = "@transName", SqlDbType = SqlDbType.NVarChar, Value = transaction.Name},
+                    new SqlParameter(){ ParameterName = "@scriptId", SqlDbType = SqlDbType.Int, Value = scriptId}
+                });
+
+                try
+                {
+                    object id = cmd.ExecuteScalar();
+                    PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)id, cnn);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        private static void PushRequests(IEnumerable<Request> requests, int transId, SqlConnection cnn)
+        {
+            SqlCommand cmd;
+
+            foreach (var request in requests)
+            {
+                cmd = new SqlCommand();
+                cmd.Connection = cnn;
+                cmd.CommandText = "INSERT INTO Requests VALUES (@requestVerb, @requestParams, @transId)" +
+                    "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                cmd.Parameters.AddRange(new SqlParameter[]
+                {
+                    new SqlParameter(){ ParameterName = "@requestVerb", SqlDbType = SqlDbType.Int, Value = (int)request.Verb},
+                    new SqlParameter(){ ParameterName = "@requestParams", SqlDbType = SqlDbType.NVarChar, Value = request.Parameters},
+                    new SqlParameter(){ ParameterName = "@transId", SqlDbType = SqlDbType.Int, Value = transId},
+                });
+
+                try
+                {
+                    object id = cmd.ExecuteScalar();
+                    if (request.Correlations != null && request.Correlations.Length > 0)
+                    {
+                        //PushCorrelations(request.Correlations, (Int32)id, cnn);
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        private static void PushCorrelations(IEnumerable<Correlation> correlations, int reqId, SqlConnection cnn)
+        {
+            SqlCommand cmd;
+
+            foreach (var correlation in correlations)
+            {
+                cmd = new SqlCommand();
+                cmd.Connection = cnn;
+                cmd.CommandText = "INSERT INTO Correlations VALUES (@rule, @extLogic, @originalVal, @reqId)" +
+                    "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                cmd.Parameters.AddRange(new SqlParameter[]
+                {
+                    new SqlParameter(){ ParameterName = "@rule", SqlDbType = SqlDbType.NVarChar, Value = correlation.Rule },
+                    new SqlParameter(){ ParameterName = "@extLogic", SqlDbType = SqlDbType.NVarChar, Value = correlation.ExtractionLogic },
+                    new SqlParameter(){ ParameterName = "@originalVal", SqlDbType = SqlDbType.NVarChar, Value = correlation.OriginalValue },
+                    new SqlParameter(){ ParameterName = "@reqId", SqlDbType = SqlDbType.Int, Value = reqId},
+                });
+
+                try
+                {
+                    object id = cmd.ExecuteScalar();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+        #endregion
     }
 }

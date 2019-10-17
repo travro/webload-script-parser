@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WLScriptParser.Models.Repositories;
+using WLScriptParser.Models;
 
 namespace WLScriptParser.DAL
 {
@@ -14,23 +14,27 @@ namespace WLScriptParser.DAL
         public string BuildVersion { get; set; }
         public int ScriptId { get; private set; }
         public string ScriptName { get; set; }
-        public DateTime RecordedDate{get; set; }
+        public DateTime RecordedDate { get; set; }
 
-        public ScriptPushCoordinator()
-        {
-
-        }
+        public ScriptPushCoordinator() { }
 
         public ScriptPushCoordinator(string testName, string buildVers, string scriptName, DateTime dt)
         {
             TestName = testName; BuildVersion = buildVers; ScriptName = scriptName; RecordedDate = dt;
         }
-        
-        public void Push()
+
+        public void Push(Script script)
         {
             TestId = SqlAPI.GetTestId(TestName, BuildVersion);
             if (TestId == -1) TestId = SqlAPI.PushNewTest(TestName, BuildVersion);
-            ScriptId = SqlAPI.PushNewScript(ScriptName, RecordedDate, TestId);
+            try
+            {
+                SqlAPI.PushNewScript(script, ScriptName, RecordedDate, TestId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
