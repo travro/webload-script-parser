@@ -17,7 +17,7 @@ namespace Webload_Script_Parser_UnitTests
         [TestMethod]
         public void SqlAPI_TestID_ReturnsCorrectValue()
         {
-            Assert.AreEqual(1, SqlAPI.GetTestId("LM", "19.3.0.0-211"));
+            Assert.AreEqual(1, SqlAPI.GetTestId("LM", "19.2.0.0-88"));
         }
 
         //[TestMethod]
