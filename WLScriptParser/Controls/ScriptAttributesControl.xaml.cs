@@ -79,12 +79,18 @@ namespace WLScriptParser.Controls
         }
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            var scritItemAddWindow = new ScriptItemAddWindow();
-            scritItemAddWindow.Show();
+            var scriptItemAddWindow = new ScriptItemAddWindow();
+            scriptItemAddWindow.Closed += AddValue;
+            scriptItemAddWindow.Show();
         }
         private void UpdateSelectedValue(object sender, PropertyChangedEventArgs args)
         {
             SelectedValue = args.PropertyName;
+            OnPropertyChanged();
+        }
+        private void AddValue(object sender, EventArgs args)
+        {
+            SelectedValue = (sender as ScriptItemAddWindow).Text_Box.Text;
             OnPropertyChanged();
         }
         #endregion handlers
