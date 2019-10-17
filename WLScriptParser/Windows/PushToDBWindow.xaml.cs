@@ -23,8 +23,11 @@ namespace WLScriptParser.Windows
     /// </summary>
     public partial class PushToDBWindow : Window
     {
+        private string _fileName;
         public PushToDBWindow()
         {
+            _fileName = ScriptRepository.Repository.ScriptLeft.FileName;
+            Title = "Push [" + _fileName.Substring(_fileName.LastIndexOf('\\') + 1) + "] to Database";
             InitializeComponent();
             SAC_Test_Names.PropertyChanged += CheckSacEnableStatus;
             SAC_Build_Names.PropertyChanged += CheckSacEnableStatus;
@@ -34,11 +37,11 @@ namespace WLScriptParser.Windows
         #region helpermethods
         private void CheckSacEnableStatus(object sender, PropertyChangedEventArgs args)
         {
-            if(sender == SAC_Test_Names)
+            if (sender == SAC_Test_Names)
             {
                 SAC_Build_Names.Clear();
             }
-            if(sender == SAC_Build_Names)
+            if (sender == SAC_Build_Names)
             {
                 SAC_Scenario_Names.Clear();
             }
@@ -59,7 +62,7 @@ namespace WLScriptParser.Windows
 
         private void CheckPushStatus(object sender, EventArgs args)
         {
-            Button_Push.IsEnabled = (SacIsValid(SAC_Test_Names) && SacIsValid(SAC_Build_Names)&& SacIsValid(SAC_Scenario_Names) && Date_Picker.SelectedDate != null) ? true : false;              
+            Button_Push.IsEnabled = (SacIsValid(SAC_Test_Names) && SacIsValid(SAC_Build_Names) && SacIsValid(SAC_Scenario_Names) && Date_Picker.SelectedDate != null) ? true : false;
         }
 
         private bool SacIsValid(ScriptAttributesControl control)
@@ -76,13 +79,35 @@ namespace WLScriptParser.Windows
 
         private void Push_Click(object sender, RoutedEventArgs e)
         {
-            var scriptPushCoordinator = new ScriptPushCoordinator
-                (SAC_Test_Names.SelectedValue, 
-                SAC_Build_Names.SelectedValue, 
-                SAC_Scenario_Names.SelectedValue,
-                Date_Picker.SelectedDate.Value);
+            string confirmation = $"Pushing: {_fileName.Substring(_fileName.LastIndexOf('\\') + 1)} to WLScriptsDB as:" +
+                $"\nTest Group: {SAC_Test_Names.SelectedValue}" +
+                $"\nBuild Version: {SAC_Build_Names.SelectedValue}" +
+                $"\nScript Name: {SAC_Scenario_Names.SelectedValue}" +
+                $"\nRecorded on {Date_Picker.SelectedDate.Value.Date}";
 
-            scriptPushCoordinator.Push();
+            if (MessageBox.Show(confirmation, "Push to Database?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+            {
+                //do no stuff
+            }
+            else
+            {
+                var scriptPushCoordinator = new ScriptPushCoordinator()
+                {
+                    TestName = SAC_Test_Names.SelectedValue,
+                    BuildVersion = SAC_Build_Names.SelectedValue,
+                    ScriptName = SAC_Scenario_Names.SelectedValue,
+                    RecordedDate = Date_Picker.SelectedDate.Value
+                };
+
+                try
+                {
+                    scriptPushCoordinator.Push(ScriptRepository.Repository.ScriptLeft);
+                }
+                catch (Exception pushException)
+                {
+                    MessageBox.Show(pushException.ToString());
+                }
+            }
         }
         #endregion
     }

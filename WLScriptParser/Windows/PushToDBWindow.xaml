@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WLScriptParser.Windows"
         xmlns:uc="clr-namespace:WLScriptParser.Controls"
         mc:Ignorable="d"
-        Title="Push to Database" Height="250" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Height="450.8" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2"/>
@@ -21,8 +21,8 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-    <StackPanel Orientation="Vertical" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <GroupBox Header="Select This Script's Attributes for Database Insertion" Margin="40,10,40,10">
+    <StackPanel Margin="0" Orientation="Vertical"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GroupBox Header="Select or Add This Script's Attributes for Database Insertion" Margin="40,10,40,10">
             <Grid Height="110" Margin="10,15,10,5">
                 <Grid.Resources>
 
@@ -47,10 +47,12 @@
                 <DatePicker Grid.Row="3" Grid.Column="1" x:Name ="Date_Picker"  Margin="15,5,0.4,0"/>
             </Grid>
 
-        </GroupBox>
-        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" Height="24" Margin="0,0,50,0">
+        </GroupBox>        
+        <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Right" Height="24" Margin="0,0,50,0">
             <Button x:Name="Button_Cancel" Click="Cancel_Click" >Cancel</Button>
             <Button x:Name="Button_Push" IsEnabled="False" Click="Push_Click">Push</Button>
         </StackPanel>
+        <TextBlock x:Name="Logger_Text_Block" />
+        <StatusBar x:Name="Status_Bar" Background="AliceBlue">Pusing</StatusBar>
     </StackPanel>
 </Window>
