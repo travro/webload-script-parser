@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WLScriptParser.Windows"
         xmlns:uc="clr-namespace:WLScriptParser.Controls"
         mc:Ignorable="d"
-        Height="450.8" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        MinHeight="450.8" Width="1024" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2"/>
@@ -20,9 +20,12 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="30,10,30,10"/>
+        </Style>
     </Window.Resources>
     <StackPanel Margin="0" Orientation="Vertical"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <GroupBox Header="Select or Add This Script's Attributes for Database Insertion" Margin="40,10,40,10">
+        <GroupBox Header="Select or Add This Script's Attributes for Database Insertion">
             <Grid Height="110" Margin="10,15,10,5">
                 <Grid.Resources>
 
@@ -52,7 +55,11 @@
             <Button x:Name="Button_Cancel" Click="Cancel_Click" >Cancel</Button>
             <Button x:Name="Button_Push" IsEnabled="False" Click="Push_Click">Push</Button>
         </StackPanel>
-        <TextBlock x:Name="Logger_Text_Block" />
-        <StatusBar x:Name="Status_Bar" Background="AliceBlue">Pusing</StatusBar>
+        <GroupBox Height="300">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="Logger_Text_Block" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </ScrollViewer>
+             </GroupBox>
+        <!--<StatusBar x:Name="Status_Bar" Background="AliceBlue">Pusing</StatusBar>-->
     </StackPanel>
 </Window>

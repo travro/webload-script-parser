@@ -15,6 +15,7 @@ using System.ComponentModel;
 using WLScriptParser.Models.Repositories;
 using WLScriptParser.Controls;
 using WLScriptParser.DAL;
+using WLScriptParser.Utilities;
 
 namespace WLScriptParser.Windows
 {
@@ -33,6 +34,7 @@ namespace WLScriptParser.Windows
             SAC_Build_Names.PropertyChanged += CheckSacEnableStatus;
             SAC_Scenario_Names.PropertyChanged += CheckPushStatus;
             Date_Picker.SelectedDateChanged += CheckPushStatus;
+            AppLogger.Log.PropertyChanged += UpdateLog;
         }
         #region helpermethods
         private void CheckSacEnableStatus(object sender, PropertyChangedEventArgs args)
@@ -69,7 +71,10 @@ namespace WLScriptParser.Windows
         {
             return (control != null && control.SelectedValue != null && control.SelectedValue != control.DefaultValue);
         }
-
+        private void UpdateLog(object sender, PropertyChangedEventArgs args)
+        {
+            Logger_Text_Block.Text += "\n"+ args.PropertyName;
+        }
         #endregion
         #region handlers
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -99,6 +104,7 @@ namespace WLScriptParser.Windows
                     RecordedDate = Date_Picker.SelectedDate.Value
                 };
 
+                Logger_Text_Block.Text = "Pushing script......\n";
                 try
                 {
                     scriptPushCoordinator.Push(ScriptRepository.Repository.ScriptLeft);

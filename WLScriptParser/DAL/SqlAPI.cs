@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using WLScriptParser.Models;
+using WLScriptParser.Utilities;
 
 namespace WLScriptParser.DAL
 {
@@ -138,8 +139,9 @@ namespace WLScriptParser.DAL
                             new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
                             new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
                     });
-
+                    AppLogger.Log.LogMessage($"Pushing {testName} {buildVersion} to Test table in WLScriptDB");
                     id = cmd.ExecuteScalar();
+                    AppLogger.Log.LogMessage($"Successfully pushed {testName} {buildVersion} to Test table in WLScriptDB");
                 }
                 cnn.Close();
             }
@@ -165,55 +167,61 @@ namespace WLScriptParser.DAL
 
                         try
                         {
+                            AppLogger.Log.LogMessage($"Pushing script {scriptName} that was recorded on {dt} to Scripts table of WLScriptDB");
                             //command execution here
                             object scriptScopeId = cmd.ExecuteScalar();
                             PushTransactions(script.Transactions, (Int32)scriptScopeId, sqlConnection, sqlTransaction);
                             sqlTransaction.Commit();
+                            AppLogger.Log.LogMessage($"Successfully pushed script {scriptName} that was recorded on {dt} to Scripts table of WLScriptDB");
                         }
                         catch (Exception)
                         {
+                            AppLogger.Log.LogMessage("Error pushing script to DB");
                             sqlTransaction.Rollback();
                             throw;
                         }
-                    } 
+                    }
                 }
                 sqlConnection.Close();
             }
         }
         #region helpermethods
         private static void PushTransactions(List<Transaction> transactions, int scriptId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {            
-                using (var cmd = new SqlCommand("INSERT INTO TRANSACTIONS VALUES (@transName, @scriptId) SELECT CONVERT(int, SCOPE_IDENTITY())", sqlConnection, sqlTransaction))
+        {
+            using (var cmd = new SqlCommand("INSERT INTO TRANSACTIONS VALUES (@transName, @scriptId) SELECT CONVERT(int, SCOPE_IDENTITY())", sqlConnection, sqlTransaction))
+            {
+                cmd.Parameters.AddRange(new SqlParameter[]
                 {
-                    cmd.Parameters.AddRange(new SqlParameter[]
-                    {
                         new SqlParameter(){ ParameterName = "@transName", SqlDbType = SqlDbType.NVarChar},
                         new SqlParameter(){ ParameterName = "@scriptId", SqlDbType = SqlDbType.Int}
-                    });
+                });
 
-                    try
+                try
+                {
+                    AppLogger.Log.LogMessage($"Pushing transactions to DB on script_id {scriptId}");
+                    foreach (var transaction in transactions)
                     {
-                        foreach (var transaction in transactions)
-                        {
-                            cmd.Parameters["@transName"].Value = transaction.Name;
-                            cmd.Parameters["@scriptId"].Value = scriptId;
+                        cmd.Parameters["@transName"].Value = transaction.Name;
+                        cmd.Parameters["@scriptId"].Value = scriptId;
 
-                            //command execution here
-                            object transactionScopeId = cmd.ExecuteScalar();
-
-                            if (transactionScopeId != null)
-                            {
-                                PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, sqlConnection, sqlTransaction);
-                            }
-
-                        }
                         
+                        //command execution here
+                        object transactionScopeId = cmd.ExecuteScalar();
+
+                        if (transactionScopeId != null)
+                        {
+                            PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, sqlConnection, sqlTransaction);
+                        }
+
                     }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
+                    AppLogger.Log.LogMessage("Successfully pushed all transactions to Transaction table in WLScriptDB");
                 }
+                catch (Exception)
+                {
+                    AppLogger.Log.LogMessage("Error pushing transactions to database");
+                    throw;
+                }
+            }
         }
 
         private static void PushRequests(IEnumerable<Request> requests, int transId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
@@ -229,6 +237,7 @@ namespace WLScriptParser.DAL
 
                 try
                 {
+                    AppLogger.Log.LogMessage($"Pushing requests to DB on trans_id {transId}");
                     foreach (var request in requests)
                     {
                         cmd.Parameters["@requestVerb"].Value = (int)request.Verb;
@@ -243,9 +252,11 @@ namespace WLScriptParser.DAL
                         //    PushCorrelations(request.Correlations, (Int32)id, cnn);
                         //}
                     }
+                    AppLogger.Log.LogMessage($"Successfully pushed all requests to Request Table on trans_id {transId} in WLScriptDB");
                 }
                 catch (Exception)
                 {
+                    AppLogger.Log.LogMessage("Error pushing requests to database");
                     throw;
                 }
             }

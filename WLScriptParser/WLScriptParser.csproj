@@ -128,6 +128,7 @@
     <Compile Include="Pages\RequestComparerPage.xaml.cs">
       <DependentUpon>RequestComparerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\AppLogger.cs" />
     <Compile Include="Utilities\ColorDispenser.cs" />
     <Compile Include="Utilities\RequestTableBuilder.cs" />
     <Compile Include="Utilities\ScriptTransactionsComparer.cs" />
