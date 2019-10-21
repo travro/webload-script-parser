@@ -132,8 +132,7 @@ namespace WLScriptParser.DAL
                 using (var cmd = new SqlCommand())
                 {
                     cmd.Connection = cnn;
-                    cmd.CommandText = "INSERT INTO Tests values (@testName, @buildVersion)" +
-                        "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                    cmd.CommandText = "INSERT INTO Tests values (@testName, @buildVersion)";
                     cmd.Parameters.AddRange(new SqlParameter[]
                     {
                             new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
@@ -156,7 +155,7 @@ namespace WLScriptParser.DAL
 
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
-                    using (var cmd = new SqlCommand("INSERT INTO Scripts values (@scriptName, @recordingDate, @testId) SELECT CONVERT(int, SCOPE_IDENTITY())", sqlConnection, sqlTransaction))
+                    using (var cmd = new SqlCommand("INSERT INTO Scripts OUTPUT INSERTED.ID VALUES (@scriptName, @recordingDate, @testId) ", sqlConnection, sqlTransaction))
                     {
                         cmd.Parameters.AddRange(new SqlParameter[]
                         {
@@ -188,31 +187,46 @@ namespace WLScriptParser.DAL
         #region helpermethods
         private static void PushTransactions(List<Transaction> transactions, int scriptId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
-            using (var cmd = new SqlCommand("INSERT INTO TRANSACTIONS VALUES (@transName, @scriptId) SELECT CONVERT(int, SCOPE_IDENTITY())", sqlConnection, sqlTransaction))
+            using (var cmd = new SqlCommand("", sqlConnection, sqlTransaction))
             {
                 cmd.Parameters.AddRange(new SqlParameter[]
                 {
                         new SqlParameter(){ ParameterName = "@transName", SqlDbType = SqlDbType.NVarChar},
-                        new SqlParameter(){ ParameterName = "@scriptId", SqlDbType = SqlDbType.Int}
+                        new SqlParameter(){ ParameterName = "@transNameId", SqlDbType = SqlDbType.Int, Value = 0},
+                        new SqlParameter(){ ParameterName = "@scriptId", SqlDbType = SqlDbType.Int, Value = scriptId}
                 });
 
                 try
                 {
                     AppLogger.Log.LogMessage($"Pushing transactions to DB on script_id {scriptId}");
+
                     foreach (var transaction in transactions)
                     {
+                        cmd.CommandText = "SELECT id FROM TransactionNames WHERE trans_name = @transName";
                         cmd.Parameters["@transName"].Value = transaction.Name;
-                        cmd.Parameters["@scriptId"].Value = scriptId;
 
-                        
-                        //command execution here
                         object transactionScopeId = cmd.ExecuteScalar();
+
+                        if (transactionScopeId == null)
+                        {
+                            cmd.CommandText = "INSERT INTO TransactionNames (trans_name) OUTPUT INSERTED.ID VALUES (@transName)";
+                            transactionScopeId = cmd.ExecuteScalar();
+                        }
+
+
+                        cmd.Parameters["@transNameId"].Value = (Int32)transactionScopeId;
+                        cmd.CommandText = "INSERT INTO Transactions (trans_nm_id, script_id) OUTPUT INSERTED.ID VALUES (@transNameId, @scriptId)";
+
+                        transactionScopeId = cmd.ExecuteScalar();
 
                         if (transactionScopeId != null)
                         {
                             PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, sqlConnection, sqlTransaction);
                         }
-
+                        else
+                        {
+                            throw new Exception("Error obtaining transaction id from Transaction table insertion");
+                        }
                     }
                     AppLogger.Log.LogMessage("Successfully pushed all transactions to Transaction table in WLScriptDB");
                 }
@@ -226,11 +240,11 @@ namespace WLScriptParser.DAL
 
         private static void PushRequests(IEnumerable<Request> requests, int transId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
-            using (var cmd = new SqlCommand("INSERT INTO Requests VALUES (@requestVerb, @requestParams, @transId) SELECT CONVERT(int, SCOPE_IDENTITY())", sqlConnection, sqlTransaction))
+            using (var cmd = new SqlCommand("INSERT INTO Requests OUTPUT INSERTED.ID VALUES (@requestVerbId, @requestParams, @transId)", sqlConnection, sqlTransaction))
             {
                 cmd.Parameters.AddRange(new SqlParameter[]
                 {
-                        new SqlParameter(){ ParameterName = "@requestVerb", SqlDbType = SqlDbType.Int, },
+                        new SqlParameter(){ ParameterName = "@requestVerbId", SqlDbType = SqlDbType.Int, },
                         new SqlParameter(){ ParameterName = "@requestParams", SqlDbType = SqlDbType.NVarChar},
                         new SqlParameter(){ ParameterName = "@transId", SqlDbType = SqlDbType.Int, Value = transId},
                 });
@@ -240,10 +254,9 @@ namespace WLScriptParser.DAL
                     AppLogger.Log.LogMessage($"Pushing requests to DB on trans_id {transId}");
                     foreach (var request in requests)
                     {
-                        cmd.Parameters["@requestVerb"].Value = (int)request.Verb;
+                        cmd.Parameters["@requestVerbId"].Value = (Int32)request.Verb;
                         cmd.Parameters["@requestParams"].Value = request.Parameters;
 
-                        //command execution here
                         object requestScopeId = cmd.ExecuteScalar();
 
 
@@ -276,8 +289,7 @@ namespace WLScriptParser.DAL
             {
                 cmd = new SqlCommand();
                 cmd.Connection = cnn;
-                cmd.CommandText = "INSERT INTO Correlations VALUES (@rule, @extLogic, @originalVal, @reqId)" +
-                    "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                cmd.CommandText = "INSERT INTO Correlations VALUES (@rule, @extLogic, @originalVal, @reqId)";
                 cmd.Parameters.AddRange(new SqlParameter[]
                 {
                     new SqlParameter(){ ParameterName = "@rule", SqlDbType = SqlDbType.NVarChar, Value = correlation.Rule },
