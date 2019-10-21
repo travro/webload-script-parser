@@ -16,7 +16,7 @@ namespace WLScriptParser.Utilities
         
         private AppLogger() { }
 
-        public static AppLogger Log
+        public static AppLogger Logger
         {
             get
             {

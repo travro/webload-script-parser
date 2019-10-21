@@ -34,7 +34,7 @@ namespace WLScriptParser.Windows
             SAC_Build_Names.PropertyChanged += CheckSacEnableStatus;
             SAC_Scenario_Names.PropertyChanged += CheckPushStatus;
             Date_Picker.SelectedDateChanged += CheckPushStatus;
-            AppLogger.Log.PropertyChanged += UpdateLog;
+            AppLogger.Logger.PropertyChanged += UpdateLog;
         }
         #region helpermethods
         private void CheckSacEnableStatus(object sender, PropertyChangedEventArgs args)
