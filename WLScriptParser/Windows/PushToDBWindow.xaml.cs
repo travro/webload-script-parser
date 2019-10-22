@@ -104,7 +104,7 @@ namespace WLScriptParser.Windows
                     RecordedDate = Date_Picker.SelectedDate.Value
                 };
 
-                Logger_Text_Block.Text = "Pushing script......\n";
+                Logger_Text_Block.Text = confirmation;
                 try
                 {
                     scriptPushCoordinator.Push(ScriptRepository.Repository.ScriptLeft);

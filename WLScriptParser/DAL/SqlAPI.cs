@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using WLScriptParser.Models;
-using WLScriptParser.Utilities;
 
 namespace WLScriptParser.DAL
 {
@@ -106,134 +103,108 @@ namespace WLScriptParser.DAL
          *  testName: the name parameter for the SQL query
          *  buildVersion: the build paraemter for the SQL query
          * **/
-        public static int GetTestId(string testName, string buildVersion)
+        public static int GetTestId(string testName, string buildVersion, SqlConnection cnn)
         {
             object id;
-
-            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            using (var cmd = new SqlCommand("SELECT id FROM Tests WHERE test_name = @testName and build_version = @buildVersion", cnn))
             {
-                using (var cmd = new SqlCommand())
+                cmd.Parameters.AddRange(new SqlParameter[]
                 {
-                    cmd.Connection = cnn;
-                    cmd.CommandText = "SELECT id FROM Tests WHERE test_name = @testName and build_version = @buildVersion";
-                    cmd.Parameters.AddRange(new SqlParameter[]
-                    {
                             new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
                             new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
-                    });
-                    cnn.Open();
-                    id = cmd.ExecuteScalar();
-                }
-                cnn.Close();
+                });
+                id = cmd.ExecuteScalar();
             }
             return (id != null) ? (Int32)id : -1;
         }
 
-        public static int PushNewTest(string testName, string buildVersion)
+        public static int PushNewTest(string testName, string buildVersion, SqlConnection cnn)
         {
             object id;
-
-            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            using (var cmd = new SqlCommand("INSERT INTO Tests values (@testName, @buildVersion)", cnn))
             {
-                try
+                cmd.Parameters.AddRange(new SqlParameter[]
                 {
-                    using (var cmd = new SqlCommand())
-                    {
-                        cmd.Connection = cnn;
-                        cmd.CommandText = "INSERT INTO Tests values (@testName, @buildVersion)";
-                        cmd.Parameters.AddRange(new SqlParameter[]
-                        {
                             new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
                             new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
-                        });
-                        AppLogger.Logger.LogMessage($"Pushing {testName} {buildVersion} to Test table in WLScriptDB");
-
-                        cnn.Open();
-                        id = cmd.ExecuteScalar();
-                    }
-                }
-                finally
+                });
+                try
                 {
-                    cnn.Close();
+                    id = cmd.ExecuteScalar();
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
             return (id != null) ? (int)id : -1;
         }
 
-        public static void PushNewScript(Script script, string scriptName, DateTime dt, int testId)
+        public static int PushNewScript(Script script, string scriptName, DateTime dt, int testId, SqlConnection cnn, SqlTransaction sqlTrn)
         {
-            using (var sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
-            {
-                using (var sqlTransaction = sqlConnection.BeginTransaction())
-                {
-                    using (var cmd = new SqlCommand("INSERT INTO Scripts OUTPUT INSERTED.ID VALUES (@scriptName, @recordingDate, @testId) ", sqlConnection, sqlTransaction))
-                    {
-                        cmd.Parameters.AddRange(new SqlParameter[]
-                        {
-                            new SqlParameter(){ ParameterName = "@scriptName", SqlDbType = SqlDbType.NVarChar, Value = scriptName},
-                            new SqlParameter(){ ParameterName = "@recordingDate", SqlDbType = SqlDbType.Date, Value = dt},
-                            new SqlParameter(){ ParameterName = "@testId", SqlDbType = SqlDbType.Int, Value = testId }
-                        });
-
-                        try
-                        {
-                            sqlConnection.Open();
-                            //command execution here
-                            object scriptScopeId = cmd.ExecuteScalar();
-                            PushTransactions(script.Transactions, (Int32)scriptScopeId, sqlConnection, sqlTransaction);
-                            sqlTransaction.Commit();
-                         }
-                        catch (Exception)
-                        {
-                            sqlTransaction.Rollback();
-                            throw;
-                        }
-                        finally
-                        {
-                            sqlConnection.Close();
-                        }
-                    }
-                }
-
-            }
-        }
-
-        #region helpermethods
-        private static void PushTransactions(List<Transaction> transactions, int scriptId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            using (var cmd = new SqlCommand("", sqlConnection, sqlTransaction))
+            object scriptId;
+            using (var cmd = new SqlCommand("INSERT INTO Scripts OUTPUT INSERTED.ID VALUES (@scriptName, @recordingDate, @testId) ", cnn, sqlTrn))
             {
                 cmd.Parameters.AddRange(new SqlParameter[]
                 {
-                        new SqlParameter(){ ParameterName = "@transName", SqlDbType = SqlDbType.NVarChar},
-                        new SqlParameter(){ ParameterName = "@transNameId", SqlDbType = SqlDbType.Int, Value = 0},
+                            new SqlParameter(){ ParameterName = "@scriptName", SqlDbType = SqlDbType.NVarChar, Value = scriptName},
+                            new SqlParameter(){ ParameterName = "@recordingDate", SqlDbType = SqlDbType.Date, Value = dt},
+                            new SqlParameter(){ ParameterName = "@testId", SqlDbType = SqlDbType.Int, Value = testId }
+                });
+
+                try
+                {
+                    scriptId = cmd.ExecuteScalar();
+                    PushNewTransactions(script.Transactions, (Int32)scriptId, cnn, sqlTrn);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return (scriptId != null) ? (int)scriptId : -1;
+        }
+
+        #region helpermethods
+        private static int GetTestId(string transactionName, SqlConnection cnn, SqlTransaction sqlTrn)
+        {
+            object transNameScopeId;
+            using (var cmd = new SqlCommand("SELECT id FROM TransactionNames WHERE trans_name = @transName", cnn, sqlTrn))
+            {
+                cmd.Parameters.AddWithValue("@transName", transactionName);
+
+                transNameScopeId = cmd.ExecuteScalar();
+
+                if (transNameScopeId == null)
+                {
+                    cmd.CommandText = "INSERT INTO TransactionNames (trans_name) OUTPUT INSERTED.ID VALUES (@transName)";
+                    transNameScopeId = cmd.ExecuteScalar();
+                }
+            }
+            return (Int32)transNameScopeId;
+        }
+        private static void PushNewTransactions(List<Transaction> transactions, int scriptId, SqlConnection cnn, SqlTransaction sqlTrn)
+        {
+            using (var cmd = new SqlCommand("", cnn, sqlTrn))
+            {
+                cmd.Parameters.AddRange(new SqlParameter[]
+                {
+                        new SqlParameter(){ ParameterName = "@transNameId", SqlDbType = SqlDbType.Int},
                         new SqlParameter(){ ParameterName = "@scriptId", SqlDbType = SqlDbType.Int, Value = scriptId}
                 });
 
                 try
                 {
-
                     foreach (var transaction in transactions)
                     {
-                        cmd.Parameters["@transName"].Value = transaction.Name;
-                        cmd.CommandText = "SELECT id FROM TransactionNames WHERE trans_name = @transName";
+                        cmd.Parameters["@transNameId"].Value = GetTestId(transaction.Name, cnn, sqlTrn);
+                        cmd.CommandText = "INSERT INTO Transactions (trans_nm_id, script_id) OUTPUT INSERTED.ID VALUES (@transNameId, @scriptId)";
 
                         object transactionScopeId = cmd.ExecuteScalar();
 
-                        if (transactionScopeId == null)
-                        {
-                            cmd.CommandText = "INSERT INTO TransactionNames (trans_name) OUTPUT INSERTED.ID VALUES (@transName)";
-                            transactionScopeId = cmd.ExecuteScalar();
-                        }
-
-                        cmd.Parameters["@transNameId"].Value = (Int32)transactionScopeId;
-                        cmd.CommandText = "INSERT INTO Transactions (trans_nm_id, script_id) OUTPUT INSERTED.ID VALUES (@transNameId, @scriptId)";
-
-                        transactionScopeId = cmd.ExecuteScalar();
-
                         if (transactionScopeId != null)
                         {
-                            PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, sqlConnection, sqlTransaction);
+                            PushNewRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, cnn, sqlTrn);
                         }
                     }
                 }
@@ -244,7 +215,7 @@ namespace WLScriptParser.DAL
             }
         }
 
-        private static void PushRequests(IEnumerable<Request> requests, int transId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        private static void PushNewRequests(IEnumerable<Request> requests, int transId, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             using (var cmd = new SqlCommand("INSERT INTO Requests OUTPUT INSERTED.ID VALUES (@requestVerbId, @requestParams, @transId)", sqlConnection, sqlTransaction))
             {

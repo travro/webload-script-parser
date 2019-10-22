@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WLScriptParser.Models;
+using WLScriptParser.Utilities;
 
 namespace WLScriptParser.DAL
 {
@@ -12,7 +9,6 @@ namespace WLScriptParser.DAL
         public int TestId { get; private set; }
         public string TestName { get; set; }
         public string BuildVersion { get; set; }
-        public int ScriptId { get; private set; }
         public string ScriptName { get; set; }
         public DateTime RecordedDate { get; set; }
 
@@ -25,16 +21,42 @@ namespace WLScriptParser.DAL
 
         public void Push(Script script)
         {
-            int TestId = SqlAPI.GetTestId(TestName, BuildVersion);
+            using (var sqlCnn = SqlConnectionManager.GetOpenConnection())
+            {
+                //Get Test Id
+                TestId = SqlAPI.GetTestId(TestName, BuildVersion, sqlCnn);
+                if (TestId == -1)
+                {
+                    TestId = SqlAPI.PushNewTest(TestName, BuildVersion, sqlCnn);
+                    AppLogger.Logger.LogMessage($"----Pushing new test {TestName} to database----");
+                }
+                else
+                {
+                    AppLogger.Logger.LogMessage($"----Test name {TestName} found in database----");
+                }
 
-            if (TestId == -1) TestId = SqlAPI.PushNewTest(TestName, BuildVersion);
-            try
-            {
-                SqlAPI.PushNewScript(script, ScriptName, RecordedDate, TestId);
-            }
-            catch (Exception)
-            {
-                throw;
+
+                //Begin pushing script
+                using (var sqlTrn = sqlCnn.BeginTransaction())
+                {
+                    try
+                    {
+                        AppLogger.Logger.LogMessage($"----Pushing {ScriptName} to database---");
+                        SqlAPI.PushNewScript(script, ScriptName, RecordedDate, TestId, sqlCnn, sqlTrn);    
+                        sqlTrn.Commit();
+                        AppLogger.Logger.LogMessage($"----Successfully pushed {ScriptName} to database---");
+                    }
+                    catch (Exception)
+                    {
+                        AppLogger.Logger.LogMessage($"----Error loging script | Transaction rolled back -----");
+                        sqlTrn.Rollback();
+                        throw;
+                    }
+                    finally
+                    {
+                        sqlCnn.Close();
+                    }
+                }
             }
         }
     }
