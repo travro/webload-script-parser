@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="DAL\ScriptPushCoordinator.cs" />
     <Compile Include="DAL\SqlAPI.cs" />
+    <Compile Include="DAL\SqlConnectionManager.cs" />
     <Compile Include="Models\Repositories\AttributesRepository.cs" />
     <Compile Include="Models\Correlation.cs" />
     <Compile Include="Models\CorrelationFactory.cs" />

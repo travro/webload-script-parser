@@ -25,27 +25,33 @@ namespace WLScriptParser.DAL
 
             using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
             {
-                cnn.Open();
-                using (var cmd = new SqlCommand())
+                try
                 {
-                    cmd.Connection = cnn;
-
-                    switch (attribute)
+                    using (var cmd = new SqlCommand())
                     {
-                        case ScriptAttribute.TestNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM Tests"; ; break;
-                        case ScriptAttribute.BuildNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT build_version FROM Tests"; ; break;
-                        default: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM TESTS"; ; break;
-                    }
+                        cmd.Connection = cnn;
 
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
+                        switch (attribute)
                         {
-                            list.Add(reader.GetString(0));
+                            case ScriptAttribute.TestNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM Tests"; ; break;
+                            case ScriptAttribute.BuildNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT build_version FROM Tests"; ; break;
+                            default: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM TESTS"; ; break;
+                        }
+                        cnn.Open();
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(reader.GetString(0));
+                            }
                         }
                     }
                 }
-                cnn.Close();
+                finally
+                {
+                    cnn.Close();
+                }
+
             }
             return list;
         }
@@ -144,8 +150,6 @@ namespace WLScriptParser.DAL
 
                         cnn.Open();
                         id = cmd.ExecuteScalar();
-
-                        AppLogger.Logger.LogMessage($"Successfully pushed {testName} {buildVersion} to Test table in WLScriptDB");
                     }
                 }
                 finally
@@ -173,19 +177,14 @@ namespace WLScriptParser.DAL
 
                         try
                         {
-                            AppLogger.Logger.LogMessage($"Pushing script {scriptName} that was recorded on {dt} to Scripts table of WLScriptDB");
-
                             sqlConnection.Open();
                             //command execution here
                             object scriptScopeId = cmd.ExecuteScalar();
                             PushTransactions(script.Transactions, (Int32)scriptScopeId, sqlConnection, sqlTransaction);
                             sqlTransaction.Commit();
-
-                            AppLogger.Logger.LogMessage($"Successfully pushed script {scriptName} that was recorded on {dt} to Scripts table of WLScriptDB");
-                        }
+                         }
                         catch (Exception)
                         {
-                            AppLogger.Logger.LogMessage("Error pushing script to DB");
                             sqlTransaction.Rollback();
                             throw;
                         }
@@ -213,12 +212,11 @@ namespace WLScriptParser.DAL
 
                 try
                 {
-                    AppLogger.Logger.LogMessage($"Pushing transactions to DB on script_id {scriptId}");
 
                     foreach (var transaction in transactions)
                     {
                         cmd.Parameters["@transName"].Value = transaction.Name;
-                        cmd.CommandText = "SELECT id FROM TransactionNames WHERE trans_name = @transName";                        
+                        cmd.CommandText = "SELECT id FROM TransactionNames WHERE trans_name = @transName";
 
                         object transactionScopeId = cmd.ExecuteScalar();
 
@@ -237,16 +235,10 @@ namespace WLScriptParser.DAL
                         {
                             PushRequests(transaction.Requests.Where(r => r.Visible == true), (Int32)transactionScopeId, sqlConnection, sqlTransaction);
                         }
-                        else
-                        {
-                            throw new Exception("Error obtaining transaction id from Transaction table insertion");
-                        }
                     }
-                    AppLogger.Logger.LogMessage("Successfully pushed all transactions to Transaction table in WLScriptDB");
                 }
                 catch (Exception)
                 {
-                    AppLogger.Logger.LogMessage("Error pushing transactions to database");
                     throw;
                 }
             }
@@ -265,7 +257,6 @@ namespace WLScriptParser.DAL
 
                 try
                 {
-                    AppLogger.Logger.LogMessage($"Pushing requests to DB on trans_id {transId}");
                     foreach (var request in requests)
                     {
                         cmd.Parameters["@requestVerbId"].Value = (Int32)request.Verb;
@@ -279,11 +270,9 @@ namespace WLScriptParser.DAL
                         //    PushCorrelations(request.Correlations, (Int32)id, cnn);
                         //}
                     }
-                    AppLogger.Logger.LogMessage($"Successfully pushed all requests to Request Table on trans_id {transId} in WLScriptDB");
                 }
                 catch (Exception)
                 {
-                    AppLogger.Logger.LogMessage("Error pushing requests to database");
                     throw;
                 }
             }

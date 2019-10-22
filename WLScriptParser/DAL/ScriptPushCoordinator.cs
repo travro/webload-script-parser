@@ -25,7 +25,8 @@ namespace WLScriptParser.DAL
 
         public void Push(Script script)
         {
-            TestId = SqlAPI.GetTestId(TestName, BuildVersion);
+            int TestId = SqlAPI.GetTestId(TestName, BuildVersion);
+
             if (TestId == -1) TestId = SqlAPI.PushNewTest(TestName, BuildVersion);
             try
             {
