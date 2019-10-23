@@ -38,7 +38,6 @@ namespace WLScriptParser.Windows
                 case ScriptAttribute.TestNames: SelectableList = AttributesRepository.Repository.TestNames; break;
                 case ScriptAttribute.BuildNames: SelectableList = AttributesRepository.Repository.TestBuilds; break;
                 case ScriptAttribute.ScenarioNames: SelectableList = AttributesRepository.Repository.ScriptNames; break;
-                //case ScriptAttribute.ScenarioDates: SelectableList = AttributesRepository.Repository.ScriptDates; break;
             }
         }
 

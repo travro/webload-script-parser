@@ -24,10 +24,10 @@ namespace WLScriptParser.DAL
             using (var sqlCnn = SqlConnectionManager.GetOpenConnection())
             {
                 //Get Test Id
-                TestId = SqlAPI.GetTestId(TestName, BuildVersion, sqlCnn);
+                TestId = SqlCommands.GetTestId(TestName, BuildVersion, sqlCnn);
                 if (TestId == -1)
                 {
-                    TestId = SqlAPI.PushNewTest(TestName, BuildVersion, sqlCnn);
+                    TestId = SqlCommands.PushNewTest(TestName, BuildVersion, sqlCnn);
                     AppLogger.Logger.LogMessage($"----Pushing new test {TestName} to database----");
                 }
                 else
@@ -42,7 +42,7 @@ namespace WLScriptParser.DAL
                     try
                     {
                         AppLogger.Logger.LogMessage($"----Pushing {ScriptName} to database---");
-                        SqlAPI.PushNewScript(script, ScriptName, RecordedDate, TestId, sqlCnn, sqlTrn);    
+                        SqlCommands.PushNewScript(script, ScriptName, RecordedDate, TestId, sqlCnn, sqlTrn);    
                         sqlTrn.Commit();
                         AppLogger.Logger.LogMessage($"----Successfully pushed {ScriptName} to database---");
                     }

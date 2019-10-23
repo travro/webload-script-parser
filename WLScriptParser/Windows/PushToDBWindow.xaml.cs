@@ -52,7 +52,7 @@ namespace WLScriptParser.Windows
             {
                 SAC_Scenario_Names.Clear();
                 //calls to SQL DB
-                AttributesRepository.Repository.BuildScriptCollections(SAC_Test_Names.SelectedValue, SAC_Build_Names.SelectedValue);
+                AttributesRepository.Repository.BuildScriptCollection(SAC_Test_Names.SelectedValue);
                 SAC_Scenario_Names.IsEnabled = true;
             }
             else
@@ -108,10 +108,15 @@ namespace WLScriptParser.Windows
                 try
                 {
                     scriptPushCoordinator.Push(ScriptRepository.Repository.ScriptLeft);
+                    SAC_Test_Names.Clear();
                 }
                 catch (Exception pushException)
                 {
                     MessageBox.Show(pushException.ToString());
+                }
+                finally
+                {
+                    AttributesRepository.Repository.Update();
                 }
             }
         }

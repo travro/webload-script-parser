@@ -14,11 +14,9 @@ namespace WLScriptParser.Models.Repositories
         private ObservableCollection<string> _testNames;
         private ObservableCollection<string> _testBuilds;
         private ObservableCollection<string> _scriptNames;
-        private ObservableCollection<DateTime> _scriptDates;
         public string[] TestNames => _testNames.ToArray();
         public string[] TestBuilds => _testBuilds.ToArray();
-        public string[] ScriptNames => _scriptNames.ToArray()?? new string[] { };
-        public DateTime[] ScriptDates => _scriptDates.ToArray()?? new DateTime[] { };
+        public string[] ScriptNames => _scriptNames.ToArray();
         //private  List<object> _scenarioNames;
         //private  List<object> _scenarioDates;
         public static AttributesRepository Repository
@@ -29,22 +27,28 @@ namespace WLScriptParser.Models.Repositories
                 {
                     //lazy loading here
                     repo = new AttributesRepository();
+                    repo.Update();
                 }
                 return repo;
             }
         }
-        private AttributesRepository()
+        private AttributesRepository() { }
+
+        public void BuildScriptCollection(string testName)
         {
-            _testNames = SqlAPI.GetTestCollections(ScriptAttribute.TestNames);
-            _testBuilds = SqlAPI.GetTestCollections(ScriptAttribute.BuildNames);
+            using (var sqlConnection = SqlConnectionManager.GetOpenConnection())
+            {
+                _scriptNames = SqlCommands.GetScriptCollection(testName, sqlConnection);
+            }
         }
 
-        public void BuildScriptCollections(string testName, string buildVersion)
+        public void Update()
         {
-            if (_scriptNames == null) _scriptNames = new ObservableCollection<string>(); else _scriptNames.Clear();
-            if (_scriptDates == null) _scriptDates = new ObservableCollection<DateTime>(); else _scriptDates.Clear();
-
-            SqlAPI.GetScriptCollections(_scriptNames, _scriptDates, testName, buildVersion);
+            using (var sqlConnection = SqlConnectionManager.GetOpenConnection())
+            {
+                _testNames = SqlCommands.GetTestCollections(ScriptAttribute.TestNames, sqlConnection);
+                _testBuilds = SqlCommands.GetTestCollections(ScriptAttribute.BuildNames, sqlConnection);
+            }
         }
     }
 }
