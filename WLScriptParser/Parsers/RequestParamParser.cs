@@ -30,7 +30,8 @@ namespace WLScriptParser.Parsers
 
             string filteredUrl = line.Substring(domainLastIndex, paramIndex - domainLastIndex);
 
-            filteredUrl = filteredUrl.ReplaceInBounds("PR##_LM_Test", "/learning/DataStore/", "/Learning/");
+            filteredUrl = filteredUrl.ReplaceInBounds("[TenantKey]", "/learning/DataStore/", "/Learning/");
+            filteredUrl = filteredUrl.ReplaceInBounds("[TenantKey]", "/learning/DataStore/", "/Common/");
             filteredUrl = filteredUrl.ReplaceInBounds("[TimeStamp]", "blank___", ".");
             filteredUrl = filteredUrl.ReplaceInBounds("[UserId]", "gamification/summaries/");
             filteredUrl = filteredUrl.ReplaceInBounds("[BrokerSessionId]", "api/sumtSocial/communities/");
