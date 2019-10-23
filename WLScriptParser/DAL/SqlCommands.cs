@@ -8,7 +8,7 @@ using WLScriptParser.Models;
 
 namespace WLScriptParser.DAL
 {
-    public static class SqlAPI
+    public static class SqlCommands
     {
         /**
          * Returns: Collection of Test names
@@ -16,39 +16,26 @@ namespace WLScriptParser.DAL
          *      attribute: the Script attribute that will determine the column of values to be returned
          *          default: TestNames
          * */
-        public static ObservableCollection<string> GetTestCollections(ScriptAttribute attribute)
+        public static ObservableCollection<string> GetTestCollections(ScriptAttribute attribute, SqlConnection cnn)
         {
             ObservableCollection<string> list = new ObservableCollection<string>();
 
-            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            using (var cmd = new SqlCommand("", cnn))
             {
-                try
+                switch (attribute)
                 {
-                    using (var cmd = new SqlCommand())
-                    {
-                        cmd.Connection = cnn;
+                    case ScriptAttribute.TestNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM Tests"; ; break;
+                    case ScriptAttribute.BuildNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT build_version FROM Tests"; ; break;
+                    default: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM TESTS"; ; break;
+                }
 
-                        switch (attribute)
-                        {
-                            case ScriptAttribute.TestNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM Tests"; ; break;
-                            case ScriptAttribute.BuildNames: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT build_version FROM Tests"; ; break;
-                            default: cmd.CommandText = "USE WLScriptsDB SELECT DISTINCT test_name FROM TESTS"; ; break;
-                        }
-                        cnn.Open();
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                list.Add(reader.GetString(0));
-                            }
-                        }
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetString(0));
                     }
                 }
-                finally
-                {
-                    cnn.Close();
-                }
-
             }
             return list;
         }
@@ -61,40 +48,24 @@ namespace WLScriptParser.DAL
          *  buildVersion: the build parameter for retrieving a test id
          * 
          * **/
-        public static void GetScriptCollections(ObservableCollection<string> scriptNames, ObservableCollection<DateTime> scriptDates, string testName, string buildVersion)
+        public static ObservableCollection<string> GetScriptCollection(string testName, SqlConnection cnn)
         {
-            using (var cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WLScriptsDB"].ConnectionString))
+            ObservableCollection<string> list = new ObservableCollection<string>();
+
+            using (var cmd = new SqlCommand("SELECT DISTINCT script_name FROM Scripts INNER JOIN Tests " +
+                "ON Tests.id = Scripts.test_id WHERE Tests.test_name = @testName", cnn))
             {
-                try
+                cmd.Parameters.AddWithValue("@testName", testName);
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    using (var cmd = new SqlCommand())
+                    while (reader.Read())
                     {
-                        cmd.Connection = cnn;
-                        cmd.CommandText = "SELECT script_name, recording_date FROM Scripts WHERE test_id = " +
-                            "(SELECT id FROM Tests WHERE test_name = @testName and build_version = @buildVersion)";
-
-                        cmd.Parameters.AddRange(new SqlParameter[]
-                        {
-                            new SqlParameter(){ ParameterName = "@testName", SqlDbType = SqlDbType.NVarChar, Value = testName},
-                            new SqlParameter(){ ParameterName = "@buildVersion", SqlDbType = SqlDbType.NVarChar, Value = buildVersion}
-                        });
-
-                        cnn.Open();
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                scriptNames.Add(reader.GetString(0));
-                                scriptDates.Add(reader.GetDateTime(1));
-                            }
-                        }
+                        list.Add(reader.GetString(0));
                     }
                 }
-                finally
-                {
-                    cnn.Close();
-                }
             }
+            return list;
         }
 
         /**

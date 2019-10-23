@@ -10,14 +10,14 @@ namespace Webload_Script_Parser_UnitTests
         [TestMethod]
         public void SqlAPI_TestCollections_IsNotNull()
         {
-            Assert.IsNotNull(SqlAPI.GetTestCollections(WLScriptParser.Models.ScriptAttribute.TestNames));
-            Assert.IsNotNull(SqlAPI.GetTestCollections(WLScriptParser.Models.ScriptAttribute.BuildNames));
+            Assert.IsNotNull(SqlCommands.GetTestCollections(WLScriptParser.Models.ScriptAttribute.TestNames));
+            Assert.IsNotNull(SqlCommands.GetTestCollections(WLScriptParser.Models.ScriptAttribute.BuildNames));
         }
 
         [TestMethod]
         public void SqlAPI_TestID_ReturnsCorrectValue()
         {
-            Assert.AreEqual(1, SqlAPI.GetTestId("LM", "19.2.0.0-88"));
+            Assert.AreEqual(1, SqlCommands.GetTestId("LM", "19.2.0.0-88"));
         }
 
         //[TestMethod]
